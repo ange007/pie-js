@@ -77,12 +77,12 @@
 		this.$elements = {};
 		this.layers = [];
 
-		// Дополнительные обработчики
-		this.basics = new pie.tabs.Basics(this, this.canvas);
-		this.text = new pie.tabs.Text(this, this.canvas);
-
 		// Встраиваем редактор
 		this.insertEditor();
+
+		// Инициализация дополнительных библиотек после полноценного встраивания
+		this.basics = new pie.tabs.Basics(this, this.canvas);
+		this.text = new pie.tabs.Text(this, this.canvas);
 
 		// Записываем редактор в список
 		pie.list[this.id] = this;
