@@ -1,0 +1,39 @@
+{
+	"serif": {
+		"caption": "Serif", 
+		"items": 
+			[ {
+				"name": "PT Mono Regular",
+				"font": "PTM55F.ttf"
+			},
+			{
+				"name": "Inglobal",
+				"font": "inglobal.ttf" 
+			},
+			{
+				"name": "Indie Flower",
+				"font": "" 
+			} ]
+	},
+	
+	"handwriting": {
+		"caption": "Handwriting", 
+		"items": 
+			[ {
+				"name": "Lemon Tuesday",
+				"font": "Lemon_Tuesday.otf"
+			},
+			{
+				"name": "Pacifico",
+				"font": "" 
+			},
+			{
+				"name": "",
+				"font": "" 
+			},
+			{
+				"name": "",
+				"font": "" 
+			} ]
+	}
+}

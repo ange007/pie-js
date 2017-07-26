@@ -1,0 +1,29 @@
+language: node_js
+
+node_js:
+  - 0.12
+  
+env:
+    global:
+        - GIT_NAME=ange007
+        - GIT_EMAIL=ange007@users.noreply.github.com
+        - GIT_DOMAIN=github.com
+        - REPO_URL=https://${OAuth}@${GIT_DOMAIN}/${TRAVIS_REPO_SLUG}.git
+
+before_script:
+  - npm install -g gulp
+
+script: 
+  - gulp clean && gulp build && gulp build:min
+
+after_success: 
+  - git config --global user.name "${GIT_NAME}"
+  - git config --global user.email "${GIT_EMAIL}"
+  - chmod +x ${TRAVIS_BUILD_DIR}/.travis-ghpages-commit.sh
+  - ${TRAVIS_BUILD_DIR}/.travis-ghpages-commit.sh
+    
+sudo: false
+
+cache:
+  directories:
+    - node_modules

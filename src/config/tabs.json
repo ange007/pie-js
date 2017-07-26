@@ -1,0 +1,45 @@
+{
+	"basics": {
+		"caption": "Base", 
+		"title": "Base",
+		"icon": "<span class='glyphicon glyphicon-picture' aria-hidden='true'></span>", 
+		"items": 
+			[ {
+				"type": "text",
+				"caption": "Crop",
+				"action": "" 
+			},
+			{
+				"type": "text",
+				"caption": "Rotate",
+				"action": ""
+			},
+			{
+				"type": "text",
+				"caption": "Resize",
+				"action": "showResize( );"
+			},
+			{
+				"type": "text",
+				"caption": "Round",
+				"action": "showRound( );"
+			},
+			{
+				"type": "text",
+				"caption": "Background color",
+				"action": "showBackgroundColor( );"
+			},
+			{
+				"type": "text",
+				"caption": "Add image",
+				"action": "addImage( 'http://fabricjs.com/assets/ladybug.png' );"
+			} ]
+	},
+	
+	"text": {
+		"caption": "Text", 
+		"title": "Text",
+		"icon": "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>", 
+		"items": [ ]
+	}
+}
