@@ -168,9 +168,10 @@
 
 			// События браузера
 			// https://stackoverflow.com/questions/24733030/fabric-js-moving-image-with-keyboard
-			// 
 			document.onkeydown = function (event) {
-				var activeObject = context.canvas.getActiveObject();
+				//
+				var movementDelta = 5,
+				    activeObject = context.canvas.getActiveGroup() || context.canvas.getActiveObject();
 
 				//
 				if (activeObject === undefined) {
@@ -181,28 +182,30 @@
 				switch (event.keyCode) {
 					/* Up arrow */
 					case 38:
-						activeObject.top -= 5;
-						context.canvas.renderAll();
+						activeObject.top -= movementDelta;
 						break;
 					/* Down arrow  */
 					case 40:
-						activeObject.top += 5;
-						context.canvas.renderAll();
+						activeObject.top += movementDelta;
 						break;
 					/* Left arrow  */
 					case 37:
-						activeObject.left -= 5;
-						context.canvas.renderAll();
+						activeObject.left -= movementDelta;
 						break;
 					/* Right arrow  */
 					case 39:
-						activeObject.left += 5;
-						context.canvas.renderAll();
+						activeObject.left += movementDelta;
 						break;
 					/* Delete */
 					case 46:
 						activeObject.remove();
 						break;
+				}
+
+				//
+				if ([37, 38, 39, 40, 46].indexOf(event.keyCode) >= 0) {
+					event.preventDefault();
+					context.canvas.renderAll();
 				}
 			};
 		},
