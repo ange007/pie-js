@@ -8,10 +8,10 @@
 	if( pie.tabs.Text ) { console.warn( 'pie.tabs.text is already defined.' );	return; }
 	
 	//
-	pie.tabs.Text = function( editor, canvas ) 
+	pie.tabs.Text = function( editor ) 
 	{
 		this.editor = editor;
-		this.canvas = canvas;
+		this.canvas = editor.canvas;
 		this.tab = undefined;
 	};
 
@@ -54,10 +54,10 @@
 			let context = this;
 
 			// Запрашиваем шрифты
-			this.editor.getConfig( 'fonts', function( data ) 
+			this.editor._getConfig( 'fonts', function( data ) 
 			{
 				let fontList = [ ],
-					fontGroups = [ ],
+					fontCategories = { },
 					webFontList = [ ];
 
 				for( let i in data )
@@ -72,17 +72,23 @@
 					let items = data[ i ].items;
 
 					// Группы шрифтов
-					fontGroups[ i ] = data[ i ].caption || i;
+					fontCategories[ i ] = data[ i ].caption || i;
 
 					// Шрифты
-					fontList = fontList.concat( items );
+					for( var j in items )
+					{
+						fontList.push( { font: items[ j ].font, 
+										caption: items[ j ].caption, 
+										action: 'addText',
+										arguments: items[ j ].caption } );
+					}
 
 					// Записываем web шрифты
 					for( var j in items )
 					{
-						if( items[ j ].font === '' && items[ j ].name !== ''  )
+						if( items[ j ].font === '' && items[ j ].caption !== ''  )
 						{
-							webFontList.push( items[ j ].name  );
+							webFontList.push( items[ j ].caption  );
 						}
 					}
 				}
@@ -94,10 +100,10 @@
 				}
 
 				// Формируем шаблон
-				let fontsHTML = pie.utils.template.render( context, 'tabs/text-fonts.tpl', { 'fonts': fontList } );
+				let fontsHTML = context.editor.utils.template.render( 'tabs/text.tpl', { 'categories': fontCategories, 'fonts': fontList } );
 
 				// Применяем шаблон
-				context.tab.find( '#fonts' ).html( fontsHTML );
+				context.tab.html( fontsHTML );
 			} );
 		},
 
@@ -115,20 +121,20 @@
 		},
 
 		//
-		addText: function( )
+		addText: function( fontFamily )
 		{
 			var text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
 						'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
 
 			// 
-			var textSample = new fabric.Textbox( text.slice( 0, getRandomInt( 0, text.length ) ), 
+			var textSample = new fabric.Textbox( text, 
 			{
 			  fontSize: 20,
-			  left: getRandomInt(350, 400),
-			  top: getRandomInt(350, 400),
-			  fontFamily: 'helvetica',
-			  angle: getRandomInt(-10, 10),
-			  fill: '#' + getRandomColor(),
+			  left: Math.random(400),
+			  top: Math.random(400),
+			  fontFamily: fontFamily,
+			  angle: Math.random(10),
+			  fill: '#2196f3',
 			  fontWeight: '',
 			  originX: 'left',
 			  width: 300,

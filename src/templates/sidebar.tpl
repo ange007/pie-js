@@ -9,9 +9,9 @@
 			</button>
 		</div>
 	</div>
-	<ul id="navigation" class="nav navbar-nav side-menu-container">
+	<ul id="navigation" class="nav navbar-nav side-menu-container">		
 		{% for tabID, tab in tabs %}
-			<li class="text-center"><a href="#" data-target-tab="{{ tabID }}">
+			<li class="text-center"><a href="#" pie-target-tab="{{ tabID }}">
 				{% if tab.icon|length > 0 %}{{ tab.icon|safe }}{% endif %}
 				<div>{{ tab.caption }}</div>
 			</a></li>
@@ -22,28 +22,19 @@
 <div id="tabs" class="panel panel-default side-body">
 	<div class="panel-body">
 		{% for tabID, tab in tabs %}
-		<div id="{{ tabID }}" class="tab">
+		<div class="tab" pie-tab="{{ tabID }}">
 			{% if tab.title|length > 0 %}	
 				<legend class="tab-title">{{ tab.title }}</legend>
 			{% endif %}
 
 			{% if tab.items|length > 0 %}
-			<ul class="nav nav-pills nav-stacked">
-				{% for item in tab.items %}
-					<li><a href="#" onclick="pie.getEditor( '{{ id }}' ).{{ tabID }}.{{ item.action }}">
-					{% if item.type === 'text' %}
-						{% if item.icon|length > 0 %}<span>{{ item.icon }}</span>{% endif %}
-						<span>{{ item.caption }}</span>
-					{% elseif item.type === 'image' %}
-						<img src="{{ item.image }}" />
-					{% else %}
-						 {% include 'tabs/' + tabID + '-item.tpl' %}
-					{% endif %}
-					</a></li>
-				{% endfor %}
-			<ul>
-			{% else %}
-				 {% include 'tabs/' + tabID + '.tpl' %}
+				<ul class="nav nav-pills nav-stacked">
+					{% for item in tab.items %}
+						<li>
+							{% include 'tabs/' + tabID + '-item.tpl' %}
+						</li>
+					{% endfor %}
+				<ul>
 			{% endif %}
 		</div>
 		{% endfor %}

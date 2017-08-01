@@ -1,10 +1,10 @@
 <div>
-	<div class="form-group">
+	<div class="form-group">		
 		<label for="f-family">Font family</label>
 		<select id="f-family" class="form-control">
-			<option>AL</option>
-			<option>CA</option>
-			<option>IL</option>
+			{% for category, caption in categories %}
+				<option value="category">{{ caption }}</option>
+			{% endfor %}
 		</select>
 	</div>
 	<div class="form-group">
@@ -14,6 +14,10 @@
 </div>
 <div>
     <ul id="fonts" class="nav nav-pills nav-stacked">
-		{% include 'tabs/text-fonts.tpl' %}
+		{% for item in fonts %}
+			<li>
+				{% include 'tabs/text-item.tpl' %}
+			</li>
+		{% endfor %}
 	</ul>
 </div>

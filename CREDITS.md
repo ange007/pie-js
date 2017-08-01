@@ -6,3 +6,4 @@ The most popular HTML, CSS, and JavaScript framework for developing responsive, 
 Zepto.js is a minimalist JavaScript library for modern browsers, with a jQuery-compatible API
 * [nunjucks](https://github.com/mozilla/nunjucks) - [*BSD 2-clause "Simplified" License*]
 A powerful templating engine with inheritance, asynchronous control, and more (jinja2 inspired)
+* [Dessert icons](http://iloveicons.ru/blog/2010/05/22/besplatnyie-ikonki-quot-desserts-quot/) - [FREE]

@@ -27,7 +27,7 @@
 				
 			// Считываем шаблон
 			let context = this,
-				template = pie.utils.template.render( editor, 'panels/' + tpl + '.tpl', data );
+				template = editor.utils.template.render( 'panels/' + tpl + '.tpl', data );
 			
 			//
 			this.element = $( this.selector );

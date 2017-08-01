@@ -8,10 +8,10 @@
 	if( pie.tabs.Basics ) { console.warn( 'pie.tabs.basics is already defined.' );	return; }
 
 	//
-	pie.tabs.Basics = function( editor, canvas ) 
+	pie.tabs.Basics = function( editor ) 
 	{
 		this.editor = editor;
-		this.canvas = canvas;
+		this.canvas = editor.canvas;
 		this.tab = undefined;
 	};
 
@@ -110,6 +110,6 @@
 			{
 				context.canvas.add(oImg);
 			} );	
-		},
+		}
 	};
 } )( window );

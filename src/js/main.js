@@ -52,6 +52,7 @@
 //= editor.js
 //= tabs/basics.js
 //= tabs/text.js
+//= tabs/stickers.js
 //= utils/template.js
 //= utils/panels.js
 //= utils/tabs.js

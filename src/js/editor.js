@@ -19,13 +19,22 @@
 		// Дополнительные переменные
 		this.$elements = { };
 		this.layers = [ ];
-				
-		// Встраиваем редактор
-		this.insertEditor( );
 		
-		// Инициализация дополнительных библиотек после полноценного встраивания
-		this.basics = new pie.tabs.Basics( this, this.canvas );
-		this.text = new pie.tabs.Text( this, this.canvas );
+		// Инициализация дополнительных библиотек
+		this.utils = {
+			tabs: new pie.utils.Tabs( this ),
+			template: new pie.utils.Template( this )
+		};
+		
+		// Встраиваем редактор
+		this._insertEditor( );
+		
+		// Инициализация библиотек вкладок (после полноценного встраивания)
+		this.tabs = {
+			basics: new pie.tabs.Basics( this ),
+			text: new pie.tabs.Text( this ),
+			stickers: new pie.tabs.Stickers( this )
+		};
 		
 		// Записываем редактор в список
 		pie.list[ this.id ] = this;
@@ -34,8 +43,11 @@
 	// Функционал класса
 	pie.Editor.prototype = 
 	{
+		utils: { },
+		tabs: { },
+		
 		// Встраивание редактора
-		insertEditor: function( )
+		_insertEditor: function( )
 		{
 			// 
 			let $container = $( this.options.container || body ),
@@ -45,7 +57,7 @@
 			if( this.options.container !== undefined )
 			{
 				// Считываем шаблон
-				let template = pie.utils.template.render( this, 'main.tpl', { } );
+				let template = this.utils.template.render( 'main.tpl', { } );
 
 				// Выводим данные шаблона
 				$container = $( template ).appendTo( this.options.container );
@@ -63,7 +75,7 @@
 			this.canvas = new fabric.Canvas( this.$elements.canvas[ 0 ] );
 			
 			// Загрузка содержимого табов
-			this.loadTabs( );
+			this.utils.tabs.load( );
 
 			// Загрузка списка слоёв
 			this.loadLayers( );
@@ -71,82 +83,15 @@
 			// Устанавливаем обработчики событий
 			this.setEvents( );
 		},
-		
-		// Вызов функции
-		callTabFunction: function( tab, functionName, data )
-		{
-			if( this.hasOwnProperty( tab ) && this[ tab ][ functionName ] !== undefined )
-			{
-				return this[ tab ][ functionName ].apply( this[ tab ], data );
-			}
-		},
-		
-		// Загрузка содержимого табов
-		loadTabs: function( )
-		{
-			const context = this;
-			
-			// Запрашиваем параметры табов
-			this.getConfig( 'tabs', function( data ) 
-			{
-				let $sidebar = context.$elements.sidebar;
-
-				// Вызов события загрузки вкладки в нужном модуле
-				for( var i in data )
-				{
-					data[ i ] = context.callTabFunction( i, 'loadTab', [ data[ i ] ] );
-				}
-
-				// Считываем шаблон
-				var html = pie.utils.template.render( context, 'sidebar.tpl', { 'tabs': data } );
-
-				// Выводим данные шаблона
-				$sidebar.html( html )
-						.on( 'click', '#navigation a', function( event )
-				{
-					var targetTab = $( this ).data( 'target-tab' );
-
-					// Перебираем навигацию
-					$sidebar.find( '#navigation li' ).each( function( index, element )
-					{
-						var $element = $( element );
-
-						// $element.toggleClass( $element.attr( 'id' ) === targetTab );
-					} );
-
-					// Перебираем табы
-					$sidebar.find( '#tabs .tab' ).each( function( index, element )
-					{
-						var $element = $( element );
-
-						// Вызов события загрузки вкладки в нужном модуле
-						if( $element.attr( 'id' ) === targetTab )
-						{
-							context.callTabFunction( targetTab, 'activateTab', [ $element ] );
-						}
-						else
-						{
-							context.callTabFunction( targetTab, 'deactivateTab', [ $element ] );
-						}
-
-						// Отображение/скрытие вкладок
-						$element.toggle( $element.attr( 'id' ) === targetTab );
-					} );
-				} );
-			} );
-		},		
-				
+						
 		// Получение настроек
-		getConfig: function( config, callback )
+		_getConfig: function( config, callback )
 		{
 			// Запрашиваем параметры табов
 			$.ajax( { 
 				url: './config/' + config + '.json', 
 				dataType: 'json',
-				success: function( data ) 
-				{
-					callback( data );
-				}
+				success: function( data ) { callback( data ); }
 			} );
 		},
 		
@@ -155,10 +100,57 @@
 		{
 			const context = this;
 			
-							// Добавление объекта
-			this.canvas.on( { 'object:added': function( ) {	context.loadLayers( ); },
-							// Удаления объекта
-							'object:removed': function( ) { context.loadLayers( ); } } );
+			// События генерируемы fabricJS		
+			this.canvas.on( 
+			{ 
+				// Добавление объекта
+				'object:added': function( ) {	context.loadLayers( ); },
+				// Удаления объекта
+				'object:removed': function( ) { context.loadLayers( ); } 
+			} );
+					
+			// События браузера
+			// https://stackoverflow.com/questions/24733030/fabric-js-moving-image-with-keyboard
+			// 
+			document.onkeydown = function( event ) 
+			{
+				const activeObject = context.canvas.getActiveObject( );
+				
+				//
+				if( activeObject === undefined )
+				{
+					return false;
+				}
+				
+				//
+				switch( event.keyCode ) 
+				{
+					/* Up arrow */
+					case 38:  
+						activeObject.top -= 5;
+						context.canvas.renderAll( );
+						break;
+					/* Down arrow  */	
+					case 40:  
+						activeObject.top += 5;
+						context.canvas.renderAll( );
+						break;
+					/* Left arrow  */	
+					case 37: 
+						activeObject.left -= 5;
+						context.canvas.renderAll( );
+						break;
+					/* Right arrow  */
+					case 39: 
+						activeObject.left += 5;
+						context.canvas.renderAll( );
+						break;
+					 /* Delete */
+					case 46: 
+						activeObject.remove( );
+						break;
+				}
+			};
 		},
 		
 		// Список объектов на канве
@@ -178,7 +170,7 @@
 			}
 					
 			// Считываем шаблон
-			let template = pie.utils.template.render( this, 'layers.tpl', { 'layers': this.layers } );
+			let template = this.utils.template.render( 'layers.tpl', { 'layers': this.layers } );
 
 			// Выводим данные шаблона
 			return this.$elements.layers.html( template );
@@ -187,13 +179,13 @@
 		// 
 		getSelected: function( ) 
 		{
-			return this.canvas.getActiveObject( );
+			return this.activeObject;
 		},
 
 		//
 		getActiveStyle: function( styleName, object )
 		{
-			object = object || this.canvas.getActiveObject( );
+			object = object || this.activeObject;
 			if( !object ) return '';
 
 			return ( object.getSelectionStyles && object.isEditing )
@@ -204,7 +196,7 @@
 		//
 		setActiveStyle: function( styleName, value, object )
 		{
-			object = object || this.canvas.getActiveObject( );
+			object = object || this.activeObject;
 			if( !object ) return;
 
 			if( object.setSelectionStyles && object.isEditing ) 
@@ -227,7 +219,7 @@
 		//
 		getActiveProp: function( name ) 
 		{
-			var object = this.canvas.getActiveObject( );
+			var object = this.activeObject;
 			if( !object ) return '';
 
 			return object[ name ] || '';
@@ -236,7 +228,7 @@
 		//
 		setActiveProp: function( name, value ) 
 		{
-			var object = this.canvas.getActiveObject( );
+			var object = this.activeObject;
 			if( !object ) return;
 			
 			object.set( name, value )
