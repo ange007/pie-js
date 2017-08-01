@@ -3,15 +3,15 @@
 		"caption": "Serif", 
 		"items": 
 			[ {
-				"name": "PT Mono Regular",
+				"caption": "PT Mono Regular",
 				"font": "PTM55F.ttf"
 			},
 			{
-				"name": "Inglobal",
+				"caption": "Inglobal",
 				"font": "inglobal.ttf" 
 			},
 			{
-				"name": "Indie Flower",
+				"caption": "Indie Flower",
 				"font": "" 
 			} ]
 	},
@@ -20,19 +20,19 @@
 		"caption": "Handwriting", 
 		"items": 
 			[ {
-				"name": "Lemon Tuesday",
+				"caption": "Lemon Tuesday",
 				"font": "Lemon_Tuesday.otf"
 			},
 			{
-				"name": "Pacifico",
+				"caption": "Pacifico",
 				"font": "" 
 			},
 			{
-				"name": "",
+				"caption": "",
 				"font": "" 
 			},
 			{
-				"name": "",
+				"caption": "",
 				"font": "" 
 			} ]
 	}

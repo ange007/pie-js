@@ -1,0 +1,50 @@
+{
+	"smiles": {
+		"caption": "Smiles", 
+		"items": 
+			[ {
+				"caption": "Cry",
+				"image": "if_cry.png"
+			},
+			{
+				"caption": "Dead",
+				"image": "if_dead.png"
+			},
+			{
+				"caption": "Happy",
+				"image": "if_happy.png"
+			},
+			{
+				"caption": "Joy",
+				"image": "if_joy.png"
+			},
+			{
+				"caption": "Love",
+				"image": "if_love.png"
+			},
+			{
+				"caption": "Sad",
+				"image": "if_sad.png"
+			},
+			{
+				"caption": "Shy",
+				"image": "if_shy.png"
+			},
+			{
+				"caption": "Sleepy",
+				"image": "if_sleepy.png"
+			},
+			{
+				"caption": "Surprise",
+				"image": "if_surprise.png"
+			},
+			{
+				"caption": "Wink",
+				"image": "if_wink.png"
+			},
+			{
+				"caption": "Embarrass",
+				"image": "if_embarrass.png"
+			} ]
+	}
+}

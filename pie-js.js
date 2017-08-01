@@ -77,12 +77,21 @@
 		this.$elements = {};
 		this.layers = [];
 
-		// Встраиваем редактор
-		this.insertEditor();
+		// Инициализация дополнительных библиотек
+		this.utils = {
+			tabs: new pie.utils.Tabs(this),
+			template: new pie.utils.Template(this)
+		};
 
-		// Инициализация дополнительных библиотек после полноценного встраивания
-		this.basics = new pie.tabs.Basics(this, this.canvas);
-		this.text = new pie.tabs.Text(this, this.canvas);
+		// Встраиваем редактор
+		this._insertEditor();
+
+		// Инициализация библиотек вкладок (после полноценного встраивания)
+		this.tabs = {
+			basics: new pie.tabs.Basics(this),
+			text: new pie.tabs.Text(this),
+			stickers: new pie.tabs.Stickers(this)
+		};
 
 		// Записываем редактор в список
 		pie.list[this.id] = this;
@@ -90,8 +99,11 @@
 
 	// Функционал класса
 	pie.Editor.prototype = {
+		utils: {},
+		tabs: {},
+
 		// Встраивание редактора
-		insertEditor: function insertEditor() {
+		_insertEditor: function _insertEditor() {
 			// 
 			var $container = $(this.options.container || body),
 			    selectors = this.options.selectors || {};
@@ -99,7 +111,7 @@
 			// Работа с шаблоном по умолчанию
 			if (this.options.container !== undefined) {
 				// Считываем шаблон
-				var template = pie.utils.template.render(this, 'main.tpl', {});
+				var template = this.utils.template.render('main.tpl', {});
 
 				// Выводим данные шаблона
 				$container = $(template).appendTo(this.options.container);
@@ -117,7 +129,7 @@
 			this.canvas = new fabric.Canvas(this.$elements.canvas[0]);
 
 			// Загрузка содержимого табов
-			this.loadTabs();
+			this.utils.tabs.load();
 
 			// Загрузка списка слоёв
 			this.loadLayers();
@@ -126,60 +138,8 @@
 			this.setEvents();
 		},
 
-		// Вызов функции
-		callTabFunction: function callTabFunction(tab, functionName, data) {
-			if (this.hasOwnProperty(tab) && this[tab][functionName] !== undefined) {
-				return this[tab][functionName].apply(this[tab], data);
-			}
-		},
-
-		// Загрузка содержимого табов
-		loadTabs: function loadTabs() {
-			var context = this;
-
-			// Запрашиваем параметры табов
-			this.getConfig('tabs', function (data) {
-				var $sidebar = context.$elements.sidebar;
-
-				// Вызов события загрузки вкладки в нужном модуле
-				for (var i in data) {
-					data[i] = context.callTabFunction(i, 'loadTab', [data[i]]);
-				}
-
-				// Считываем шаблон
-				var html = pie.utils.template.render(context, 'sidebar.tpl', { 'tabs': data });
-
-				// Выводим данные шаблона
-				$sidebar.html(html).on('click', '#navigation a', function (event) {
-					var targetTab = $(this).data('target-tab');
-
-					// Перебираем навигацию
-					$sidebar.find('#navigation li').each(function (index, element) {
-						var $element = $(element);
-
-						// $element.toggleClass( $element.attr( 'id' ) === targetTab );
-					});
-
-					// Перебираем табы
-					$sidebar.find('#tabs .tab').each(function (index, element) {
-						var $element = $(element);
-
-						// Вызов события загрузки вкладки в нужном модуле
-						if ($element.attr('id') === targetTab) {
-							context.callTabFunction(targetTab, 'activateTab', [$element]);
-						} else {
-							context.callTabFunction(targetTab, 'deactivateTab', [$element]);
-						}
-
-						// Отображение/скрытие вкладок
-						$element.toggle($element.attr('id') === targetTab);
-					});
-				});
-			});
-		},
-
 		// Получение настроек
-		getConfig: function getConfig(config, callback) {
+		_getConfig: function _getConfig(config, callback) {
 			// Запрашиваем параметры табов
 			$.ajax({
 				url: './config/' + config + '.json',
@@ -194,14 +154,57 @@
 		setEvents: function setEvents() {
 			var context = this;
 
-			// Добавление объекта
-			this.canvas.on({ 'object:added': function objectAdded() {
+			// События генерируемы fabricJS		
+			this.canvas.on({
+				// Добавление объекта
+				'object:added': function objectAdded() {
 					context.loadLayers();
 				},
 				// Удаления объекта
 				'object:removed': function objectRemoved() {
 					context.loadLayers();
-				} });
+				}
+			});
+
+			// События браузера
+			// https://stackoverflow.com/questions/24733030/fabric-js-moving-image-with-keyboard
+			// 
+			document.onkeydown = function (event) {
+				var activeObject = context.canvas.getActiveObject();
+
+				//
+				if (activeObject === undefined) {
+					return false;
+				}
+
+				//
+				switch (event.keyCode) {
+					/* Up arrow */
+					case 38:
+						activeObject.top -= 5;
+						context.canvas.renderAll();
+						break;
+					/* Down arrow  */
+					case 40:
+						activeObject.top += 5;
+						context.canvas.renderAll();
+						break;
+					/* Left arrow  */
+					case 37:
+						activeObject.left -= 5;
+						context.canvas.renderAll();
+						break;
+					/* Right arrow  */
+					case 39:
+						activeObject.left += 5;
+						context.canvas.renderAll();
+						break;
+					/* Delete */
+					case 46:
+						activeObject.remove();
+						break;
+				}
+			};
 		},
 
 		// Список объектов на канве
@@ -219,7 +222,7 @@
 			}
 
 			// Считываем шаблон
-			var template = pie.utils.template.render(this, 'layers.tpl', { 'layers': this.layers });
+			var template = this.utils.template.render('layers.tpl', { 'layers': this.layers });
 
 			// Выводим данные шаблона
 			return this.$elements.layers.html(template);
@@ -227,12 +230,12 @@
 
 		// 
 		getSelected: function getSelected() {
-			return this.canvas.getActiveObject();
+			return this.activeObject;
 		},
 
 		//
 		getActiveStyle: function getActiveStyle(styleName, object) {
-			object = object || this.canvas.getActiveObject();
+			object = object || this.activeObject;
 			if (!object) return '';
 
 			return object.getSelectionStyles && object.isEditing ? object.getSelectionStyles()[styleName] || '' : object[styleName] || '';
@@ -240,7 +243,7 @@
 
 		//
 		setActiveStyle: function setActiveStyle(styleName, value, object) {
-			object = object || this.canvas.getActiveObject();
+			object = object || this.activeObject;
 			if (!object) return;
 
 			if (object.setSelectionStyles && object.isEditing) {
@@ -259,7 +262,7 @@
 
 		//
 		getActiveProp: function getActiveProp(name) {
-			var object = this.canvas.getActiveObject();
+			var object = this.activeObject;
 			if (!object) return '';
 
 			return object[name] || '';
@@ -267,7 +270,7 @@
 
 		//
 		setActiveProp: function setActiveProp(name, value) {
-			var object = this.canvas.getActiveObject();
+			var object = this.activeObject;
 			if (!object) return;
 
 			object.set(name, value).setCoords();
@@ -290,9 +293,9 @@
 	}
 
 	//
-	pie.tabs.Basics = function (editor, canvas) {
+	pie.tabs.Basics = function (editor) {
 		this.editor = editor;
-		this.canvas = canvas;
+		this.canvas = editor.canvas;
 		this.tab = undefined;
 	};
 
@@ -379,9 +382,9 @@
 	}
 
 	//
-	pie.tabs.Text = function (editor, canvas) {
+	pie.tabs.Text = function (editor) {
 		this.editor = editor;
-		this.canvas = canvas;
+		this.canvas = editor.canvas;
 		this.tab = undefined;
 	};
 
@@ -416,9 +419,9 @@
 			var context = this;
 
 			// Запрашиваем шрифты
-			this.editor.getConfig('fonts', function (data) {
+			this.editor._getConfig('fonts', function (data) {
 				var fontList = [],
-				    fontGroups = [],
+				    fontCategories = {},
 				    webFontList = [];
 
 				for (var i in data) {
@@ -431,15 +434,20 @@
 					var items = data[i].items;
 
 					// Группы шрифтов
-					fontGroups[i] = data[i].caption || i;
+					fontCategories[i] = data[i].caption || i;
 
 					// Шрифты
-					fontList = fontList.concat(items);
+					for (var j in items) {
+						fontList.push({ font: items[j].font,
+							caption: items[j].caption,
+							action: 'addText',
+							arguments: items[j].caption });
+					}
 
 					// Записываем web шрифты
 					for (var j in items) {
-						if (items[j].font === '' && items[j].name !== '') {
-							webFontList.push(items[j].name);
+						if (items[j].font === '' && items[j].caption !== '') {
+							webFontList.push(items[j].caption);
 						}
 					}
 				}
@@ -450,10 +458,10 @@
 				}
 
 				// Формируем шаблон
-				var fontsHTML = pie.utils.template.render(context, 'tabs/text-fonts.tpl', { 'fonts': fontList });
+				var fontsHTML = context.editor.utils.template.render('tabs/text.tpl', { 'categories': fontCategories, 'fonts': fontList });
 
 				// Применяем шаблон
-				context.tab.find('#fonts').html(fontsHTML);
+				context.tab.html(fontsHTML);
 			});
 		},
 
@@ -470,17 +478,17 @@
 		},
 
 		//
-		addText: function addText() {
+		addText: function addText(fontFamily) {
 			var text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' + 'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
 
 			// 
-			var textSample = new fabric.Textbox(text.slice(0, getRandomInt(0, text.length)), {
+			var textSample = new fabric.Textbox(text, {
 				fontSize: 20,
-				left: getRandomInt(350, 400),
-				top: getRandomInt(350, 400),
-				fontFamily: 'helvetica',
-				angle: getRandomInt(-10, 10),
-				fill: '#' + getRandomColor(),
+				left: Math.random(400),
+				top: Math.random(400),
+				fontFamily: fontFamily,
+				angle: Math.random(10),
+				fill: '#2196f3',
 				fontWeight: '',
 				originX: 'left',
 				width: 300,
@@ -499,18 +507,117 @@
 	var pie = global.pie = global.pie || {};
 
 	//
+	if (!pie.tabs) {
+		pie.tabs = {};
+	}
+	if (pie.tabs.Stickers) {
+		console.warn('pie.tabs.stickers is already defined.');return;
+	}
+
+	//
+	pie.tabs.Stickers = function (editor) {
+		this.editor = editor;
+		this.canvas = editor.canvas;
+		this.tab = undefined;
+	};
+
+	//
+	pie.tabs.Stickers.prototype = {
+		// Загрузка таба
+		loadTab: function loadTab(data) {
+			return data;
+		},
+
+		// Активация таба
+		activateTab: function activateTab($tab, data) {
+			this.tab = $tab;
+
+			// Загружаем в память список шрифтов
+			this._loadStickerList();
+
+			// Навешиваем события
+			this.tab.on('click', '#fonts li', function () {});
+
+			//
+			return data;
+		},
+
+		//
+		deactivateTab: function deactivateTab() {},
+
+		// Загрузка шрифтов
+		_loadStickerList: function _loadStickerList() {
+			var category = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+			var context = this;
+
+			// Запрашиваем шрифты
+			this.editor._getConfig('stickers', function (data) {
+				var stickerList = [],
+				    stickerCategories = {};
+
+				for (var i in data) {
+					// Пропуск ненужных блоков
+					if (category !== '' && category !== 'all' && category !== i) {
+						continue;
+					}
+
+					//
+					var items = data[i].items;
+
+					// Категории 
+					stickerCategories[i] = data[i].caption || i;
+
+					// 
+					for (var j in items) {
+						stickerList.push({ caption: items[j].caption,
+							image: 'packs/stickers/' + i + '/' + items[j].image,
+							action: 'addImage',
+							arguments: './packs/stickers/' + i + '/' + items[j].image });
+					}
+
+					// stickerList = stickerList.concat( items );
+				}
+
+				// Формируем шаблон
+				var stickersHTML = context.editor.utils.template.render('tabs/stickers.tpl', { 'categories': stickerCategories, 'stickers': stickerList });
+
+				// Применяем шаблон
+				context.tab.html(stickersHTML);
+			});
+		},
+
+		// Добавление изображения
+		addImage: function addImage(image) {
+			var context = this;
+
+			fabric.Image.fromURL(image, function (oImg) {
+				context.canvas.add(oImg);
+			});
+		}
+	};
+})(window);
+(function (global) {
+	'use strict';
+
+	var pie = global.pie = global.pie || {};
+
+	//
 	if (!pie.utils) {
 		pie.utils = {};
 	}
-	if (pie.utils.template) {
+	if (pie.utils.Template) {
 		console.warn('pie.utils.template is already defined.');return;
 	}
 
 	//
-	pie.utils.template = {
+	pie.utils.Template = function (editor) {
+		this.editor = editor;
+	};
+	pie.utils.Template.prototype = {
 		// Отрисовка шаблона
-		render: function render(editor, template, data) {
-			return nunjucks.render(template, $.extend(data, { 'id': editor.id }));
+		render: function render(template, data) {
+			return nunjucks.render(template, $.extend(data, { 'id': this.editor.id }));
 		}
 	};
 })(window);
@@ -542,7 +649,7 @@
 
 			// Считываем шаблон
 			var context = this,
-			    template = pie.utils.template.render(editor, 'panels/' + tpl + '.tpl', data);
+			    template = editor.utils.template.render('panels/' + tpl + '.tpl', data);
 
 			//
 			this.element = $(this.selector);
@@ -579,61 +686,96 @@
 	if (!pie.utils) {
 		pie.utils = {};
 	}
-	if (pie.utils.tabs) {
+	if (pie.utils.Tabs) {
 		console.warn('pie.utils.tabs is already defined.');return;
 	}
 
-	// Навешивание на изменение элементов
-	pie.utils.tabs = {
+	//
+	pie.utils.Tabs = function (editor) {
+		this.editor = editor;
+	};
+	pie.utils.Tabs.prototype = {
 		// Загрузка содержимого табов
-		load: function load(selector) {
+		load: function load() {
 			var context = this;
 
 			// Запрашиваем параметры табов
-			this.getConfig('tabs', function (data) {
-				var $sidebar = $(selector || '#sidebar');
-
+			this.editor._getConfig('tabs', function (config) {
 				// Вызов события загрузки вкладки в нужном модуле
-				for (var i in data) {
-					data[i] = context.callTabFunction(i, 'loadTab', [data[i]]);
+				// @todo: Здесь нужно фильтровать вкладки в зависимости от настроек редактора
+				var data = {};
+				for (var i in config) {
+					data[i] = context._callFunction(i, 'loadTab', [config[i]]);
 				}
 
 				// Считываем шаблон
-				var html = pie.utils.template.render(context, 'sidebar.tpl', { 'tabs': data });
+				var sidebarTemplate = context.editor.utils.template.render('sidebar.tpl', { 'tabs': data });
+
+				//
+				var $sidebar = context.editor.$elements.sidebar;
 
 				// Выводим данные шаблона
-				$sidebar.html(html).on('click', '#navigation a', function (event) {
-					var targetTab = $(this).data('target-tab');
+				$sidebar.html(sidebarTemplate).on('click', '#navigation a[pie-target-tab]', function (event) {
+					context._onTabClick(this, event);
+				});
 
-					// Перебираем навигацию
-					$sidebar.find('#navigation li').each(function (index, element) {
-						var $element = $(element);
-
-						// $element.toggleClass( $element.attr( 'id' ) === targetTab );
-					});
-
-					// Перебираем табы
-					$sidebar.find('#tabs .tab').each(function (index, element) {
-						var $element = $(element);
-
-						// Вызов события загрузки вкладки в нужном модуле
-						if ($element.attr('id') === targetTab) {
-							context.callTabFunction(targetTab, 'activateTab', [$element]);
-						} else {
-							//
-							$element.off();
-
-							// 
-							context.callTabFunction(targetTab, 'deactivateTab', [$element]);
-						}
-
-						// Отображение/скрытие вкладок
-						$element.toggle($element.attr('id') === targetTab);
-					});
+				// Обработка клика по функции
+				$sidebar.find('#tabs').on('click', '.tab a[pie-action]', function (event) {
+					context._onTabItemClick(this, event);
 				});
 			});
-		}
+		},
 
+		// Переключением табов
+		_onTabClick: function _onTabClick(target, event) {
+			var context = this,
+			    $sidebar = this.editor.$elements.sidebar;
+
+			var targetTab = $(target).attr('pie-target-tab');
+
+			// Перебираем навигацию
+			$sidebar.find('#navigation a[pie-target-tab]').each(function (index, element) {
+				var $element = $(element);
+
+				// $element.toggleClass( $element.attr( 'id' ) === targetTab );
+			});
+
+			// Перебираем табы
+			$sidebar.find('#tabs .tab').each(function (index, element) {
+				var $element = $(element);
+
+				// Вызов события загрузки вкладки в нужном модуле
+				if ($element.attr('pie-tab') === targetTab) {
+					context._callFunction(targetTab, 'activateTab', [$element]);
+				} else {
+					//
+					$element.off();
+
+					// Вызов функции деактивации вкладки
+					context._callFunction(targetTab, 'deactivateTab', [$element]);
+				}
+
+				// Отображение/скрытие вкладок
+				$element.toggle($element.attr('pie-tab') === targetTab);
+			});
+		},
+
+		// Выбор пункта действия
+		_onTabItemClick: function _onTabItemClick(target, event) {
+			var targetTab = $(target).parents('.tab').attr('pie-tab'),
+			    action = $(target).attr('pie-action'),
+			    args = $(target).attr('pie-arguments');
+
+			// Вызываем функцию
+			this._callFunction(targetTab, action, [].concat(args));
+		},
+
+		// Вызов функции из "таба"
+		_callFunction: function _callFunction(tab, functionName, data) {
+			if (this.editor.tabs.hasOwnProperty(tab) && this.editor.tabs[tab][functionName] !== undefined) {
+				return this.editor.tabs[tab][functionName].apply(this.editor.tabs[tab], data);
+			}
+		}
 	};
 })(window);
 (function (global) {
