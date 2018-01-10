@@ -23,7 +23,8 @@
 		// Инициализация дополнительных библиотек
 		this.utils = {
 			tabs: new pie.utils.Tabs( this ),
-			template: new pie.utils.Template( this )
+			template: new pie.utils.Template( this ),
+			layers: new pie.utils.Layers( this ),
 		};
 		
 		// Встраиваем редактор
@@ -161,23 +162,7 @@
 		// http://jsfiddle.net/rodrigopandini/BGgDg/5/
 		loadLayers: function( )
 		{
-			// Очищаем массив слоёв
-			this.layers = [ ];
-			
-			// Считываем текущие объекты
-			let objects = this.canvas.getObjects( );
-			
-			// Формируем новый список слоёв
-			for( var i in objects )
-			{
-				this.layers.push( { name: objects[ i ].cacheKey, object: objects[ i ] } );
-			}
-					
-			// Считываем шаблон
-			let template = this.utils.template.render( 'layers.tpl', { 'layers': this.layers } );
-
-			// Выводим данные шаблона
-			return this.$elements.layers.html( template );
+			return this.utils.layers.load( );
 		},
 		
 		// 

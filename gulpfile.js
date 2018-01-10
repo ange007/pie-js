@@ -17,7 +17,7 @@ var gulp = require( 'gulp' ),
 	concat = require( 'gulp-concat' ),
 	uglify = require( 'gulp-uglify' ),
 	sass = require( 'gulp-sass' ),
-	cssmin = require( 'gulp-minify-css' ),
+	cssmin = require( 'gulp-clean-css' ),
 	postcss = require( 'gulp-postcss' ),
 	babel = require( 'gulp-babel' ),
 	nunjucks = require( 'gulp-nunjucks' ),
@@ -123,9 +123,9 @@ gulp.task( 'js:build', function( )
     return gulp.src( paths.src.js + 'main.js')
 				.pipe( debug( { title: 'js:' } ) ) // Вывод пофайлового лога
 				.pipe( rigger( ) ) // Подстановка исходного кода файлов на место переменных
-				.pipe( header( banner, { pkg : pkg } ) ) // Установка хидера
-				.pipe( babel( {	presets: [ 'es2015' ] } ) )
 				.pipe( gulpif( bundle.compress, uglify( { mangle: true, compress: false } ) ) ) //
+				.pipe( header( banner, { pkg : pkg } ) ) // Установка хидера
+				.pipe( babel( {	presets: [ 'env' ] } ) ) // Преобразовываем
 				.pipe( rename( fileName ) ) // Переименовываем
 				.pipe( gulp.dest( path ) );
 } );
@@ -142,8 +142,8 @@ gulp.task( 'scss:build', function( )
 				.pipe( debug( { title: 'scss:' } ) ) // Вывод пофайлового лога
 				.pipe( sass( { errLogToConsole: true } ) ) // Компилируем SCSS файлы
 				.pipe( postcss( [ autoprefixer( ) ] ) ) // Добавим префиксы
+				.pipe( concat( fileName + bundle.fileSuffix + '.css' ) ) // Собираем
 				.pipe( gulpif( bundle.compress, cssmin( ) ) ) // Сжимаем
-				.pipe( concat( fileName + bundle.fileSuffix + '.css' ) ) // Переименовываем
 				.pipe( gulp.dest( path ) );
 } );
 

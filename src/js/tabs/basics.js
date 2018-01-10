@@ -42,12 +42,15 @@
 		showBackgroundColor: function( )
 		{
 			var	context = this,
-				modal = pie.utils.panels.show( this.editor, 'basics', { title: 'Выбор цвета', type: 'color' } );
+				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Выбор цвета', type: 'color' } );
 
 			// Устанавливаем двухстороннюю связь
-			pie.utils.binding.bind( this.canvas, modal, [ this.canvas.renderAll.bind( this.canvas ) ], function( element, propName, value )
+			$( panel ).myData( this.canvas, function( type, element, propName, value ) 
 			{
-				
+				if( type === 'set' )
+				{
+					context.canvas.renderAll.bind( context.canvas )( );
+				}
 			} );
 		},
 
@@ -70,11 +73,11 @@
 		showResize: function( )
 		{
 			var	context = this,
-				modal = pie.utils.panels.show( this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth( ), height: this.canvas.getHeight( ) } );
+				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth( ), height: this.canvas.getHeight( ) } );
 
-			// 
-			pie.utils.binding.bind( context.canvas, modal, function( )
-			{
+			// Устанавливаем двухстороннюю связь
+			$( panel ).myData( this.canvas, function( type, element, propName, value ) 
+			{ 
 				
 			} );
 

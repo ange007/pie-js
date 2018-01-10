@@ -56,4 +56,4 @@
 //= utils/template.js
 //= utils/panels.js
 //= utils/tabs.js
-//= utils/binding.js
+//= utils/layers.js

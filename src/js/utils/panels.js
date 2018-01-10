@@ -45,13 +45,13 @@
 			{
 				return;
 			}
+
+			// Обрываем двухстороннюю связь
+			$( this.element ).myData( 'destroy' );
 			
 			// Снимаем прослушку событий и скрываем
 			this.element.off( )
 						.hide( );
-				
-			// Обрываем двухстороннюю связь
-			pie.utils.binding.unbind( this.element );
 				
 			// Удаляем ссылку на элемент
 			delete this.element;
