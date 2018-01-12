@@ -8,26 +8,14 @@
 	if( pie.tabs.Text ) { console.warn( 'pie.tabs.text is already defined.' );	return; }
 	
 	//
-	pie.tabs.Text = function( editor ) 
+	pie.tabs.Text = 
+	class Text extends pie.utils.BasicTab
 	{
-		this.editor = editor;
-		this.canvas = editor.canvas;
-		this.tab = undefined;
-	};
-
-	//
-	pie.tabs.Text.prototype = 
-	{
-		// Загрузка таба
-		loadTab: function( data )
-		{
-			return data;
-		},
-
 		// Активация таба
-		activateTab: function( $tab, data )
+		activateTab( $tab, data )
 		{
-			this.tab = $tab;
+			// Вызов родителя
+			super.activateTab( $tab, data );
 
 			// Загружаем в память список шрифтов
 			this.loadFontList( );
@@ -40,16 +28,10 @@
 
 			//
 			return data;
-		},
-
-		//
-		deactivateTab: function( )
-		{
-
-		},
+		}
 
 		// Загрузка шрифтов
-		loadFontList: function( category = '' )
+		loadFontList( category = '' )
 		{
 			let context = this;
 
@@ -105,10 +87,10 @@
 				// Применяем шаблон
 				context.tab.html( fontsHTML );
 			} );
-		},
+		}
 
 		// Использование Web шрифтов
-		loadWebFont: function( fonts )
+		loadWebFont( fonts )
 		{
 			// Удаляем старые подключенные шрифты
 			$( 'head' ).find( 'link[name="g-fonts"]' ).remove( );
@@ -118,10 +100,10 @@
 
 			// <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
 			// https://fonts.googleapis.com/css?family=Indie+Flower|Pacifico|Gloria+Hallelujah|Shadows+Into+Light|Dancing+Script|Amatic+SC|Architects+Daughter|Yellowtail|Courgette|Satisfy|Kaushan+Script|Permanent+Marker|Cookie|Great+Vibes|Kalam|Handlee|Bad+Script
-		},
+		}
 
 		//
-		addText: function( fontFamily )
+		addText( fontFamily )
 		{
 			var text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
 						'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';

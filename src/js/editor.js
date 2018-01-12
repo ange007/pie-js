@@ -8,47 +8,44 @@
 	let pie = global.pie = global.pie || { };
 	
 	// Основной класс
-	pie.Editor = function( options ) 
+	pie.Editor =
+	class Editor 
 	{
-		// Генерируем уникальный ключ
-		this.id = Math.random( ).toString( 36 ).replace( /[^a-z]+/g, '' ).substr( 0, 5 );
-		
-		// Считываем параметры
-		this.options = $.extend( true, pie.defaultOptions, options );
+		constructor( options ) 
+		{
+			// Генерируем уникальный ключ
+			this.id = Math.random( ).toString( 36 ).replace( /[^a-z]+/g, '' ).substr( 0, 5 );
 
-		// Дополнительные переменные
-		this.$elements = { };
-		this.layers = [ ];
-		
-		// Инициализация дополнительных библиотек
-		this.utils = {
-			tabs: new pie.utils.Tabs( this ),
-			template: new pie.utils.Template( this ),
-			layers: new pie.utils.Layers( this ),
-		};
-		
-		// Встраиваем редактор
-		this._insertEditor( );
-		
-		// Инициализация библиотек вкладок (после полноценного встраивания)
-		this.tabs = {
-			basics: new pie.tabs.Basics( this ),
-			text: new pie.tabs.Text( this ),
-			stickers: new pie.tabs.Stickers( this )
-		};
-		
-		// Записываем редактор в список
-		pie.list[ this.id ] = this;
-	};
-	
-	// Функционал класса
-	pie.Editor.prototype = 
-	{
-		utils: { },
-		tabs: { },
-		
+			// Считываем параметры
+			this.options = $.extend( true, pie.defaultOptions, options );
+
+			// Дополнительные переменные
+			this.$elements = { };
+			this.layers = [ ];
+
+			// Инициализация дополнительных библиотек
+			this.utils = {
+				tabs: new pie.utils.Tabs( this ),
+				template: new pie.utils.Template( this ),
+				layers: new pie.utils.Layers( this )
+			};
+
+			// Встраиваем редактор
+			this._insertEditor( );
+
+			// Инициализация библиотек вкладок (после полноценного встраивания)
+			this.tabs = {
+				basics: new pie.tabs.Basics( this ),
+				text: new pie.tabs.Text( this ),
+				stickers: new pie.tabs.Stickers( this )
+			};
+
+			// Записываем редактор в список
+			pie.list[ this.id ] = this;
+		}
+
 		// Встраивание редактора
-		_insertEditor: function( )
+		_insertEditor( )
 		{
 			// 
 			let $container = $( this.options.container || body ),
@@ -83,10 +80,10 @@
 			
 			// Устанавливаем обработчики событий
 			this.setEvents( );
-		},
+		}
 						
 		// Получение настроек
-		_getConfig: function( config, callback )
+		_getConfig( config, callback )
 		{
 			// Запрашиваем параметры табов
 			$.ajax( { 
@@ -94,10 +91,19 @@
 				dataType: 'json',
 				success: function( data ) { callback( data ); }
 			} );
-		},
+		}
+		
+		//
+		_saveToFile( fileName, content )
+		{
+			var link = document.createElement( 'a' );
+				link.href = content;
+				link.download = fileName;
+				link.click( );
+		}
 		
 		// Установка событий
-		setEvents: function( )
+		setEvents( )
 		{
 			const context = this;
 			
@@ -121,58 +127,120 @@
 				//
 				if( activeObject === undefined )
 				{
-					return false;
+					return;
 				}
 				
 				//
 				switch( event.keyCode ) 
 				{
-					/* Up arrow */
+					// Up arrow
 					case 38:
 						activeObject.top -= movementDelta;
 						break;
-					/* Down arrow  */	
+					// Down arrow	
 					case 40:
 						activeObject.top += movementDelta;
 						break;
-					/* Left arrow  */	
+					// Left arrow	
 					case 37:
 						activeObject.left -= movementDelta;
 						break;
-					/* Right arrow  */
+					// Right arrow
 					case 39:
 						activeObject.left += movementDelta;
 						break;
-					 /* Delete */
+					// Delete
 					case 46:
-						activeObject.remove( );
+						context.utils.layers.remove( null, activeObject );
 						break;
 				}
 				
 				//
-				if( [ 37, 38, 39, 40, 46 ].indexOf( event.keyCode ) >= 0 )
+				if( [ 37, 38, 39, 40 ].indexOf( event.keyCode ) >= 0 )
 				{
 					event.preventDefault( );	
 					context.canvas.renderAll( );
 				}
 			};
-		},
+		}
 		
 		// Список объектов на канве
 		// http://jsfiddle.net/rodrigopandini/BGgDg/5/
-		loadLayers: function( )
+		loadLayers( )
 		{
 			return this.utils.layers.load( );
-		},
+		}
+		
+		// Сохранение изображения
+		save( format )
+		{	
+			if( !fabric.Canvas.supports( 'toDataURL' ) ) 
+			{
+				alert( 'This browser doesn\'t provide means to serialize canvas to an image' );
+			}
+			else 
+			{
+				let format = format || 'png';
+								
+				// Убираем выделения и обновляем канву
+				this.canvas.deactivateAll( )
+							.renderAll( );
+				
+				// Сохранение в SVG
+				if( format === 'svg' )
+				{
+					let SVGString = this.canvas.toSVG( );
+					
+					this._saveToFile( this.id + '.' + format, 'data:text/plain;charset=utf-8;base64,' + btoa( unescape( encodeURIComponent( SVGString ) ) ) );
+				}
+				else
+				{
+					let imageString = canvas.toDataURL( { format: format, quality: 0.8 } );
+					
+					this._saveToFile( this.id + '.' + format, imageString );
+				}
+			}
+		}
+		
+		// Экспорт
+		exportToJSON( )
+		{
+			var jsonData = JSON.stringify( this.canvas.toDatalessJSON( ) ); 
+
+			// Сохраняем файл
+			this._saveToFile( this.id + '.json', 'data:text/plain;charset=utf-8;base64,' + btoa( jsonData ) );
+		}
+
+		// Импорт
+		importFromJSON( json )
+		{
+			let context = this;
+			
+			fabric.loadSVGFromString( json , function( objects, options ) 
+			{
+				let obj = fabric.util.groupSVGElements( objects, options );
+				
+				// Добавляем объект
+				context.canvas.add( obj )
+								.centerObject( obj );
+					
+				// Устанавливаем координаты
+				obj.setCoords( );
+				
+				// Расчитыываем и отрисовываем
+				context.canvas.calcOffset( );
+				context.canvas.renderAll( );
+			} ); 
+		}
 		
 		// 
-		getSelected: function( ) 
+		getSelected( ) 
 		{
 			return this.activeObject;
-		},
+		}
 
 		//
-		getActiveStyle: function( styleName, object )
+		getActiveStyle( styleName, object )
 		{
 			object = object || this.activeObject;
 			if( !object ) return '';
@@ -180,10 +248,10 @@
 			return ( object.getSelectionStyles && object.isEditing )
 					? ( object.getSelectionStyles( )[ styleName ] || '')
 					: ( object[ styleName ] || '' );
-		},
+		}
 
 		//
-		setActiveStyle: function( styleName, value, object )
+		setActiveStyle( styleName, value, object )
 		{
 			object = object || this.activeObject;
 			if( !object ) return;
@@ -203,19 +271,19 @@
 
 			object.setCoords( );
 			this.canvas.renderAll( );
-		},
+		}
 
 		//
-		getActiveProp: function( name ) 
+		getActiveProp( name ) 
 		{
 			var object = this.activeObject;
 			if( !object ) return '';
 
 			return object[ name ] || '';
-		},
+		}
 
 		//
-		setActiveProp: function( name, value ) 
+		setActiveProp( name, value ) 
 		{
 			var object = this.activeObject;
 			if( !object ) return;
@@ -225,6 +293,5 @@
 			
 			this.canvas.renderAll( );
 		}
-	};
-	
+	};	
 } )( window );

@@ -8,27 +8,15 @@
 	if( pie.tabs.Stickers ) { console.warn( 'pie.tabs.stickers is already defined.' );	return; }
 	
 	//
-	pie.tabs.Stickers = function( editor ) 
+	pie.tabs.Stickers = 
+	class Stickers extends pie.utils.BasicTab
 	{
-		this.editor = editor;
-		this.canvas = editor.canvas;
-		this.tab = undefined;
-	};
-
-	//
-	pie.tabs.Stickers.prototype = 
-	{
-		// Загрузка таба
-		loadTab: function( data )
-		{
-			return data;
-		},
-
 		// Активация таба
-		activateTab: function( $tab, data )
+		activateTab( $tab, data )
 		{
-			this.tab = $tab;
-
+			// Вызов родителя
+			super.activateTab( $tab, data );
+			
 			// Загружаем в память список шрифтов
 			this._loadStickerList( );
 
@@ -40,16 +28,10 @@
 
 			//
 			return data;
-		},
-
-		//
-		deactivateTab: function( )
-		{
-
-		},
+		}
 
 		// Загрузка шрифтов
-		_loadStickerList: function( category = '' )
+		_loadStickerList( category = '' )
 		{
 			let context = this;
 
@@ -91,18 +73,25 @@
 				// Применяем шаблон
 				context.tab.html( stickersHTML );
 			} );
-		},
+		}
 		
 		// Добавление изображения
-		addImage: function( image )
+		addImage( image )
 		{
 			var context = this;
 
 			fabric.Image.fromURL( image, function( oImg ) 
 			{
-				context.canvas.add(oImg);
+				// 
+				oImg.left = Math.floor( Math.random( ) * ( context.canvas.getWidth( ) - oImg.width ) + 1 );
+				oImg.top = Math.floor( Math.random( ) * ( context.canvas.getHeight( ) - oImg.height ) + 1 );
+				
+				//
+				context.canvas.add( oImg );
+
+				// Отрисовываем изменения
+				context.canvas.renderAll( );
 			} );	
 		}
 	};
-
 } )( window );

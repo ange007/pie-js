@@ -8,38 +8,11 @@
 	if( pie.tabs.Basics ) { console.warn( 'pie.tabs.basics is already defined.' );	return; }
 
 	//
-	pie.tabs.Basics = function( editor ) 
+	pie.tabs.Basics =
+	class Basics extends pie.utils.BasicTab
 	{
-		this.editor = editor;
-		this.canvas = editor.canvas;
-		this.tab = undefined;
-	};
-
-	//
-	pie.tabs.Basics.prototype = 
-	{
-		// Загрузка таба
-		loadTab: function( data )
-		{		
-			return data;
-		},
-
-		// Активация таба
-		activateTab: function( $tab, data )
-		{
-			this.tab = $tab;
-
-			return data;
-		},
-
-		//
-		deactivateTab: function( )
-		{
-
-		},
-
 		// Окно выбора цвета
-		showBackgroundColor: function( )
+		showBackgroundColor( )
 		{
 			var	context = this,
 				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Выбор цвета', type: 'color' } );
@@ -52,25 +25,25 @@
 					context.canvas.renderAll.bind( context.canvas )( );
 				}
 			} );
-		},
+		}
 
 		// Окно выбора изображения
-		showBackgroundImage: function( )
+		showBackgroundImage( )
 		{
 
-		},
+		}
 
 		// Изображение на фоне
-		backgroundImage: function( image )
+		backgroundImage( image )
 		{
 			this.canvas.setBackgroundImage( image, this.canvas.renderAll.bind( this.canvas ), {
 				originX: 'left',
 				originY: 'top'
 			} );
-		}, 
+		}
 
 		//
-		showResize: function( )
+		showResize( )
 		{
 			var	context = this,
 				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth( ), height: this.canvas.getHeight( ) } );
@@ -84,35 +57,52 @@
 			// Событие
 			/*modal.on( 'change', 'input[type="number"][name="width"]', function( event ) { context.canvas.setWidth( event.target.value ); } );
 			modal.on( 'change', 'input[type="number"][name="height"]', function( event ) { context.canvas.setHeight( event.target.value ); } );*/
-		},
+		}
 
 		// 
-		showRound: function( )
+		showRound( )
 		{
 
-		},
+		}
 
 		// Загругление углов фона
-		rounded: function( )
+		rounded( )
 		{
 
-		},
+		}
 
 		// Окно выбора изображения
-		showAddImage: function( )
+		showAddImage( )
 		{
 
-		},
+		}
 
 		// Добавление изображения
-		addImage: function( image )
+		addImage( image )
 		{
 			var context = this;
 
 			fabric.Image.fromURL( image, function( oImg ) 
 			{
-				context.canvas.add(oImg);
+				context.canvas.add( oImg );
 			} );	
+		}
+		
+		//
+		save( format )
+		{
+			this.editor.save( format );
+		}
+
+		//
+		exportToJSON( )
+		{
+			this.editor.exportToJSON( );
+		}
+		
+		importFromJSON( json )
+		{
+			this.editor.importFromJSON( json );
 		}
 	};
 } )( window );

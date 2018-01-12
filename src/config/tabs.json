@@ -11,6 +11,18 @@
 			{
 				"caption": "Background color",
 				"action": "showBackgroundColor"
+			},
+			{
+				"caption": "Save",
+				"action": "save"
+			},
+			{
+				"caption": "Import",
+				"action": "importFromJSON"
+			},
+			{
+				"caption": "Export",
+				"action": "exportToJSON"
 			} ]
 	},
 	

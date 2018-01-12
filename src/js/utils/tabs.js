@@ -8,11 +8,17 @@
 	if( pie.utils.Tabs ) { console.warn( 'pie.utils.tabs is already defined.' ); return; }
 
 	//
-	pie.utils.Tabs = function( editor ) { this.editor = editor; };
-	pie.utils.Tabs.prototype = 
+	pie.utils.Tabs =
+	class Tabs 
 	{
+		//
+		constructor( editor ) 
+		{
+			this.editor = editor;
+		}
+		
 		// Загрузка содержимого табов
-		load: function( )
+		load( )
 		{
 			const context = this;
 
@@ -38,10 +44,10 @@
 				$sidebar.find( '#tabs' )
 						.on( 'click', '.tab a[pie-action]', function( event ) { context._onTabItemClick( this, event ); } );
 			} );
-		},
+		}
 		
 		// Переключением табов
-		_onTabClick: function( target, event )
+		_onTabClick( target, event )
 		{
 			const context = this,
 				$sidebar = this.editor.$elements.sidebar;
@@ -78,10 +84,10 @@
 				// Отображение/скрытие вкладок
 				$element.toggle( $element.attr( 'pie-tab' ) === targetTab );
 			} );
-		},
+		}
 		
 		// Выбор пункта действия
-		_onTabItemClick: function( target, event )
+		_onTabItemClick( target, event )
 		{
 			const targetTab = $( target ).parents( '.tab' ).attr( 'pie-tab' ),
 				action = $( target ).attr( 'pie-action' ),
@@ -89,10 +95,10 @@
 
 			// Вызываем функцию
 			this._callFunction( targetTab, action, [ ].concat( args ) );
-		},
+		}
 
 		// Вызов функции из "таба"
-		_callFunction: function( tab, functionName, data )
+		_callFunction( tab, functionName, data )
 		{
 			if( this.editor.tabs.hasOwnProperty( tab ) && this.editor.tabs[ tab ][ functionName ] !== undefined )
 			{
@@ -101,4 +107,35 @@
 		}
 	};
 
+	// Базовый класс таба
+	pie.utils.BasicTab =
+	class BasicTab
+	{
+		constructor( editor )
+		{
+			this.editor = editor;
+			this.canvas = editor.canvas;
+			this.tab = undefined;
+		}
+		
+		// Загрузка таба
+		loadTab( data )
+		{
+			return data;
+		}
+		
+		// Активация таба
+		activateTab( $tab, data )
+		{
+			this.tab = $tab;
+
+			return data;
+		}
+
+		//
+		deactivateTab( )
+		{
+			pie.utils.panels.hide( );
+		}
+	};
 } )( window );
