@@ -14,7 +14,7 @@
 		// Отрисовка шаблона
 		render: function( template, data )
 		{
-			return nunjucks.render( template, $.extend( data, { 'id': this.editor.id } ) );
+			return nunjucks.render( template, $.extend( data, { 'editorID': this.editor.id } ) );
 		}
 	};
 

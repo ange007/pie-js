@@ -18,25 +18,3 @@
 		{% endfor %}
 	</ul>
 </div>
-
-<div id="tabs" class="panel panel-default side-body">
-	<div class="panel-body">
-		{% for tabID, tab in tabs %}
-		<div class="tab" pie-tab="{{ tabID }}">
-			{% if tab.title|length > 0 %}	
-				<legend class="tab-title">{{ tab.title }}</legend>
-			{% endif %}
-
-			{% if tab.items|length > 0 %}
-				<ul class="nav nav-pills nav-stacked">
-					{% for item in tab.items %}
-						<li>
-							{% include 'tabs/' + tabID + '-item.tpl' %}
-						</li>
-					{% endfor %}
-				<ul>
-			{% endif %}
-		</div>
-		{% endfor %}
-	</div>
-</div>

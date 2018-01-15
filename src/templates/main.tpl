@@ -1,14 +1,25 @@
-<div id="editor" class="row" style="height: 100%;">
-	<div id="sidebar" class="col-md-3 row"></div>
+<div id="editor">	
+	
+	<div id="sidebar" class="col-md-1 row">
+		
+	</div>
+	
+	<div id="tab" class="col-md-2 row">
+		
+	</div>
+	
+	<div id="wrapper" class="col-md-7">
+		<div id="top-panel"></div>	
 
-	<div class="col-md-7" style="height: 100%;">
 		<div id="viewport">
 			<canvas id="canvas" width="500" height="300"></canvas>
+
+			<div id="ruler"></div>
 		</div>
 
-		<div id="panel"></div>	
+		<div id="bottom-panel"></div>	
 	</div>
-
+	
 	<div id="layers" class="col-md-2 row"></div>
 </div>
 
