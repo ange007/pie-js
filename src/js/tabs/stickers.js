@@ -78,20 +78,34 @@
 		// Добавление изображения
 		addImage( image )
 		{
-			var context = this;
+			let context = this,
+				parts = image.split( '/' ).pop( ).split( '.' ),
+				ext = parts.length > 1 ? parts.pop( ) : '';
 
-			fabric.Image.fromURL( image, function( oImg ) 
+			if( ext === 'svg' )
 			{
-				// 
-				oImg.left = Math.floor( Math.random( ) * ( context.canvas.getWidth( ) - oImg.width ) + 1 );
-				oImg.top = Math.floor( Math.random( ) * ( context.canvas.getHeight( ) - oImg.height ) + 1 );
-				
-				//
-				context.canvas.add( oImg );
+				fabric.loadSVGFromURL( image, function( objects, options )
+				{
+					var obj = fabric.util.groupSVGElements( objects, options );
+					
+					//
+					context.canvas.add( obj )
+									.renderAll( );
+				 } );
+			}
+			else
+			{
+				fabric.Image.fromURL( image, function( oImg ) 
+				{
+					// 
+					oImg.left = Math.floor( Math.random( ) * ( context.canvas.getWidth( ) - oImg.width ) + 1 );
+					oImg.top = Math.floor( Math.random( ) * ( context.canvas.getHeight( ) - oImg.height ) + 1 );
 
-				// Отрисовываем изменения
-				context.canvas.renderAll( );
-			} );	
+					//
+					context.canvas.add( oImg )
+									.renderAll( );
+				} );
+			}
 		}
 	};
 } )( window );

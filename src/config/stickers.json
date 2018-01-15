@@ -46,5 +46,13 @@
 				"caption": "Embarrass",
 				"image": "if_embarrass.png"
 			} ]
+	},
+	"words-svg": {
+		"caption": "Words", 
+		"items": 
+			[ {
+				"caption": "404",
+				"image": "404.svg"
+			} ]
 	}
 }

@@ -4,7 +4,8 @@
  *  Подключениемые модули 
  * * * * * * * * * * * * * */
 
-var gulp = require( 'gulp' ),
+var fs = require('fs'),
+	gulp = require( 'gulp' ),
 	gulpif = require( 'gulp-if' ),
 	rename = require( 'gulp-rename' ),
 	replace = require('gulp-replace'),
@@ -40,7 +41,8 @@ var paths =
 		main: './src/',
 		templates: './src/templates/',
 		js: './src/js/**/',
-		style: './src/scss/'
+		style: './src/scss/',
+		packs: './src/packs/',
 	},
 	
 	build: './build/'
@@ -106,6 +108,35 @@ gulp.task( 'js:build', function( )
 	// Основные параметры
 	var fileName = params.fileName + bundle.fileSuffix + '.js',
 		path = paths.build + bundle.mainPath;
+	
+	// Считываем директории и файлы
+	fs.readdir( paths.src.packs, function( err, items )
+	{
+		console.log( items );
+
+		for( var i = 0; i < items.length; i++ )
+		{
+			console.log( items[i] );
+		}
+	} );
+	
+	//
+	/*
+	fs.readdir( path, function( err, items )
+	{
+		for( var i = 0; i < items.length; i++ )
+		{
+			var file = path + '/' + items[i];
+			console.log( "Start: " + file );
+
+			fs.stat( file, function( err, stats )
+			{
+				console.log( file );
+				console.log( stats["size"] );
+			} );
+		}
+	} );
+	*/
 	
 	// Формируем заголовок для файла
 	var pkg = require( './package.json' ),
