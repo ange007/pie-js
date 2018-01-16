@@ -22,6 +22,8 @@
 		// Показываем модальное окно
 		show: function( editor, tpl, data )
 		{
+			console.log( 'show' );
+			
 			// Предварительно скрываем модалку
 			this.hide( );
 				
@@ -31,7 +33,7 @@
 			
 			//
 			this.element = $( this.selector );
-
+			
 			// Выводим данные шаблона
 			return this.element.html( template )
 								.show( )

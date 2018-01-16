@@ -10,19 +10,22 @@
 		<link href="./vendor/bootstrap/bootstrap-theme.min.css" rel="stylesheet" />
 		<link href="./bootstrap-side-menu.css" rel="stylesheet" />-->
 		<link href="./pie-js.css" rel="stylesheet" />
-		
+	</head>
+
+	<body>			
 		<script src="./vendor/zepto/zepto.min.js"></script>
 		<script src="./vendor/zepto/zepto.myData.min.js"></script>
+		<script> window.jQuery = window.Zepto;</script>
+		
+		<script src="./vendor/bootstrap/bootstrap.min.js"></script>
 		<script src="./vendor/fabric.min.js"></script>
 		<script src="./vendor/nunjucks-slim.min.js"></script>
 		<script src="./vendor/ruler/ruler.min.js"></script>
 		<script src="./templates.js"></script>
 		<script src="./pie-js.js"></script>
-	</head>
-
-	<body>		
+		
 		<script>
-			var pieCanvas = new pie.Editor( { 
+			let pieCanvas = new pie.Editor( { 
 				container: 'body' 
 			} );
 		</script>

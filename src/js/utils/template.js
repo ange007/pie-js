@@ -5,14 +5,19 @@
 
 	//
 	if( !pie.utils ) { pie.utils = { }; }
-	if( pie.utils.Template ) { console.warn( 'pie.utils.template is already defined.' );	return; }
+	if( pie.utils.Template ) { console.warn( 'pie.utils.Template is already defined.' );	return; }
 
 	//
-	pie.utils.Template = function( editor ) { this.editor = editor; };
-	pie.utils.Template.prototype =
+	pie.utils.Template = 
+	class Template
 	{
+		constructor( editor )
+		{
+			this.editor = editor;
+		}
+
 		// Отрисовка шаблона
-		render: function( template, data )
+		render( template, data )
 		{
 			return nunjucks.render( template, $.extend( data, { 'editorID': this.editor.id } ) );
 		}

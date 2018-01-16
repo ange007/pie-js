@@ -22,23 +22,18 @@
 			// Дополнительные переменные
 			this.$elements = { };
 			this.layers = [ ];
+			this.tabs = { };
 
 			// Инициализация дополнительных библиотек
 			this.utils = {
 				tabs: new pie.utils.Tabs( this ),
 				template: new pie.utils.Template( this ),
-				layers: new pie.utils.Layers( this )
+				layers: new pie.utils.Layers( this ),
+				toolbar: new pie.utils.Toolbar( this )
 			};
 
 			// Встраиваем редактор
 			this._insertEditor( );
-
-			// Инициализация библиотек вкладок (после полноценного встраивания)
-			this.tabs = {
-				basics: new pie.tabs.Basics( this ),
-				text: new pie.tabs.Text( this ),
-				stickers: new pie.tabs.Stickers( this )
-			};
 
 			// Записываем редактор в список
 			pie.list[ this.id ] = this;
@@ -64,8 +59,10 @@
 			//
 			this.$elements = {
 				sidebar: $container.find( this.options.container !== undefined ? '#sidebar' : selectors.sidebar ),
+				toolbar: $container.find( this.options.container !== undefined ? '#toolbar' : selectors.toolbar ),
 				layers: $container.find( this.options.container !== undefined ? '#layers' : selectors.layers ),
 				panel: $container.find( this.options.container !== undefined ? '#panel' : selectors.panel ),
+				tab: $container.find( this.options.container !== undefined ? '#tab' : selectors.tab ),
 				canvas: $container.find( this.options.container !== undefined ? 'canvas' : selectors.canvas )
 			};
 			
@@ -74,6 +71,9 @@
 			
 			// Загрузка содержимого табов
 			this.utils.tabs.load( );
+			
+			// Загрузка содержимого тулбара
+			this.utils.toolbar.load( );
 
 			// Загрузка списка слоёв
 			this.loadLayers( );
