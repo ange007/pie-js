@@ -107,7 +107,9 @@
 		{
 			const context = this;
 			
-			// События генерируемы fabricJS		
+			// События генерируемы fabricJS
+			// Позиционирование по центру https://stackoverflow.com/questions/43024617/snap-shape-to-center-with-fabricjs
+			// 
 			this.canvas.on( 
 			{ 
 				// Добавление объекта
