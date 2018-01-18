@@ -4,7 +4,9 @@
  *  Подключениемые модули 
  * * * * * * * * * * * * * */
 
-var fs = require('fs'),
+let fs = require( 'fs' ),
+	path = require( 'path' ),
+	async = require( 'async' ),
 	gulp = require( 'gulp' ),
 	gulpif = require( 'gulp-if' ),
 	rename = require( 'gulp-rename' ),
@@ -35,7 +37,7 @@ var params =
 };
 
 // Пути
-var paths = 
+var pathList = 
 {
 	src: { 
 		main: './src/',
@@ -66,6 +68,63 @@ var bundles =
 
 // Сборка по умолчанию
 var bundle = bundles[ 'dev' ];
+
+/* * * * * * * * * * * * * *
+ *  
+ * * * * * * * * * * * * * */
+
+function getFiles( dirPath, fileExt, type, readSubDir, callback )
+{
+	fs.readdir( dirPath, function( err, files )
+	{
+		if( err ) { return callback( err ); }
+		let filePaths = [ ];
+		
+		async.eachSeries( files, function( fileName, eachCallback )
+		{
+			let filePath = path.join( dirPath, fileName );
+
+			fs.stat( filePath, function( err, stat )
+			{
+				if( err ) { return eachCallback( err ); }
+
+				if( ( type === 'dir' || readSubDir ) && stat.isDirectory( ) )
+				{
+					if( type === 'dir' )
+					{
+						filePaths.push( filePath );
+						eachCallback( null );
+					}
+					
+					if( readSubDir )
+					{
+						getFiles( filePath, fileExt, type, readSubDir, function( err, subDirFiles )
+						{
+							if( err ) { return eachCallback( err ); }
+
+							filePaths = filePaths.concat( subDirFiles );
+							eachCallback( null );
+						} );
+					}
+				} 
+				else
+				{
+					if( type === 'file' && stat.isFile( ) && ( new RegExp( '\.' + fileExt + '$' ) ).test( filePath ) )
+					{
+						filePaths.push( filePath );
+					}
+
+					eachCallback( null );
+				}
+			} );
+		}, 
+		function( err )
+		{
+			callback( err, filePaths );
+		} );
+
+	} );
+}
 
 /* * * * * * * * * * * * * *
  * Задачи 
@@ -99,7 +158,7 @@ gulp.task( 'config:sync', function( )
 // Очищаем директорию сборки
 gulp.task( 'clean', function( )
 {  
-    return rimraf.sync( paths.build + '/**' );
+    return rimraf.sync( pathList.build + '/**' );
 } );
 
 // Задача обработки скриптов библиотеки
@@ -107,18 +166,35 @@ gulp.task( 'js:build', function( )
 {
 	// Основные параметры
 	var fileName = params.fileName + bundle.fileSuffix + '.js',
-		path = paths.build + bundle.mainPath;
+		path = pathList.build + bundle.mainPath,
+		stickersPath = pathList.src.packs + 'stickers';
 	
-	// Считываем директории и файлы
-	fs.readdir( paths.src.packs, function( err, items )
+	// Считываем стикеры
+	getFiles( stickersPath, '', 'dir', false, function( err, items )
 	{
 		console.log( items );
-
+		
 		for( var i = 0; i < items.length; i++ )
 		{
-			console.log( items[i] );
+			let item = items[i],
+				dirName = item.replace( /^(.*\/).[a-zA-Z0-9_-]+(?:(\/)|\w)$/g, '' );
+			
+			console.log( item + '----' + dirName  );
+			
+			getFiles( item, 'svg', 'file', false, function( err, items )
+			{
+				console.log( items );
+			} );
 		}
+		
+		// console.log( err || items );
 	} );
+	
+	//
+	/*fs.readdir( paths.src.packs + 'stickers', function( err, items )
+	{
+		if 
+	} );*/
 	
 	//
 	/*
@@ -151,7 +227,7 @@ gulp.task( 'js:build', function( )
 					'' ].join( '\n' );
 	
 	// Собираем файл
-    return gulp.src( paths.src.js + 'main.js')
+    return gulp.src( pathList.src.js + 'main.js')
 				.pipe( debug( { title: 'js:' } ) ) // Вывод пофайлового лога
 				.pipe( rigger( ) ) // Подстановка исходного кода файлов на место переменных
 				.pipe( gulpif( bundle.compress, uglify( { mangle: true, compress: false } ) ) ) //
@@ -164,9 +240,9 @@ gulp.task( 'js:build', function( )
 // Сборка SASS/SCSS
 gulp.task( 'scss:build', function( ) 
 { 
-	var target = paths.src.style + '**/**.scss',
+	var target = pathList.src.style + '**/**.scss',
 		fileName = params.fileName,
-		path = paths.build + bundle.mainPath;
+		path = pathList.build + bundle.mainPath;
 
 	// Собираем каркас
 	return gulp.src( target )
@@ -182,24 +258,24 @@ gulp.task( 'scss:build', function( )
 gulp.task( 'other:transfer', function( )
 {
 	//
-    gulp.src( [ paths.src.main + '**/*.*', 
-						'!' +  paths.src.main + '**/*.+(js|css|scss|tpl)',
-						'!' +  paths.src.main + 'vendor/**/*.*' ], { base: paths.src.main } )
-        .pipe( gulp.dest( paths.build ) );
+    gulp.src( [ pathList.src.main + '**/*.*', 
+						'!' +  pathList.src.main + '**/*.+(js|css|scss|tpl)',
+						'!' +  pathList.src.main + 'vendor/**/*.*' ], { base: pathList.src.main } )
+        .pipe( gulp.dest( pathList.build ) );
 
 	//
-    return gulp.src( [ paths.src.main + 'vendor/**/*.*' ], { base: paths.src.main } )
-        .pipe( gulp.dest( paths.build ) );
+    return gulp.src( [ pathList.src.main + 'vendor/**/*.*' ], { base: pathList.src.main } )
+        .pipe( gulp.dest( pathList.build ) );
 } );
 
 // Прекомпиляция шаблонов
 gulp.task( 'template:precompile', function( ) 
 { 
 	// Компилируем шаблоны
-	return gulp.src( paths.src.templates + '**/*.tpl', { base: paths.src.templates } )
+	return gulp.src( pathList.src.templates + '**/*.tpl', { base: pathList.src.templates } )
 			.pipe( nunjucks.precompile( { } ) )
 			.pipe( concat( 'templates.js' ) )
-			.pipe( gulp.dest( paths.build ) );
+			.pipe( gulp.dest( pathList.build ) );
 } );
 
 // Задача по сборке
@@ -227,9 +303,9 @@ gulp.task( 'default', function( )
 	 * Смотрители 
 	 * * * * * * * * * * * * * */
 
-	gulp.watch( paths.src.js + '/*.js', [ 'js:build' ] ),
-	gulp.watch( paths.src.style + '/**/*.scss', [ 'scss:build' ] );
-	gulp.watch( [ paths.src.templates + '**/*.tpl' ], [ 'template:precompile' ] );
-	gulp.watch( [ paths.src.main + '**/*.*', 
-				'!' +  paths.src.main + '**/*.+(js|css|scss)' ], [ 'other:transfer' ] );
+	gulp.watch( pathList.src.js + '/*.js', [ 'js:build' ] ),
+	gulp.watch( pathList.src.style + '/**/*.scss', [ 'scss:build' ] );
+	gulp.watch( [ pathList.src.templates + '**/*.tpl' ], [ 'template:precompile' ] );
+	gulp.watch( [ pathList.src.main + '**/*.*', 
+				'!' +  pathList.src.main + '**/*.+(js|css|scss)' ], [ 'other:transfer' ] );
 } );
