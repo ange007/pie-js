@@ -44,7 +44,7 @@ var pathList =
 		templates: './src/templates/',
 		js: './src/js/**/',
 		style: './src/scss/',
-		packs: './src/packs/',
+		packs: './src/packs/'
 	},
 	
 	build: './build/'
@@ -120,6 +120,7 @@ function getFiles( dirPath, fileExt, type, readSubDir, callback )
 		}, 
 		function( err )
 		{
+			console.log( 'getFiles:end' );
 			callback( err, filePaths );
 		} );
 
@@ -165,55 +166,41 @@ gulp.task( 'clean', function( )
 gulp.task( 'js:build', function( ) 
 {
 	// Основные параметры
-	var fileName = params.fileName + bundle.fileSuffix + '.js',
-		path = pathList.build + bundle.mainPath,
-		stickersPath = pathList.src.packs + 'stickers';
+	const fileName = params.fileName + bundle.fileSuffix + '.js',
+			path = pathList.build + bundle.mainPath,
+			stickersPath = pathList.src.packs + 'stickers';
+		
+	let stickersConfig = { };
 	
 	// Считываем стикеры
-	getFiles( stickersPath, '', 'dir', false, function( err, items )
+	getFiles( stickersPath, '', 'dir', false, function( err, dirs )
 	{
-		console.log( items );
+		console.log( dirs );
 		
-		for( var i = 0; i < items.length; i++ )
+		for( var i = 0; i < dirs.length; i++ )
 		{
-			let item = items[i],
-				dirName = item.replace( /^(.*\/).[a-zA-Z0-9_-]+(?:(\/)|\w)$/g, '' );
+			const item = dirs[ i ],
+				dirName = item.match( /(^.*)\/(.[a-zA-Z0-9_-]+)(?:(\/)|)$/ )[ 2 ];
 			
-			console.log( item + '----' + dirName  );
+			stickersConfig[ dirName ] = { 
+				'caption': '',
+				'items': [ ]
+			};
 			
-			getFiles( item, 'svg', 'file', false, function( err, items )
+			getFiles( item, 'svg', 'file', false, function( err, files )
 			{
-				console.log( items );
+				for( var j = 0; j < files.length; j++ )
+				{
+					const fileName = path.basename( files[ j ] );
+					
+					stickersConfig[ dirname ][ 'items' ].push( { 'image': fileName } );
+				}
 			} );
 		}
 		
 		// console.log( err || items );
 	} );
-	
-	//
-	/*fs.readdir( paths.src.packs + 'stickers', function( err, items )
-	{
-		if 
-	} );*/
-	
-	//
-	/*
-	fs.readdir( path, function( err, items )
-	{
-		for( var i = 0; i < items.length; i++ )
-		{
-			var file = path + '/' + items[i];
-			console.log( "Start: " + file );
 
-			fs.stat( file, function( err, stats )
-			{
-				console.log( file );
-				console.log( stats["size"] );
-			} );
-		}
-	} );
-	*/
-	
 	// Формируем заголовок для файла
 	var pkg = require( './package.json' ),
 		banner = [ '/**',
@@ -227,7 +214,7 @@ gulp.task( 'js:build', function( )
 					'' ].join( '\n' );
 	
 	// Собираем файл
-    return gulp.src( pathList.src.js + 'main.js')
+    return gulp.src( [ pathList.src.js + 'main.js' ] )
 				.pipe( debug( { title: 'js:' } ) ) // Вывод пофайлового лога
 				.pipe( rigger( ) ) // Подстановка исходного кода файлов на место переменных
 				.pipe( gulpif( bundle.compress, uglify( { mangle: true, compress: false } ) ) ) //
@@ -240,7 +227,7 @@ gulp.task( 'js:build', function( )
 // Сборка SASS/SCSS
 gulp.task( 'scss:build', function( ) 
 { 
-	var target = pathList.src.style + '**/**.scss',
+	var target = [ pathList.src.style + '**/**.scss' ],
 		fileName = params.fileName,
 		path = pathList.build + bundle.mainPath;
 
@@ -259,8 +246,8 @@ gulp.task( 'other:transfer', function( )
 {
 	//
     gulp.src( [ pathList.src.main + '**/*.*', 
-						'!' +  pathList.src.main + '**/*.+(js|css|scss|tpl)',
-						'!' +  pathList.src.main + 'vendor/**/*.*' ], { base: pathList.src.main } )
+				'!' +  pathList.src.main + '**/*.+(js|css|scss|tpl)',
+				'!' +  pathList.src.main + 'vendor/**/*.*' ], { base: pathList.src.main } )
         .pipe( gulp.dest( pathList.build ) );
 
 	//
@@ -272,7 +259,7 @@ gulp.task( 'other:transfer', function( )
 gulp.task( 'template:precompile', function( ) 
 { 
 	// Компилируем шаблоны
-	return gulp.src( pathList.src.templates + '**/*.tpl', { base: pathList.src.templates } )
+	return gulp.src( [ pathList.src.templates + '**/*.tpl' ], { base: pathList.src.templates } )
 			.pipe( nunjucks.precompile( { } ) )
 			.pipe( concat( 'templates.js' ) )
 			.pipe( gulp.dest( pathList.build ) );
@@ -303,8 +290,8 @@ gulp.task( 'default', function( )
 	 * Смотрители 
 	 * * * * * * * * * * * * * */
 
-	gulp.watch( pathList.src.js + '/*.js', [ 'js:build' ] ),
-	gulp.watch( pathList.src.style + '/**/*.scss', [ 'scss:build' ] );
+	gulp.watch( [ pathList.src.js + '/*.js' ], [ 'js:build' ] ),
+	gulp.watch( [ pathList.src.style + '/**/*.scss' ], [ 'scss:build' ] );
 	gulp.watch( [ pathList.src.templates + '**/*.tpl' ], [ 'template:precompile' ] );
 	gulp.watch( [ pathList.src.main + '**/*.*', 
 				'!' +  pathList.src.main + '**/*.+(js|css|scss)' ], [ 'other:transfer' ] );
