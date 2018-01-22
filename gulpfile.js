@@ -103,7 +103,7 @@ function readPacks( dirPath )
 			{
 				if( fs.statSync( dirPath + '/' + name + '/' + fileName ).isFile( ) )
 				{
-					let caption = path.parse( fileName )[ 'name' ].replace( /[_-]/, ' ' );
+					let caption = path.parse( fileName )[ 'name' ].replace( /[_-]/g, ' ' );
 					
 					// Прописываем файл
 					if( /\.(svg|gif|png|jpeg|jpg|ttf|otf)$/.test( fileName ) )
