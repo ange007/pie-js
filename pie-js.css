@@ -22,7 +22,6 @@
     border-right: 1px solid #e7e7e7;
 }*/
 .side-menu {
-  position: fixed;
   width: 100px;
   height: 100%; }
   .side-menu.navbar {
@@ -44,7 +43,8 @@
     margin-bottom: 0;
     border-radius: 0;
     background-color: transparent;
-    box-shadow: none; }
+    -webkit-box-shadow: none;
+            box-shadow: none; }
     .side-menu #dropdown .caret {
       float: right;
       margin: 9px 5px 0; }
@@ -101,7 +101,8 @@
     .side-menu #search .panel-body .navbar-form input {
       border: 0;
       border-radius: 0;
-      box-shadow: none;
+      -webkit-box-shadow: none;
+              box-shadow: none;
       width: 100%;
       height: 50px; }
     .side-menu #search .panel-body .navbar-form .btn {
@@ -115,7 +116,7 @@
 
 /* Main body section */
 .side-body {
-  margin-left: 110px; }
+  margin-left: 100px; }
 
 /* small screen */
 @media (max-width: 768px) {
@@ -235,57 +236,83 @@
     margin: 0; } }
 
 html, body {
-  height: 100%; }
+  height: 100%;
+  overflow-x: hidden; }
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important; }
+
+.nopadding-left-right {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+.nopadding-top-bottom {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important; }
+
+.scrollable-panel {
+  height: auto;
+  overflow-y: auto; }
 
 #editor {
   height: 100%;
   background-image: url(./images/grid.png); }
-  #editor #sidebar {
-    height: 100%;
-    /*background-color: #fff;*/
-    overflow: visible;
-    transition: left .2s ease-in-out;
-    /*box-shadow: 0 3px 1px -2px rgba(0,0,0,.14), 0 2px 2px 0 rgba(0,0,0,.098), 0 1px 5px 0 rgba(0,0,0,.084);*/ }
-    #editor #sidebar .side-menu {
-      /*background-color: #263238;*/
-      padding-right: 0px; }
-    #editor #sidebar #navigation {
-      /* background-color: #263238; */
-      height: 100%;
-      padding-right: 0px;
-      position: relative;
-      z-index: 10;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none; }
-      #editor #sidebar #navigation .glyphicon {
-        margin-top: 5px;
-        margin-bottom: 10px;
-        font-size: 24px; }
-    #editor #sidebar #tabs {
-      position: relative;
-      overflow: hidden;
-      height: 100%; }
-      #editor #sidebar #tabs.panel {
-        margin-top: 15px; }
-      #editor #sidebar #tabs .tab {
-        display: none; }
-        #editor #sidebar #tabs .tab #fonts {
-          font-size: 21px; }
-  #editor #viewport {
-    overflow: auto;
+  #editor #toolbar .row {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important; }
+  #editor #wrapper {
     height: 100%; }
-    #editor #viewport .canvas-container {
-      margin: 80px auto 5px;
-      background-color: white;
-      box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.14), 0 4px 5px 0 rgba(0, 0, 0, 0.098), 0 1px 10px 0 rgba(0, 0, 0, 0.084); }
-  #editor #layers {
-    margin-top: 15px;
-    max-height: 100%;
-    overflow-y: auto; }
-  #editor #panel {
-    display: none;
-    position: absolute;
-    overflow: hidden;
-    top: 15px; }
+    #editor #wrapper #topbar {
+      height: 10px; }
+      #editor #wrapper #topbar.navbar {
+        margin-bottom: 0px; }
+    #editor #wrapper #bottombar {
+      height: 10p; }
+    #editor #wrapper #sidebar {
+      height: 100%;
+      width: 130px !important;
+      overflow: visible;
+      -webkit-transition: left .2s ease-in-out;
+      transition: left .2s ease-in-out; }
+      #editor #wrapper #sidebar .side-menu {
+        /*background-color: #263238;*/ }
+      #editor #wrapper #sidebar #navigation {
+        height: 100%;
+        padding-right: 0px;
+        position: relative;
+        z-index: 10;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none; }
+        #editor #wrapper #sidebar #navigation .glyphicon {
+          margin-top: 5px;
+          margin-bottom: 10px;
+          font-size: 24px; }
+    #editor #wrapper #tab {
+      height: 100%; }
+      #editor #wrapper #tab .panel {
+        height: 100%; }
+    #editor #wrapper #canvas-wrapper {
+      height: 100%; }
+      #editor #wrapper #canvas-wrapper #viewport {
+        overflow: auto;
+        height: 100%; }
+        #editor #wrapper #canvas-wrapper #viewport .canvas-container {
+          margin: 80px auto 5px;
+          background-color: white;
+          -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.14), 0 4px 5px 0 rgba(0, 0, 0, 0.098), 0 1px 10px 0 rgba(0, 0, 0, 0.084);
+                  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.14), 0 4px 5px 0 rgba(0, 0, 0, 0.098), 0 1px 10px 0 rgba(0, 0, 0, 0.084); }
+    #editor #wrapper #layers {
+      max-height: 100%;
+      overflow-y: auto; }
+    #editor #wrapper #panel {
+      /*display: none;
+			position: absolute;
+			overflow: hidden;*/
+      /*top: 15px;*/ }
