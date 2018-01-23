@@ -14,7 +14,7 @@ before_script:
   - npm install -g gulp-cli
 
 script: 
-  - gulp clean && gulp build && gulp build:min
+  - gulp clean && gulp build
 
 after_success: 
   - git config --global user.name "${GIT_NAME}"
