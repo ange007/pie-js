@@ -16,18 +16,49 @@
 		{
 			// Parent call
 			super.activateTab( $tab, data );
-			
-			// Load the sticker list into memory
-			this._loadStickerList( );
+
+			// Variables
+			this.categories = { };
+
+			// Load sticker categories and stickers
+			this._loadStickerCategories( )
+				._loadStickerList( );
+
+			// Context link
+			let context = this;
 
 			// Hanging events
-			this.tab.on( 'click', '#fonts li', function( )
+			this.tab.on( 'change', 'select#s-category', function( event )
 			{
+				let category = $( this ).val( );
 
+				// Load the sticker list
+				context._loadStickerList( category );
 			} );
 
 			//
 			return data;
+		}
+
+		//
+		_loadStickerCategories( )
+		{
+			let context = this;
+
+			// Get Categories
+			this.editor._getConfig( 'stickers', function( data ) 
+			{
+				// Clear list
+				context.categories = { };
+
+				// Load list
+				for( let i in data ) 
+				{
+					context.categories[ i ] = data[ i ].caption || i; 
+				}
+			} );
+
+			return this;
 		}
 
 		// Download stickers
@@ -38,9 +69,9 @@
 			// Get stickers
 			this.editor._getConfig( 'stickers', function( data ) 
 			{
-				let stickerList = [ ],
-					stickerCategories = { };
+				let stickerList = [ ];
 
+				//
 				for( let i in data )
 				{
 					// Skipping unnecessary blocks
@@ -49,30 +80,34 @@
 						continue;
 					}
 
-					//
-					let items = data[ i ].items;
-
-					// Categories 
-					stickerCategories[ i ] = data[ i ].caption || i;
-
 					// 
-					for( var j in items )
+					for( var j in data[ i ].items )
 					{
-						stickerList.push( { caption: items[ j ].caption, 
-											image: 'packs/stickers/' + i + '/' + items[ j ].file,
+						let item  = data[ i ].items[ j ];
+
+						//
+						stickerList.push( { caption: item.caption,
+											category: i,
+											image: 'packs/stickers/' + i + '/' + item.file,
 											action: 'addImage',
-											arguments: './packs/stickers/' + i + '/' + items[ j ].file } );
+											arguments: './packs/stickers/' + i + '/' + item.file } );
 					}
 					
 					// stickerList = stickerList.concat( items );
 				}
 
 				// Template render
-				let stickersHTML = context.editor.utils.template.render( 'tabs/stickers.tpl', { 'categories': stickerCategories, 'stickers': stickerList } );
+				let stickersHTML = context.editor.utils.template.render( 'tabs/stickers.tpl', { 
+					'active_category': category || 'all', 
+					'categories': context.categories, 
+					'stickers': stickerList 
+				} );
 
 				// Apply template
 				context.tab.html( stickersHTML );
 			} );
+
+			return this;
 		}
 		
 		// Add image
@@ -106,6 +141,8 @@
 									.renderAll( );
 				} );
 			}
+
+			return this;
 		}
 	};
 } )( window );

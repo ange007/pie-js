@@ -73,6 +73,7 @@
 			this.editor.exportToJSON( );
 		}
 		
+		//
 		importFromJSON( json )
 		{
 			this.editor.importFromJSON( json );

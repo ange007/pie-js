@@ -3,10 +3,11 @@
 {% block content %}
 	<div>
 		<div class="form-group">
-			<label for="f-family">Sticker category</label>
-			<select id="f-family" class="form-control">
+			<label for="s-category">Sticker category</label>
+			<select id="s-category" class="form-control">
+				<option value="all">ALL</option>
 				{% for category, caption in categories %}
-					<option value="category">{{ caption }}</option>
+					<option value="{{ category }}"{{ ' selected' if ( category == active_category ) }}>{{ caption }}</option>
 				{% endfor %}
 			</select>
 		</div>

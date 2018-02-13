@@ -2,17 +2,14 @@
 	<div class="container-fluid">
 
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Load <span class="sr-only">(current)</span></a></li>
-			<li><a href="#">Save</a></li>
+			<li class="active"><a href="#" click="click:importFromJSON">Load <span class="sr-only">(current)</span></a></li>
+			<li><a href="#" data-on="click:save">Save</a></li>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Other<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Action 1</a></li>
-					<li><a href="#">Action 2</a></li>
+					<li><a href="#" data-on="click:importFromJSON">Import from JSON</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#">Separated link</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#">Separated link</a></li>
+					<li><a href="#" data-on="click:exportToJSON">Export to JSON</a></li>
 				</ul>
 			</li>
 		</ul>

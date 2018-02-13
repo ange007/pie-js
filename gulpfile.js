@@ -85,7 +85,7 @@ var bundle = bundles[ 'dev' ];
 function readPacks( dirPath )
 {
 	const files = fs.readdirSync( dirPath ),
-			dataList = { };
+		dataList = { };
 			
 	// Считываем основную директорию
 	files.forEach( function( name )
@@ -292,8 +292,8 @@ gulp.task( 'default', gulp.series( 'clean', 'build' , function( done )
 	 * Смотрители 
 	 * * * * * * * * * * * * * */
 
-	gulp.watch( [ pathList.src.js + '/*.js' ], gulp.parallel( 'js:build' ) ),
-	gulp.watch( [ pathList.src.style + '/**/*.scss' ], gulp.parallel( 'scss:build' ) );
+	gulp.watch( [ pathList.src.js + '**/*.js' ], gulp.parallel( 'js:build' ) ),
+	gulp.watch( [ pathList.src.style + '**/*.scss' ], gulp.parallel( 'scss:build' ) );
 	gulp.watch( [ pathList.src.templates + '**/*.tpl' ], gulp.parallel( 'template:precompile' ) );
 	gulp.watch( [ pathList.src.main + '**/*.*', 
 				'!' +  pathList.src.main + '**/*.+(js|css|scss)' ], gulp.parallel( 'other:transfer' ) );
