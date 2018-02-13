@@ -59,7 +59,7 @@
 					// Fonts
 					for( var j in items )
 					{
-						fontList.push( { font: items[ j ].font, 
+						fontList.push( { font: items[ j ].file, 
 										caption: items[ j ].caption, 
 										action: 'addText',
 										arguments: items[ j ].caption } );
@@ -68,7 +68,7 @@
 					// Write Web fonts
 					for( var j in items )
 					{
-						if( items[ j ].font === '' && items[ j ].caption !== ''  )
+						if( items[ j ].file === '' && items[ j ].caption !== ''  )
 						{
 							webFontList.push( items[ j ].caption  );
 						}

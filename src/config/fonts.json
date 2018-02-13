@@ -1,47 +1,24 @@
 {
-	"serif": {
-		"caption": "Serif", 
-		"items": 
-			[ {
-				"caption": "PT Mono Regular",
-				"font": "PTM55F.ttf"
-			},
-			{
-				"caption": "Inglobal",
-				"font": "inglobal.ttf" 
-			},
-			{
-				"caption": "Indie Flower",
-				"font": "" 
-			} ]
-	},
-	
-	"handwriting": {
-		"caption": "Handwriting", 
-		"items": 
-			[ {
-				"caption": "Lemon Tuesday",
-				"font": "Lemon_Tuesday.otf"
-			},
-			{
-				"caption": "Pacifico",
-				"font": "" 
-			},
-			{
-				"caption": "Bad Script",
-				"font": "" 
-			},
-			{
-				"caption": "Neucha",
-				"font": "" 
-			},
-			{
-				"caption": "Marck Script",
-				"font": "" 
-			},
-			{
-				"caption": "Pangolin",
-				"font": "" 
-			} ]
-	}
+  "handwriting": {
+    "caption": "handwriting",
+    "items": [
+      {
+        "caption": "Lemon Tuesday",
+        "file": "Lemon_Tuesday.otf"
+      }
+    ]
+  },
+  "serif": {
+    "caption": "serif",
+    "items": [
+      {
+        "caption": "Inglobal",
+        "file": "Inglobal.ttf"
+      },
+      {
+        "caption": "PT Mono_Regular",
+        "file": "PT_Mono_Regular.ttf"
+      }
+    ]
+  }
 }

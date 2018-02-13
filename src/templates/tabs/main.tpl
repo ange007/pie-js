@@ -1,4 +1,4 @@
-<div id="tabs" class="panel panel-default">
+<div id="tabs" class="panel panel-default scrollable-panel">
 	<div class="panel-body">
 		<div pie-tab="{{ id }}">
 			{% if title|length > 0 %}	

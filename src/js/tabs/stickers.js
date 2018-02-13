@@ -59,9 +59,9 @@
 					for( var j in items )
 					{
 						stickerList.push( { caption: items[ j ].caption, 
-											image: 'packs/stickers/' + i + '/' + items[ j ].image,
+											image: 'packs/stickers/' + i + '/' + items[ j ].file,
 											action: 'addImage',
-											arguments: './packs/stickers/' + i + '/' + items[ j ].image } );
+											arguments: './packs/stickers/' + i + '/' + items[ j ].file } );
 					}
 					
 					// stickerList = stickerList.concat( items );
