@@ -1,31 +1,4 @@
 {
-	"basics": {
-		"caption": "Base", 
-		"title": "Base",
-		"icon": "<span class='glyphicon glyphicon-picture' aria-hidden='true'></span>", 
-		"items": 
-			[ {
-				"caption": "Resize",
-				"action": "showResize"
-			},
-			{
-				"caption": "Background color",
-				"action": "showBackgroundColor"
-			},
-			{
-				"caption": "Save",
-				"action": "save"
-			},
-			{
-				"caption": "Import",
-				"action": "importFromJSON"
-			},
-			{
-				"caption": "Export",
-				"action": "exportToJSON"
-			} ]
-	},
-	
 	"text": {
 		"caption": "Text", 
 		"title": "Text",

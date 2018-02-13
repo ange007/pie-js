@@ -508,6 +508,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			value: function exportToJSON() {
 				this.editor.exportToJSON();
 			}
+
+			//
+
 		}, {
 			key: 'importFromJSON',
 			value: function importFromJSON(json) {
@@ -1079,14 +1082,46 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				// Parent call
 				_get(Stickers.prototype.__proto__ || Object.getPrototypeOf(Stickers.prototype), 'activateTab', this).call(this, $tab, data);
 
-				// Load the sticker list into memory
-				this._loadStickerList();
+				// Variables
+				this.categories = {};
+
+				// Load sticker categories and stickers
+				this._loadStickerCategories()._loadStickerList();
+
+				// Context link
+				var context = this;
 
 				// Hanging events
-				this.tab.on('click', '#fonts li', function () {});
+				this.tab.on('change', 'select#s-category', function (event) {
+					var category = $(this).val();
+
+					// Load the sticker list
+					context._loadStickerList(category);
+				});
 
 				//
 				return data;
+			}
+
+			//
+
+		}, {
+			key: '_loadStickerCategories',
+			value: function _loadStickerCategories() {
+				var context = this;
+
+				// Get Categories
+				this.editor._getConfig('stickers', function (data) {
+					// Clear list
+					context.categories = {};
+
+					// Load list
+					for (var i in data) {
+						context.categories[i] = data[i].caption || i;
+					}
+				});
+
+				return this;
 			}
 
 			// Download stickers
@@ -1100,38 +1135,42 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 				// Get stickers
 				this.editor._getConfig('stickers', function (data) {
-					var stickerList = [],
-					    stickerCategories = {};
+					var stickerList = [];
 
+					//
 					for (var i in data) {
 						// Skipping unnecessary blocks
 						if (category !== '' && category !== 'all' && category !== i) {
 							continue;
 						}
 
-						//
-						var items = data[i].items;
-
-						// Categories 
-						stickerCategories[i] = data[i].caption || i;
-
 						// 
-						for (var j in items) {
-							stickerList.push({ caption: items[j].caption,
-								image: 'packs/stickers/' + i + '/' + items[j].file,
+						for (var j in data[i].items) {
+							var item = data[i].items[j];
+
+							//
+							stickerList.push({ caption: item.caption,
+								category: i,
+								image: 'packs/stickers/' + i + '/' + item.file,
 								action: 'addImage',
-								arguments: './packs/stickers/' + i + '/' + items[j].file });
+								arguments: './packs/stickers/' + i + '/' + item.file });
 						}
 
 						// stickerList = stickerList.concat( items );
 					}
 
 					// Template render
-					var stickersHTML = context.editor.utils.template.render('tabs/stickers.tpl', { 'categories': stickerCategories, 'stickers': stickerList });
+					var stickersHTML = context.editor.utils.template.render('tabs/stickers.tpl', {
+						'active_category': category || 'all',
+						'categories': context.categories,
+						'stickers': stickerList
+					});
 
 					// Apply template
 					context.tab.html(stickersHTML);
 				});
+
+				return this;
 			}
 
 			// Add image
@@ -1160,6 +1199,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 						context.canvas.add(oImg).renderAll();
 					});
 				}
+
+				return this;
 			}
 		}]);
 

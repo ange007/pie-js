@@ -211,7 +211,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"navbar navbar-inverse nopadding-top-bottom\">\r\n\t<div class=\"container-fluid\">\r\n\r\n\t\t<ul class=\"nav navbar-nav\">\r\n\t\t\t<li class=\"active\"><a href=\"#\">Load <span class=\"sr-only\">(current)</span></a></li>\r\n\t\t\t<li><a href=\"#\">Save</a></li>\r\n\t\t\t<li class=\"dropdown\">\r\n\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a href=\"#\">Action 1</a></li>\r\n\t\t\t\t\t<li><a href=\"#\">Action 2</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a href=\"#\">Separated link</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a href=\"#\">Separated link</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t</div>\r\n\t</div>\r\n</div><!-- /.row -->\r\n\r\n\r\n\r\n";
+output += "<div class=\"navbar navbar-inverse nopadding-top-bottom\">\r\n\t<div class=\"container-fluid\">\r\n\r\n\t\t<ul class=\"nav navbar-nav\">\r\n\t\t\t<li class=\"active\"><a href=\"#\" click=\"click:importFromJSON\">Load <span class=\"sr-only\">(current)</span></a></li>\r\n\t\t\t<li><a href=\"#\" data-on=\"click:save\">Save</a></li>\r\n\t\t\t<li class=\"dropdown\">\r\n\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t</div>\r\n\t</div>\r\n</div><!-- /.row -->\r\n\r\n\r\n\r\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -803,7 +803,7 @@ var colno = null;
 var output = "";
 try {
 var frame = frame.push(true);
-output += "\r\n\t<div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"f-family\">Sticker category</label>\r\n\t\t\t<select id=\"f-family\" class=\"form-control\">\r\n\t\t\t\t";
+output += "\r\n\t<div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"s-category\">Sticker category</label>\r\n\t\t\t<select id=\"s-category\" class=\"form-control\">\r\n\t\t\t\t<option value=\"all\">ALL</option>\r\n\t\t\t\t";
 frame = frame.push();
 var t_7 = runtime.contextOrFrameLookup(context, frame, "categories");
 if(t_7) {var t_5;
@@ -821,7 +821,11 @@ frame.set("loop.revindex0", t_6 - t_5 - 1);
 frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
-output += "\r\n\t\t\t\t\t<option value=\"category\">";
+output += "\r\n\t\t\t\t\t<option value=\"";
+output += runtime.suppressValue(t_8, env.opts.autoescape);
+output += "\"";
+output += runtime.suppressValue(((t_8 == runtime.contextOrFrameLookup(context, frame, "active_category"))?" selected":""), env.opts.autoescape);
+output += ">";
 output += runtime.suppressValue(t_9, env.opts.autoescape);
 output += "</option>\r\n\t\t\t\t";
 ;
@@ -841,7 +845,11 @@ frame.set("loop.revindex0", t_6 - t_5 - 1);
 frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
-output += "\r\n\t\t\t\t\t<option value=\"category\">";
+output += "\r\n\t\t\t\t\t<option value=\"";
+output += runtime.suppressValue(t_10, env.opts.autoescape);
+output += "\"";
+output += runtime.suppressValue(((t_10 == runtime.contextOrFrameLookup(context, frame, "active_category"))?" selected":""), env.opts.autoescape);
+output += ">";
 output += runtime.suppressValue(t_11, env.opts.autoescape);
 output += "</option>\r\n\t\t\t\t";
 ;
