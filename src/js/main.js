@@ -7,11 +7,11 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 	
-	// Настройки по умолчанию
+	// Default options
 	pie.defaultOptions = { 
-		container: undefined, // Основной контейнер в котором будет располагаться редактор
+		container: undefined, // The main container in which the editor will be located
 
-		// Если не указан контейнер - используются селекторы (необходимо для кастомизации)
+		// If no container is specified - used selectors (needed from customizing).
 		selectors: {
 			sidebar: '#sidebar',
 			layers: '#layers',
@@ -32,22 +32,22 @@
 		lang: 'ru'
 	};
 	
-	// Список редакторов
+	// Editor list
 	pie.list = [ ];
 	
-	// Список редакторов
+	// Get editor list
 	pie.getEditorList = function( )
 	{
 		return this.list;
 	};
 	
-	// Получить редактор по идентификатору
+	// Get editor by identifier
 	pie.getEditor = function( id )
 	{
 		return this.list[ id ];
 	};
 	
-	// Получить редактор по индексу
+	// Get the editor by index
 	pie.getEditorFromIndex = function( index )
 	{
 		// return this.list[ index ];

@@ -3,11 +3,11 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.utils ) { pie.utils = { }; }
 	if( pie.utils.Tabs ) { console.warn( 'pie.utils.Tabs is already defined.' ); return; }
 
-	//
+	// Tabs
 	pie.utils.Tabs =
 	class Tabs 
 	{
@@ -17,16 +17,16 @@
 			this.editor = editor;
 		}
 		
-		// Загрузка содержимого табов
+		// Loading the contents of tabs
 		load( )
 		{
 			const context = this;
 
-			// Запрашиваем параметры табов
+			// Get tabs parameters
 			this.editor._getConfig( 'tabs', function( config ) 
 			{
-				// Вызов события загрузки вкладки в нужном модуле
-				// @todo: Здесь нужно фильтровать вкладки в зависимости от настроек редактора
+				// Calling the load event of the tab in the required module
+				// @todo: Here we need to filter tabs depending on the settings of the editor
 				let data = { };
 				for( let tabID in config ) 
 				{
@@ -40,25 +40,25 @@
 					data[ tabID ] = context._callFunction( tabID, 'loadTab', [ config[ tabID ] ] ); 
 				}
 
-				// Считываем шаблон
+				// Template render
 				const sidebarTemplate = context.editor.utils.template.render( 'sidebar.tpl', { 'tabs': data } );
 
 				//
 				const $sidebar = context.editor.$elements.sidebar;
 
-				// Выводим данные шаблона
+				// Display the template data
 				$sidebar.html( sidebarTemplate )
 						.on( 'click', '#navigation a[pie-target-tab]', function( event ) 
 				{
 					var targetTab = $( this ).attr( 'pie-target-tab' );
 					
-					// Активация таба
+					// Tab activation
 					context._callFunction( targetTab, 'activateTab', [ ] );
 				} );
 			} );
 		}
 
-		// Вызов функции из "таба"
+		// Calling a function from Tab
 		_callFunction( tab, functionName, data )
 		{	
 			if( this.editor.tabs.hasOwnProperty( tab ) && this.editor.tabs[ tab ][ functionName ] !== undefined )
@@ -68,7 +68,7 @@
 		}
 	};
 
-	// Базовый класс таба
+	// Base class of the tab
 	pie.utils.BasicTab =
 	class BasicTab
 	{
@@ -81,7 +81,7 @@
 			this.data = { };
 		}
 		
-		// Загрузка таба
+		// Tab loading
 		loadTab( data )
 		{			
 			this.data = data;
@@ -90,27 +90,27 @@
 			return data;
 		}
 
-		// Активация таба
+		// Tab activating
 		activateTab( )
 		{
-			// Формируем шаблон
+			// Template render
 			let templateHTML = this.editor.utils.template.render( 'tabs/' + this.className + '.tpl', this.data );
 
-			// Применяем шаблон
+			// Apply template
 			this.tab.html( templateHTML );
 			
-			// Обработка клика по функции
+			// Set events
 			this.setEvents( );
 		}
 
-		// Деактивация таба
+		// Tab deactivating
 		deactivateTab( )
 		{
 			this.tab.off( );
 			// pie.utils.panels.hide( );
 		}
 		
-		//
+		// Set events
 		setEvents( )
 		{
 			const context = this;
@@ -120,17 +120,17 @@
 					.on( 'click', 'a[pie-action]', function( event ){ context._onTabItemClick( this, event ); } );
 		}
 		
-		// Выбор пункта действия
+		// Select Action Point
 		_onTabItemClick( target, event )
 		{
 			const action = $( target ).attr( 'pie-action' ),
 				args = $( target ).attr( 'pie-arguments' );
 
-			// Вызываем функцию
+			// Call the function
 			this._callFunction( action, [ ].concat( args ) );
 		}
 
-		// Вызов функции по названию
+		// Calling a function by name
 		_callFunction( functionName, data )
 		{
 			if( typeof this[ functionName ] === 'function' )

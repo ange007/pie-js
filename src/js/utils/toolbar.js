@@ -3,11 +3,11 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.utils ) { pie.utils = { }; }
 	if( pie.utils.Toolbar ) { console.warn( 'pie.utils.Toolbar is already defined.' );	return; }
 
-	//
+	// Toolbar
 	pie.utils.Toolbar = 
 	class Toolbar
 	{
@@ -17,14 +17,14 @@
 			this.editor = editor;
 		}
 		
-		//
+		// Load Toolbar
 		load( )
 		{
-			// Считываем шаблон
+			// Template render
 			let context = this,
 				template = this.editor.utils.template.render( 'toolbar.tpl', { } );
 
-			// Устанавливаем шаблон и двухстороннюю связь
+			// Set template and two-way communication
 			this.editor.$elements.toolbar.html( template )
 								.myData( this.editor.canvas, function( type, element, propName, value ) 
 			{

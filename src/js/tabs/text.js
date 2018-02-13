@@ -3,24 +3,24 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.tabs ) { pie.tabs = { }; }
 	if( pie.tabs.Text ) { console.warn( 'pie.tabs.text is already defined.' );	return; }
 	
-	//
+	// Text
 	pie.tabs.Text = 
 	class Text extends pie.utils.BasicTab
 	{
-		// Активация таба
+		// Activating the tab
 		activateTab( $tab, data )
 		{
-			// Вызов родителя
+			// Parent call
 			super.activateTab( $tab, data );
 
-			// Загружаем в память список шрифтов
+			// Load into memory font list
 			this.loadFontList( );
 
-			// Навешиваем события
+			// Hanging events
 			this.tab.on( 'click', '#fonts li', function( )
 			{
 
@@ -30,12 +30,12 @@
 			return data;
 		}
 
-		// Загрузка шрифтов
+		// Downloading Fonts
 		loadFontList( category = '' )
 		{
 			let context = this;
 
-			// Запрашиваем шрифты
+			// Get fonts
 			this.editor._getConfig( 'fonts', function( data ) 
 			{
 				let fontList = [ ],
@@ -44,7 +44,7 @@
 
 				for( let i in data )
 				{
-					// Пропуск ненужных блоков
+					// Skipping unnecessary blocks
 					if( category !== '' && category !== 'all' && category !== i )
 					{
 						continue;
@@ -53,10 +53,10 @@
 					//
 					let items = data[ i ].items;
 
-					// Группы шрифтов
+					// Font Groups
 					fontCategories[ i ] = data[ i ].caption || i;
 
-					// Шрифты
+					// Fonts
 					for( var j in items )
 					{
 						fontList.push( { font: items[ j ].font, 
@@ -65,7 +65,7 @@
 										arguments: items[ j ].caption } );
 					}
 
-					// Записываем web шрифты
+					// Write Web fonts
 					for( var j in items )
 					{
 						if( items[ j ].font === '' && items[ j ].caption !== ''  )
@@ -75,41 +75,41 @@
 					}
 				}
 
-				// Загрузка шрифтов
+				// Download Font
 				if( webFontList.length > 0 )
 				{
 					context.loadWebFont( webFontList );
 				}
 
-				// Формируем шаблон
+				// Template render
 				let fontsHTML = context.editor.utils.template.render( 'tabs/text.tpl', { 'categories': fontCategories, 'fonts': fontList } );
 
-				// Применяем шаблон
+				// Apply template
 				context.tab.html( fontsHTML );
 			} );
 		}
 
-		// Использование Web шрифтов
+		// Using Web Fonts
 		loadWebFont( fonts )
 		{
-			// Удаляем старые подключенные шрифты
+			// Delete the old connected fonts
 			$( 'head' ).find( 'link[name="g-fonts"]' ).remove( );
 
-			// Добавляем новые
+			// Adding new
 			$( 'head' ).append( "<link href='http://fonts.googleapis.com/css?family=" + fonts.join( '|' ) + "' rel='stylesheet' type='text/css' name='g-fonts'>" );
 
 			// <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
 			// https://fonts.googleapis.com/css?family=Indie+Flower|Pacifico|Gloria+Hallelujah|Shadows+Into+Light|Dancing+Script|Amatic+SC|Architects+Daughter|Yellowtail|Courgette|Satisfy|Kaushan+Script|Permanent+Marker|Cookie|Great+Vibes|Kalam|Handlee|Bad+Script
 		}
 
-		//
-		addText( fontFamily )
+		// Text add
+		addText( fontFamily, text )
 		{
-			var text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
-						'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
+			let defaultText = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
+								'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
 
 			// 
-			var textSample = new fabric.Textbox( text, 
+			var textSample = new fabric.Textbox( text || defaultText, 
 			{
 			  fontSize: 20,
 			  left: Math.random(400),
@@ -124,7 +124,7 @@
 			  centerTransform: true
 			} );
 
-			// Добавляем текст
+			// Adding text
 			this.canvas.add( textSample );
 		}
 	};

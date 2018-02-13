@@ -3,11 +3,11 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.utils ) { pie.utils = { }; }
-	if( pie.utils.Template ) { console.warn( 'pie.utils.Template is already defined.' );	return; }
+	if( pie.utils.Template ) { console.warn( 'pie.utils.Template is already defined.' ); return; }
 
-	//
+	// Template
 	pie.utils.Template = 
 	class Template
 	{
@@ -16,7 +16,7 @@
 			this.editor = editor;
 		}
 
-		// Отрисовка шаблона
+		// Template render
 		render( template, data )
 		{
 			return nunjucks.render( template, $.extend( data, { 'editorID': this.editor.id } ) );

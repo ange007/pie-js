@@ -3,7 +3,7 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.tabs ) { pie.tabs = { }; }
 	if( pie.tabs.Basics ) { console.warn( 'pie.tabs.basics is already defined.' );	return; }
 
@@ -11,13 +11,13 @@
 	pie.tabs.Basics =
 	class Basics extends pie.utils.BasicTab
 	{
-		// Окно выбора цвета
+		// Background color selection Window
 		showBackgroundColor( )
 		{
 			var	context = this,
 				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Выбор цвета', type: 'color' } );
 
-			// Устанавливаем двухстороннюю связь
+			// Establish two-way communication
 			$( panel ).myData( this.canvas, function( type, element, propName, value ) 
 			{
 				if( type === 'set' )
@@ -27,13 +27,13 @@
 			} );
 		}
 
-		// Окно выбора изображения
+		// Background image selection window
 		showBackgroundImage( )
 		{
 
 		}
 
-		// Изображение на фоне
+		// Image on background
 		backgroundImage( image )
 		{
 			this.canvas.setBackgroundImage( image, this.canvas.renderAll.bind( this.canvas ), {
@@ -42,21 +42,17 @@
 			} );
 		}
 
-		//
+		// Canvas resize
 		showResize( )
 		{
 			var	context = this,
 				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth( ), height: this.canvas.getHeight( ) } );
 
-			// Устанавливаем двухстороннюю связь
+			// Establish two-way communication
 			$( panel ).myData( this.canvas, function( type, element, propName, value ) 
 			{ 
 				
 			} );
-
-			// Событие
-			/*modal.on( 'change', 'input[type="number"][name="width"]', function( event ) { context.canvas.setWidth( event.target.value ); } );
-			modal.on( 'change', 'input[type="number"][name="height"]', function( event ) { context.canvas.setHeight( event.target.value ); } );*/
 		}
 
 		// 
@@ -65,19 +61,19 @@
 
 		}
 
-		// Загругление углов фона
+		// Rounded the corners of the canvas
 		rounded( )
 		{
 
 		}
 
-		// Окно выбора изображения
+		// Image selection window
 		showAddImage( )
 		{
 
 		}
 
-		// Добавление изображения
+		// Add image
 		addImage( image )
 		{
 			var context = this;
@@ -88,18 +84,19 @@
 			} );	
 		}
 		
-		//
+		// Save
 		save( format )
 		{
 			this.editor.save( format );
 		}
 
-		//
+		// Export to JSON
 		exportToJSON( )
 		{
 			this.editor.exportToJSON( );
 		}
 		
+		// Import from JSON
 		importFromJSON( json )
 		{
 			this.editor.importFromJSON( json );

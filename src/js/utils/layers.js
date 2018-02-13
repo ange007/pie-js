@@ -3,11 +3,11 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.utils ) { pie.utils = { }; }
 	if( pie.utils.Layers ) { console.warn( 'pie.utils.Layers is already defined.' ); return; }
 
-	//
+	// Layers
 	pie.utils.Layers = 
 	class Layers 
 	{
@@ -16,24 +16,24 @@
 			//
 			this.editor = editor;
 			
-			// Список слоёв
+			// List of layers
 			this.list = [ ];
 		}
 		
-		// Список объектов на канве
+		// List of objects on the canvas
 		// http://jsfiddle.net/rodrigopandini/BGgDg/5/
 		load( )
 		{
 			//
 			const context = this;
 			
-			// Считываем текущие объекты
+			// Read the current objects
 			let objects = this.editor.canvas.getObjects( );
 			
 			//
 			this.list = [ ];
 			
-			// Формируем новый список слоёв
+			// Form a new list of layers
 			for( let i in objects )
 			{
 				let object = objects[ i ];
@@ -42,21 +42,21 @@
 				this.list.push( { id: this.list.length, name: ( i + 1 ) + ': ' + objects[ i ].get( 'type' ), type: objects[ i ].get( 'type' ), object: objects[ i ] } );
 			}
 
-			// Считываем шаблон
+			// Template render
 			let template = this.editor.utils.template.render( 'layers.tpl', { 'layers': this.list } );
 			
-			// Выводим данные шаблона
+			// Apply template
 			return this.editor.$elements.layers.off( )
 												.html( template )
 												.on( 'click', '.layer, button', function( event ) { context._onLayerClick( this, event ); event.stopPropagation( ); } );
 		}
 		
-		// Обработчик клика
+		// Click handler
 		_onLayerClick( target, event )
 		{
 			const $element = $( target );
 			
-			// Нажатие на кнопку
+			// Click on the button
 			if( $element.is( 'button' ) )
 			{
 				const id = $element.closest( '[data-layer-id]' ).data( 'layer-id' );
@@ -75,7 +75,7 @@
 			}
 		}
 		
-		// Выделение объета
+		// Object selection
 		select( target, obj )
 		{
 			let lock = !obj.hasControls,
@@ -90,47 +90,47 @@
 			this.editor.canvas.setActiveObject( obj );
 		}
 		
-		// Удаление слоя
+		// Remove object
 		remove( target, obj )
 		{
-			// Удаляем объект
+			// Delete the object
 			this.editor.canvas.remove( obj );
 			
-			// Обновление списка слоёв
+			// Update Layer List
 			this.load( ); 
 		}
 		
-		// Скрытие/отображение слоя
+		// Hide/show object
 		hide( target, obj )
 		{
-			// Проверяем видимость
+			// Check visibility
 			let show = obj.get( 'opacity' );
 			
-			// Устанавливаем параметры
+			// Set parameters
 			obj.set( {
 				opacity: ( show === 1 ? 0 : 1 ),
 				selectable: ( show !== 1 ),
 			} );
 			
-			//
+			// Deactivate All objects
 			this.editor.canvas.deactivateAll( );
 
-			// Обновляем канву
+			// Updated canvas
 			this.editor.canvas.renderAll( );
 			
-			// Обновляем иконку
+			// Update icon
 			target.toggleClass( 'btn-primary', show )
 					.find( '.glyphicon' ).removeClass( 'glyphicon-eye-open glyphicon-eye-close' )
 										.addClass( ( show === 1 ? 'glyphicon-eye-close' : 'glyphicon-eye-open' ) );
 		}
 		
-		// Блокировка/разблокировка слоя
+		// Lock/unlock layer
 		lock( target, obj )
 		{
-			// Проверяем блокировку
+			// Checking the lock
 			let lock = !obj.hasControls;
 			
-			// Устанавливаем параметры
+			// Set the parameters
 			obj.hasControls = lock;
 			obj.hasRotatingPoint = lock;
 			obj.hasBorders = lock;
@@ -138,10 +138,10 @@
 			obj.lockMovementX = !lock;
 			obj.lockMovementY = !lock;
 			
-			// Обновляем канву
+			// Updated canvas
 			this.editor.canvas.renderAll( );
 			
-			// Обновляем иконку
+			// Update icon
 			target.toggleClass( 'btn-primary', !lock )
 					.find( '.glyphicon' ).removeClass( 'glyphicon-lock glyphicon-lock' )
 										.addClass( ( lock ? 'glyphicon-lock' : 'glyphicon-lock' ) );

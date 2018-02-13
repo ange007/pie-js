@@ -3,24 +3,24 @@
 	'use strict';
 	let pie = global.pie = global.pie || { };
 
-	//
+	// Init scope
 	if( !pie.tabs ) { pie.tabs = { }; }
 	if( pie.tabs.Stickers ) { console.warn( 'pie.tabs.stickers is already defined.' );	return; }
 	
-	//
+	// Stickers
 	pie.tabs.Stickers = 
 	class Stickers extends pie.utils.BasicTab
 	{
-		// Активация таба
+		// Activating the tab
 		activateTab( $tab, data )
 		{
-			// Вызов родителя
+			// Parent call
 			super.activateTab( $tab, data );
 			
-			// Загружаем в память список шрифтов
+			// Load the sticker list into memory
 			this._loadStickerList( );
 
-			// Навешиваем события
+			// Hanging events
 			this.tab.on( 'click', '#fonts li', function( )
 			{
 
@@ -30,12 +30,12 @@
 			return data;
 		}
 
-		// Загрузка шрифтов
+		// Download stickers
 		_loadStickerList( category = '' )
 		{
 			let context = this;
 
-			// Запрашиваем шрифты
+			// Get stickers
 			this.editor._getConfig( 'stickers', function( data ) 
 			{
 				let stickerList = [ ],
@@ -43,7 +43,7 @@
 
 				for( let i in data )
 				{
-					// Пропуск ненужных блоков
+					// Skipping unnecessary blocks
 					if( category !== '' && category !== 'all' && category !== i )
 					{
 						continue;
@@ -52,7 +52,7 @@
 					//
 					let items = data[ i ].items;
 
-					// Категории 
+					// Categories 
 					stickerCategories[ i ] = data[ i ].caption || i;
 
 					// 
@@ -67,15 +67,15 @@
 					// stickerList = stickerList.concat( items );
 				}
 
-				// Формируем шаблон
+				// Template render
 				let stickersHTML = context.editor.utils.template.render( 'tabs/stickers.tpl', { 'categories': stickerCategories, 'stickers': stickerList } );
 
-				// Применяем шаблон
+				// Apply template
 				context.tab.html( stickersHTML );
 			} );
 		}
 		
-		// Добавление изображения
+		// Add image
 		addImage( image )
 		{
 			let context = this,
