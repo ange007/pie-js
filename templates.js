@@ -8,7 +8,8 @@ var parentTemplate = null;
 output += "<div class=\"panel panel-default\">\r\n\t<div class=\"panel-heading\">\r\n\t\t<h3 class=\"panel-title\">Layers</h3>\r\n\t</div>\r\n\t<div class=\"panel-body\">\r\n\t\t<ul class=\"nav nav-pills nav-stacked\">\r\n\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "layers");
-if(t_3) {var t_2 = t_3.length;
+if(t_3) {t_3 = runtime.fromIterator(t_3);
+var t_2 = t_3.length;
 for(var t_1=0; t_1 < t_3.length; t_1++) {
 var t_4 = t_3[t_1];
 frame.set("layer", t_4);
@@ -129,14 +130,15 @@ var parentTemplate = null;
 output += "<div class=\"side-menu navbar navbar-inverse col-md-3\" role=\"navigation\">\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t<ul id=\"navigation\" class=\"nav navbar-nav side-menu-container\">\t\t\r\n\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "tabs");
-if(t_3) {var t_1;
+if(t_3) {t_3 = runtime.fromIterator(t_3);
+var t_1;
 if(runtime.isArray(t_3)) {
 var t_2 = t_3.length;
 for(t_1=0; t_1 < t_3.length; t_1++) {
-var t_4 = t_3[t_1][0]
-frame.set("tabID", t_3[t_1][0]);
-var t_5 = t_3[t_1][1]
-frame.set("tab", t_3[t_1][1]);
+var t_4 = t_3[t_1][0];
+frame.set("[object Object]", t_3[t_1][0]);
+var t_5 = t_3[t_1][1];
+frame.set("[object Object]", t_3[t_1][1]);
 frame.set("loop.index", t_1 + 1);
 frame.set("loop.index0", t_1);
 frame.set("loop.revindex", t_2 - t_1);
@@ -211,7 +213,11 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"navbar navbar-inverse nopadding-top-bottom\">\r\n\t<div class=\"container-fluid\">\r\n\r\n\t\t<ul class=\"nav navbar-nav\">\r\n\t\t\t<li class=\"active\"><a href=\"#\" click=\"click:importFromJSON\">Load <span class=\"sr-only\">(current)</span></a></li>\r\n\t\t\t<li><a href=\"#\" data-on=\"click:save\">Save</a></li>\r\n\t\t\t<li class=\"dropdown\">\r\n\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t\r\n\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t</div>\r\n\t</div>\r\n</div><!-- /.row -->\r\n\r\n\r\n\r\n";
+output += "<div class=\"navbar navbar-inverse nopadding-top-bottom\">\r\n\t<div class=\"container-fluid\">\r\n\r\n\t\t<ul id=\"menu\" class=\"nav navbar-nav\">\r\n\t\t\t<li class=\"active\"><a href=\"#\" data-on=\"click:importFromJSON\">";
+output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.load"), env.opts.autoescape);
+output += "<span class=\"sr-only\">(current)</span></a></li>\r\n\t\t\t<li><a href=\"#\" data-on=\"click:save\">";
+output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.save"), env.opts.autoescape);
+output += "</a></li>\r\n\t\t\t<li class=\"dropdown\">\r\n\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\">\r\n\t\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t\t</div> \r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div><!-- /.row -->\r\n\r\n\r\n\r\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -236,20 +242,20 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("panels/main.tpl", true, "panels/basics.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("panels/main.tpl", true, "panels/basics.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_6,t_5) {
-if(t_6) { cb(t_6); return; }
-output += t_5;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += t_6;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -403,20 +409,20 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("panels/main.tpl", true, "panels/text.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("panels/main.tpl", true, "panels/text.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\n\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 output += "\n\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_6,t_5) {
-if(t_6) { cb(t_6); return; }
-output += t_5;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += t_6;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -527,16 +533,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("tabs/action-item.tpl", true, "tabs/basics-item.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("tabs/action-item.tpl", true, "tabs/basics-item.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -587,15 +593,15 @@ var parentTemplate = null;
 var tasks = [];
 tasks.push(
 function(callback) {
-env.getTemplate("tabs/main.tpl", false, "tabs/basics.tpl", null, function(t_3,t_1) {
-if(t_3) { cb(t_3); return; }
+env.getTemplate("tabs/main.tpl", false, "tabs/basics.tpl", false, function(t_2,t_1) {
+if(t_2) { cb(t_2); return; }
 callback(null,t_1);});
 });
 tasks.push(
 function(template, callback){
-template.render(context.getVariables(), frame, function(t_4,t_2) {
+template.render(context.getVariables(), frame, function(t_4,t_3) {
 if(t_4) { cb(t_4); return; }
-callback(null,t_2);});
+callback(null,t_3);});
 });
 tasks.push(
 function(result, callback){
@@ -641,7 +647,8 @@ if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, f
 output += "\r\n\t\t\t\t<ul class=\"nav nav-pills nav-stacked\">\r\n\t\t\t\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "items");
-if(t_3) {var t_2 = t_3.length;
+if(t_3) {t_3 = runtime.fromIterator(t_3);
+var t_2 = t_3.length;
 for(var t_1=0; t_1 < t_3.length; t_1++) {
 var t_4 = t_3[t_1];
 frame.set("item", t_4);
@@ -656,15 +663,15 @@ output += "\r\n\t\t\t\t\t\t<li>\r\n\t\t\t\t\t\t\t";
 var tasks = [];
 tasks.push(
 function(callback) {
-env.getTemplate("tabs/" + runtime.contextOrFrameLookup(context, frame, "id") + "-item.tpl", false, "tabs/main.tpl", null, function(t_7,t_5) {
-if(t_7) { cb(t_7); return; }
+env.getTemplate("tabs/" + runtime.contextOrFrameLookup(context, frame, "id") + "-item.tpl", false, "tabs/main.tpl", false, function(t_6,t_5) {
+if(t_6) { cb(t_6); return; }
 callback(null,t_5);});
 });
 tasks.push(
 function(template, callback){
-template.render(context.getVariables(), frame, function(t_8,t_6) {
+template.render(context.getVariables(), frame, function(t_8,t_7) {
 if(t_8) { cb(t_8); return; }
-callback(null,t_6);});
+callback(null,t_7);});
 });
 tasks.push(
 function(result, callback){
@@ -727,16 +734,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("tabs/action-item.tpl", true, "tabs/stickers-item.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("tabs/action-item.tpl", true, "tabs/stickers-item.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -777,16 +784,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("tabs/main.tpl", true, "tabs/stickers.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("tabs/main.tpl", true, "tabs/stickers.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -805,52 +812,53 @@ try {
 var frame = frame.push(true);
 output += "\r\n\t<div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"s-category\">Sticker category</label>\r\n\t\t\t<select id=\"s-category\" class=\"form-control\">\r\n\t\t\t\t<option value=\"all\">ALL</option>\r\n\t\t\t\t";
 frame = frame.push();
-var t_7 = runtime.contextOrFrameLookup(context, frame, "categories");
-if(t_7) {var t_5;
-if(runtime.isArray(t_7)) {
-var t_6 = t_7.length;
-for(t_5=0; t_5 < t_7.length; t_5++) {
-var t_8 = t_7[t_5][0]
-frame.set("category", t_7[t_5][0]);
-var t_9 = t_7[t_5][1]
-frame.set("caption", t_7[t_5][1]);
-frame.set("loop.index", t_5 + 1);
-frame.set("loop.index0", t_5);
-frame.set("loop.revindex", t_6 - t_5);
-frame.set("loop.revindex0", t_6 - t_5 - 1);
-frame.set("loop.first", t_5 === 0);
-frame.set("loop.last", t_5 === t_6 - 1);
-frame.set("loop.length", t_6);
+var t_8 = runtime.contextOrFrameLookup(context, frame, "categories");
+if(t_8) {t_8 = runtime.fromIterator(t_8);
+var t_6;
+if(runtime.isArray(t_8)) {
+var t_7 = t_8.length;
+for(t_6=0; t_6 < t_8.length; t_6++) {
+var t_9 = t_8[t_6][0];
+frame.set("[object Object]", t_8[t_6][0]);
+var t_10 = t_8[t_6][1];
+frame.set("[object Object]", t_8[t_6][1]);
+frame.set("loop.index", t_6 + 1);
+frame.set("loop.index0", t_6);
+frame.set("loop.revindex", t_7 - t_6);
+frame.set("loop.revindex0", t_7 - t_6 - 1);
+frame.set("loop.first", t_6 === 0);
+frame.set("loop.last", t_6 === t_7 - 1);
+frame.set("loop.length", t_7);
 output += "\r\n\t\t\t\t\t<option value=\"";
-output += runtime.suppressValue(t_8, env.opts.autoescape);
-output += "\"";
-output += runtime.suppressValue(((t_8 == runtime.contextOrFrameLookup(context, frame, "active_category"))?" selected":""), env.opts.autoescape);
-output += ">";
 output += runtime.suppressValue(t_9, env.opts.autoescape);
+output += "\"";
+output += runtime.suppressValue(((t_9 == runtime.contextOrFrameLookup(context, frame, "active_category"))?" selected":""), env.opts.autoescape);
+output += ">";
+output += runtime.suppressValue(t_10, env.opts.autoescape);
 output += "</option>\r\n\t\t\t\t";
 ;
 }
 } else {
-t_5 = -1;
-var t_6 = runtime.keys(t_7).length;
-for(var t_10 in t_7) {
-t_5++;
-var t_11 = t_7[t_10];
-frame.set("category", t_10);
-frame.set("caption", t_11);
-frame.set("loop.index", t_5 + 1);
-frame.set("loop.index0", t_5);
-frame.set("loop.revindex", t_6 - t_5);
-frame.set("loop.revindex0", t_6 - t_5 - 1);
-frame.set("loop.first", t_5 === 0);
-frame.set("loop.last", t_5 === t_6 - 1);
-frame.set("loop.length", t_6);
+t_6 = -1;
+var t_7 = runtime.keys(t_8).length;
+for(var t_11 in t_8) {
+t_6++;
+var t_12 = t_8[t_11];
+frame.set("category", t_11);
+frame.set("caption", t_12);
+frame.set("loop.index", t_6 + 1);
+frame.set("loop.index0", t_6);
+frame.set("loop.revindex", t_7 - t_6);
+frame.set("loop.revindex0", t_7 - t_6 - 1);
+frame.set("loop.first", t_6 === 0);
+frame.set("loop.last", t_6 === t_7 - 1);
+frame.set("loop.length", t_7);
 output += "\r\n\t\t\t\t\t<option value=\"";
-output += runtime.suppressValue(t_10, env.opts.autoescape);
-output += "\"";
-output += runtime.suppressValue(((t_10 == runtime.contextOrFrameLookup(context, frame, "active_category"))?" selected":""), env.opts.autoescape);
-output += ">";
 output += runtime.suppressValue(t_11, env.opts.autoescape);
+output += "\"";
+output += runtime.suppressValue(((t_11 == runtime.contextOrFrameLookup(context, frame, "active_category"))?" selected":""), env.opts.autoescape);
+output += ">";
+output += runtime.suppressValue(t_12, env.opts.autoescape);
 output += "</option>\r\n\t\t\t\t";
 ;
 }
@@ -859,31 +867,32 @@ output += "</option>\r\n\t\t\t\t";
 frame = frame.pop();
 output += "\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t</div>\r\n\t<div>\r\n\t\t<div id=\"stickers\">\r\n\t\t\t";
 frame = frame.push();
-var t_14 = runtime.contextOrFrameLookup(context, frame, "stickers");
-if(t_14) {var t_13 = t_14.length;
-for(var t_12=0; t_12 < t_14.length; t_12++) {
-var t_15 = t_14[t_12];
-frame.set("item", t_15);
-frame.set("loop.index", t_12 + 1);
-frame.set("loop.index0", t_12);
-frame.set("loop.revindex", t_13 - t_12);
-frame.set("loop.revindex0", t_13 - t_12 - 1);
-frame.set("loop.first", t_12 === 0);
-frame.set("loop.last", t_12 === t_13 - 1);
-frame.set("loop.length", t_13);
+var t_15 = runtime.contextOrFrameLookup(context, frame, "stickers");
+if(t_15) {t_15 = runtime.fromIterator(t_15);
+var t_14 = t_15.length;
+for(var t_13=0; t_13 < t_15.length; t_13++) {
+var t_16 = t_15[t_13];
+frame.set("item", t_16);
+frame.set("loop.index", t_13 + 1);
+frame.set("loop.index0", t_13);
+frame.set("loop.revindex", t_14 - t_13);
+frame.set("loop.revindex0", t_14 - t_13 - 1);
+frame.set("loop.first", t_13 === 0);
+frame.set("loop.last", t_13 === t_14 - 1);
+frame.set("loop.length", t_14);
 output += "\r\n\t\t\t\t";
 var tasks = [];
 tasks.push(
 function(callback) {
-env.getTemplate("tabs/stickers-item.tpl", false, "tabs/stickers.tpl", null, function(t_18,t_16) {
+env.getTemplate("tabs/stickers-item.tpl", false, "tabs/stickers.tpl", false, function(t_18,t_17) {
 if(t_18) { cb(t_18); return; }
-callback(null,t_16);});
+callback(null,t_17);});
 });
 tasks.push(
 function(template, callback){
-template.render(context.getVariables(), frame, function(t_19,t_17) {
-if(t_19) { cb(t_19); return; }
-callback(null,t_17);});
+template.render(context.getVariables(), frame, function(t_20,t_19) {
+if(t_20) { cb(t_20); return; }
+callback(null,t_19);});
 });
 tasks.push(
 function(result, callback){
@@ -920,7 +929,8 @@ try {
 var parentTemplate = null;
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "fonts");
-if(t_3) {var t_2 = t_3.length;
+if(t_3) {t_3 = runtime.fromIterator(t_3);
+var t_2 = t_3.length;
 for(var t_1=0; t_1 < t_3.length; t_1++) {
 var t_4 = t_3[t_1];
 frame.set("font", t_4);
@@ -975,16 +985,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("tabs/action-item.tpl", true, "tabs/text-item.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("tabs/action-item.tpl", true, "tabs/text-item.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -1027,16 +1037,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-env.getTemplate("tabs/main.tpl", true, "tabs/text.tpl", false, function(t_2,_parentTemplate) {
-if(t_2) { cb(t_2); return; }
-parentTemplate = _parentTemplate
+env.getTemplate("tabs/main.tpl", true, "tabs/text.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
 for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -1055,44 +1065,45 @@ try {
 var frame = frame.push(true);
 output += "\r\n\t<div>\r\n\t\t<div class=\"form-group\">\t\t\r\n\t\t\t<label for=\"f-family\">Font family</label>\r\n\t\t\t<select id=\"f-family\" class=\"form-control\">\r\n\t\t\t\t";
 frame = frame.push();
-var t_7 = runtime.contextOrFrameLookup(context, frame, "categories");
-if(t_7) {var t_5;
-if(runtime.isArray(t_7)) {
-var t_6 = t_7.length;
-for(t_5=0; t_5 < t_7.length; t_5++) {
-var t_8 = t_7[t_5][0]
-frame.set("category", t_7[t_5][0]);
-var t_9 = t_7[t_5][1]
-frame.set("caption", t_7[t_5][1]);
-frame.set("loop.index", t_5 + 1);
-frame.set("loop.index0", t_5);
-frame.set("loop.revindex", t_6 - t_5);
-frame.set("loop.revindex0", t_6 - t_5 - 1);
-frame.set("loop.first", t_5 === 0);
-frame.set("loop.last", t_5 === t_6 - 1);
-frame.set("loop.length", t_6);
+var t_8 = runtime.contextOrFrameLookup(context, frame, "categories");
+if(t_8) {t_8 = runtime.fromIterator(t_8);
+var t_6;
+if(runtime.isArray(t_8)) {
+var t_7 = t_8.length;
+for(t_6=0; t_6 < t_8.length; t_6++) {
+var t_9 = t_8[t_6][0];
+frame.set("[object Object]", t_8[t_6][0]);
+var t_10 = t_8[t_6][1];
+frame.set("[object Object]", t_8[t_6][1]);
+frame.set("loop.index", t_6 + 1);
+frame.set("loop.index0", t_6);
+frame.set("loop.revindex", t_7 - t_6);
+frame.set("loop.revindex0", t_7 - t_6 - 1);
+frame.set("loop.first", t_6 === 0);
+frame.set("loop.last", t_6 === t_7 - 1);
+frame.set("loop.length", t_7);
 output += "\r\n\t\t\t\t\t<option value=\"category\">";
-output += runtime.suppressValue(t_9, env.opts.autoescape);
+output += runtime.suppressValue(t_10, env.opts.autoescape);
 output += "</option>\r\n\t\t\t\t";
 ;
 }
 } else {
-t_5 = -1;
-var t_6 = runtime.keys(t_7).length;
-for(var t_10 in t_7) {
-t_5++;
-var t_11 = t_7[t_10];
-frame.set("category", t_10);
-frame.set("caption", t_11);
-frame.set("loop.index", t_5 + 1);
-frame.set("loop.index0", t_5);
-frame.set("loop.revindex", t_6 - t_5);
-frame.set("loop.revindex0", t_6 - t_5 - 1);
-frame.set("loop.first", t_5 === 0);
-frame.set("loop.last", t_5 === t_6 - 1);
-frame.set("loop.length", t_6);
+t_6 = -1;
+var t_7 = runtime.keys(t_8).length;
+for(var t_11 in t_8) {
+t_6++;
+var t_12 = t_8[t_11];
+frame.set("category", t_11);
+frame.set("caption", t_12);
+frame.set("loop.index", t_6 + 1);
+frame.set("loop.index0", t_6);
+frame.set("loop.revindex", t_7 - t_6);
+frame.set("loop.revindex0", t_7 - t_6 - 1);
+frame.set("loop.first", t_6 === 0);
+frame.set("loop.last", t_6 === t_7 - 1);
+frame.set("loop.length", t_7);
 output += "\r\n\t\t\t\t\t<option value=\"category\">";
-output += runtime.suppressValue(t_11, env.opts.autoescape);
+output += runtime.suppressValue(t_12, env.opts.autoescape);
 output += "</option>\r\n\t\t\t\t";
 ;
 }
@@ -1101,31 +1112,32 @@ output += "</option>\r\n\t\t\t\t";
 frame = frame.pop();
 output += "\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"f-search\">Search</label>\r\n\t\t\t<input type=\"text\" id=\"f-search\" class=\"form-control\" />\r\n\t\t</div>\r\n\t</div>\r\n\t<div>\r\n\t\t<ul id=\"fonts\" class=\"nav nav-pills nav-stacked\">\r\n\t\t\t";
 frame = frame.push();
-var t_14 = runtime.contextOrFrameLookup(context, frame, "fonts");
-if(t_14) {var t_13 = t_14.length;
-for(var t_12=0; t_12 < t_14.length; t_12++) {
-var t_15 = t_14[t_12];
-frame.set("item", t_15);
-frame.set("loop.index", t_12 + 1);
-frame.set("loop.index0", t_12);
-frame.set("loop.revindex", t_13 - t_12);
-frame.set("loop.revindex0", t_13 - t_12 - 1);
-frame.set("loop.first", t_12 === 0);
-frame.set("loop.last", t_12 === t_13 - 1);
-frame.set("loop.length", t_13);
+var t_15 = runtime.contextOrFrameLookup(context, frame, "fonts");
+if(t_15) {t_15 = runtime.fromIterator(t_15);
+var t_14 = t_15.length;
+for(var t_13=0; t_13 < t_15.length; t_13++) {
+var t_16 = t_15[t_13];
+frame.set("item", t_16);
+frame.set("loop.index", t_13 + 1);
+frame.set("loop.index0", t_13);
+frame.set("loop.revindex", t_14 - t_13);
+frame.set("loop.revindex0", t_14 - t_13 - 1);
+frame.set("loop.first", t_13 === 0);
+frame.set("loop.last", t_13 === t_14 - 1);
+frame.set("loop.length", t_14);
 output += "\r\n\t\t\t\t<li>\r\n\t\t\t\t\t";
 var tasks = [];
 tasks.push(
 function(callback) {
-env.getTemplate("tabs/text-item.tpl", false, "tabs/text.tpl", null, function(t_18,t_16) {
+env.getTemplate("tabs/text-item.tpl", false, "tabs/text.tpl", false, function(t_18,t_17) {
 if(t_18) { cb(t_18); return; }
-callback(null,t_16);});
+callback(null,t_17);});
 });
 tasks.push(
 function(template, callback){
-template.render(context.getVariables(), frame, function(t_19,t_17) {
-if(t_19) { cb(t_19); return; }
-callback(null,t_17);});
+template.render(context.getVariables(), frame, function(t_20,t_19) {
+if(t_20) { cb(t_20); return; }
+callback(null,t_19);});
 });
 tasks.push(
 function(result, callback){

@@ -2,6 +2,8 @@
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -98,6 +100,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 			// Initializing additional libraries
 			this.utils = {
+				config: new pie.utils.Config(this),
 				tabs: new pie.utils.Tabs(this),
 				template: new pie.utils.Template(this),
 				layers: new pie.utils.Layers(this),
@@ -161,14 +164,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: '_getConfig',
 			value: function _getConfig(config, callback) {
-				// Requesting tab options
-				$.ajax({
-					url: './config/' + config + '.json',
-					dataType: 'json',
-					success: function success(data) {
-						callback(data);
-					}
-				});
+				this.utils.config.load('config/' + config, callback);
 			}
 
 			// Save to File
@@ -208,7 +204,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				document.onkeydown = function (event) {
 					//
 					var movementDelta = 5,
-					    activeObject = context.canvas.getActiveGroup() || context.canvas.getActiveObject();
+					    activeObject = context.canvas.getActiveObject();
 
 					//
 					if (activeObject === undefined) {
@@ -267,7 +263,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					var _format = _format || 'png';
 
 					// Remove the selection and update the canvas
-					this.canvas.deactivateAll().renderAll();
+					this.canvas.discardActiveObject().renderAll();
 
 					// Save in SVG
 					if (_format === 'svg') {
@@ -396,6 +392,117 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	var pie = global.pie = global.pie || {};
 
 	// Init scope
+	if (!pie.helpers) {
+		pie.helpers = {};
+	}
+	if (pie.helpers.panels) {
+		console.warn('pie.helpers.panels is already defined.');return;
+	}
+
+	// Panels
+	pie.helpers.panels = {
+		selector: '#panel',
+		element: undefined,
+
+		//
+		setSelector: function setSelector() {},
+
+		// Show modal window
+		show: function show(editor, tpl, data) {
+			console.log('show');
+
+			// Prevent hide
+			this.hide();
+
+			// Render template
+			var context = this,
+			    template = editor.helpers.template.render('panels/' + tpl + '.tpl', data);
+
+			//
+			this.element = $(this.selector);
+
+			// Display the template data
+			return this.element.html(template).show().on('click', '.panel-heading .close', function () {
+				context.hide();
+			});
+		},
+
+		// Hide modal window
+		hide: function hide() {
+			if (this.element === undefined) {
+				return;
+			}
+
+			// Break off two-way communication
+			$(this.element).myData('destroy');
+
+			// Remove the listener of events and hide
+			this.element.off().hide();
+
+			// Remove the link to the item
+			delete this.element;
+		}
+	};
+})(window);
+(function (global) {
+	'use strict';
+
+	var pie = global.pie = global.pie || {};
+
+	// Init scope
+	if (!pie.utils) {
+		pie.utils = {};
+	}
+	if (pie.utils.Config) {
+		console.warn('pie.utils.Config is already defined.');return;
+	}
+
+	// Config
+	pie.utils.Config = function () {
+		function Config(editor) {
+			_classCallCheck(this, Config);
+
+			this.editor = editor;
+		}
+
+		//
+
+
+		_createClass(Config, [{
+			key: 'load',
+			value: function load(file, callback) {
+				var data = {
+					url: './' + file + '.json',
+					dataType: 'json'
+				};
+
+				//
+				if (typeof callback === 'function') {
+					$.ajax($.extend({}, data, {
+						success: function success(response) {
+							var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
+
+							callback(object);
+						}
+					}));
+				} else {
+					var response = $.ajax($.extend({}, data, { async: false })).responseText;
+					var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
+
+					return object;
+				}
+			}
+		}]);
+
+		return Config;
+	}();
+})(window);
+(function (global) {
+	'use strict';
+
+	var pie = global.pie = global.pie || {};
+
+	// Init scope
 	if (!pie.utils) {
 		pie.utils = {};
 	}
@@ -409,15 +516,66 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			_classCallCheck(this, Template);
 
 			this.editor = editor;
+			this.language = '';
+
+			//
+			var customEnv = nunjucks.configure();
+			customEnv.addFilter('i18n', function (str, data) {
+				return I18n.t(str, data);
+			});
 		}
 
-		// Template render
+		// Change Language
 
 
 		_createClass(Template, [{
+			key: 'changeLanguage',
+			value: function changeLanguage(lang) {
+				this.language = lang;
+
+				//
+				I18n.fallbacks = true;
+				I18n.defaultLocale = 'en';
+				I18n.locale = lang;
+				I18n.translations['en'] = this.editor.utils.config.load('locales/en');
+
+				// Load other language
+				if (lang !== 'en') {
+					I18n.translations[lang] = this.editor.utils.config.load('locales/' + lang);
+				}
+
+				//
+				// I18n.currentLocale( );
+			}
+
+			// Reload Templatess
+
+		}, {
+			key: 'reload',
+			value: function reload() {}
+
+			// Template Render
+
+		}, {
 			key: 'render',
 			value: function render(template, data) {
-				return nunjucks.render(template, $.extend(data, { 'editorID': this.editor.id }));
+				// Load language
+				if (this.language === '') {
+					this.changeLanguage('en');
+				}
+
+				// Render template
+				return nunjucks.render(template, $.extend(data, {
+					'editorID': this.editor.id
+				}));
+			}
+
+			// Translate
+
+		}, {
+			key: 'translate',
+			value: function translate(str, data) {
+				I18n.t(str, data);
 			}
 		}]);
 
@@ -457,14 +615,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				    template = this.editor.utils.template.render('toolbar.tpl', {});
 
 				// Set template and two-way communication
-				this.editor.$elements.toolbar.html(template).myData(this.editor.canvas, function (type, element, propName, value) {
+				this.editor.$elements.toolbar.html(template);
+
+				// Menu
+				this.editor.$elements.toolbar.find('#menu').myData(this, function (type, element, propName, value) {
+					if (type === 'set') {
+						context.editor.canvas.renderAll.bind(context.editor.canvas)();
+					}
+				});
+
+				// Canvas
+				this.editor.$elements.toolbar.find('#control-panel').myData(this.editor.canvas, function (type, element, propName, value) {
 					if (type === 'set') {
 						context.editor.canvas.renderAll.bind(context.editor.canvas)();
 					}
 				});
 			}
 
-			// Изображение на фоне
+			// BackgroundImage
 
 		}, {
 			key: 'backgroundImage',
@@ -475,13 +643,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				});
 			}
 
-			// Загругление углов фона
+			// Round
 
 		}, {
 			key: 'rounded',
 			value: function rounded() {}
 
-			// Добавление изображения
+			// Add image
 
 		}, {
 			key: 'addImage',
@@ -506,6 +674,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'exportToJSON',
 			value: function exportToJSON() {
+				alert('export');
 				this.editor.exportToJSON();
 			}
 
@@ -514,70 +683,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'importFromJSON',
 			value: function importFromJSON(json) {
+				alert('import');
 				this.editor.importFromJSON(json);
 			}
 		}]);
 
 		return Toolbar;
 	}();
-})(window);
-(function (global) {
-	'use strict';
-
-	var pie = global.pie = global.pie || {};
-
-	// Init scope
-	if (!pie.utils) {
-		pie.utils = {};
-	}
-	if (pie.utils.panels) {
-		console.warn('pie.utils.panels is already defined.');return;
-	}
-
-	// Panels
-	pie.utils.panels = {
-		selector: '#panel',
-		element: undefined,
-
-		//
-		setSelector: function setSelector() {},
-
-		// Show modal window
-		show: function show(editor, tpl, data) {
-			console.log('show');
-
-			// Prevent hide
-			this.hide();
-
-			// Render template
-			var context = this,
-			    template = editor.utils.template.render('panels/' + tpl + '.tpl', data);
-
-			//
-			this.element = $(this.selector);
-
-			// Display the template data
-			return this.element.html(template).show().on('click', '.panel-heading .close', function () {
-				context.hide();
-			});
-		},
-
-		// Hide modal window
-		hide: function hide() {
-			if (this.element === undefined) {
-				return;
-			}
-
-			// Break off two-way communication
-			$(this.element).myData('destroy');
-
-			// Remove the listener of events and hide
-			this.element.off().hide();
-
-			// Remove the link to the item
-			delete this.element;
-		}
-	};
 })(window);
 (function (global) {
 	'use strict';
@@ -703,7 +815,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			key: 'deactivateTab',
 			value: function deactivateTab() {
 				this.tab.off();
-				// pie.utils.panels.hide( );
+				// pie.helpers.panels.hide( );
 			}
 
 			// Set events
@@ -842,7 +954,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return;
 				}
 
-				this.editor.canvas.deactivateAll();
+				this.editor.canvas.discardActiveObject();
 				this.editor.canvas.setActiveObject(obj);
 			}
 
@@ -873,7 +985,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				});
 
 				// Deactivate All objects
-				this.editor.canvas.deactivateAll();
+				this.editor.canvas.discardActiveObject();
 
 				// Updated canvas
 				this.editor.canvas.renderAll();
