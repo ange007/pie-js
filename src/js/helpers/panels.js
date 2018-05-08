@@ -4,11 +4,11 @@
 	let pie = global.pie = global.pie || { };
 
 	// Init scope
-	if( !pie.utils ) { pie.utils = { }; }
-	if( pie.utils.panels ) { console.warn( 'pie.utils.panels is already defined.' );	return; }
+	if( !pie.helpers ) { pie.helpers = { }; }
+	if( pie.helpers.panels ) { console.warn( 'pie.helpers.panels is already defined.' ); return; }
 
 	// Panels
-	pie.utils.panels = 
+	pie.helpers.panels = 
 	{
 		selector: '#panel',
 		element: undefined,
@@ -29,7 +29,7 @@
 				
 			// Render template
 			let context = this,
-				template = editor.utils.template.render( 'panels/' + tpl + '.tpl', data );
+				template = editor.helpers.template.render( 'panels/' + tpl + '.tpl', data );
 			
 			//
 			this.element = $( this.selector );

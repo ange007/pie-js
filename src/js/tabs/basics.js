@@ -15,7 +15,7 @@
 		showBackgroundColor( )
 		{
 			var	context = this,
-				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Выбор цвета', type: 'color' } );
+				panel = pie.helpers.panels.show( this.editor, 'basics', { title: 'Выбор цвета', type: 'color' } );
 
 			// Establish two-way communication
 			$( panel ).myData( this.canvas, function( type, element, propName, value ) 
@@ -46,7 +46,7 @@
 		showResize( )
 		{
 			var	context = this,
-				panel = pie.utils.panels.show( this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth( ), height: this.canvas.getHeight( ) } );
+				panel = pie.helpers.panels.show( this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth( ), height: this.canvas.getHeight( ) } );
 
 			// Establish two-way communication
 			$( panel ).myData( this.canvas, function( type, element, propName, value ) 

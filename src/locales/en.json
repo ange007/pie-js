@@ -1,0 +1,9 @@
+{
+	"toolbar": {
+		"load": "Load",
+		"save": "Save",
+		"other": "Other",
+		"importJSON": "Import From JSON",
+		"exportJSON": "Export To JSON"
+	}
+}

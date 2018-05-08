@@ -25,8 +25,19 @@
 				template = this.editor.utils.template.render( 'toolbar.tpl', { } );
 
 			// Set template and two-way communication
-			this.editor.$elements.toolbar.html( template )
-								.myData( this.editor.canvas, function( type, element, propName, value ) 
+			this.editor.$elements.toolbar.html( template );
+
+			// Menu
+			this.editor.$elements.toolbar.find( '#menu' ).myData( this, function( type, element, propName, value ) 
+			{
+				if( type === 'set' )
+				{
+					context.editor.canvas.renderAll.bind( context.editor.canvas )( );
+				}
+			} );
+
+			// Canvas
+			this.editor.$elements.toolbar.find( '#control-panel' ).myData( this.editor.canvas, function( type, element, propName, value ) 
 			{
 				if( type === 'set' )
 				{
@@ -35,7 +46,7 @@
 			} );
 		}
 
-		// Изображение на фоне
+		// BackgroundImage
 		backgroundImage( image )
 		{
 			this.canvas.setBackgroundImage( image, this.canvas.renderAll.bind( this.canvas ), {
@@ -44,13 +55,13 @@
 			} );
 		}
 
-		// Загругление углов фона
+		// Round
 		rounded( )
 		{
 
 		}
 
-		// Добавление изображения
+		// Add image
 		addImage( image )
 		{
 			var context = this;
@@ -70,12 +81,14 @@
 		//
 		exportToJSON( )
 		{
+			alert( 'export' );
 			this.editor.exportToJSON( );
 		}
 		
 		//
 		importFromJSON( json )
 		{
+			alert( 'import' );
 			this.editor.importFromJSON( json );
 		}
 	};

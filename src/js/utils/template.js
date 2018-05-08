@@ -14,12 +14,59 @@
 		constructor( editor )
 		{
 			this.editor = editor;
+			this.language = '';
+
+			//
+			const customEnv = nunjucks.configure( );
+				customEnv.addFilter( 'i18n', function( str, data ) { return I18n.t( str, data ); } );
 		}
 
-		// Template render
+		// Change Language
+		changeLanguage( lang )
+		{
+			this.language = lang;
+
+			//
+			I18n.fallbacks = true;
+			I18n.defaultLocale = 'en';
+			I18n.locale = lang;
+			I18n.translations[ 'en' ] = this.editor.utils.config.load( 'locales/en' );
+
+			// Load other language
+			if( lang !== 'en' ) 
+			{
+				I18n.translations[ lang ] = this.editor.utils.config.load( 'locales/' + lang );
+			}
+
+			//
+			// I18n.currentLocale( );
+		}
+
+		// Reload Templatess
+		reload( )
+		{
+
+		}
+
+		// Template Render
 		render( template, data )
 		{
-			return nunjucks.render( template, $.extend( data, { 'editorID': this.editor.id } ) );
+			// Load language
+			if( this.language === '' )
+			{
+				this.changeLanguage( 'en' );
+			}
+
+			// Render template
+			return nunjucks.render( template, $.extend( data, {
+				'editorID': this.editor.id
+			} ) );
+		}
+
+		// Translate
+		translate( str, data )
+		{
+			I18n.t( str, data );
 		}
 	};
 

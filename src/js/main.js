@@ -55,9 +55,10 @@
 } )( window );
 
 //= editor.js
+//= helpers/panels.js
+//= utils/config.js
 //= utils/template.js
 //= utils/toolbar.js
-//= utils/panels.js
 //= utils/tabs.js
 //= utils/layers.js
 //= tabs/text.js

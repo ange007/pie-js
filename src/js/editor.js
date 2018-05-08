@@ -26,10 +26,11 @@
 
 			// Initializing additional libraries
 			this.utils = {
-				tabs: new pie.utils.Tabs( this ),
-				template: new pie.utils.Template( this ),
-				layers: new pie.utils.Layers( this ),
-				toolbar: new pie.utils.Toolbar( this )
+				config: 	new pie.utils.Config( this ),
+				tabs:		new pie.utils.Tabs( this ),
+				template:	new pie.utils.Template( this ),
+				layers:		new pie.utils.Layers( this ),
+				toolbar:	new pie.utils.Toolbar( this )
 			};
 
 			// Embed the editor
@@ -85,12 +86,7 @@
 		// Getting Settings
 		_getConfig( config, callback )
 		{
-			// Requesting tab options
-			$.ajax( { 
-				url: './config/' + config + '.json', 
-				dataType: 'json',
-				success: function( data ) { callback( data ); }
-			} );
+			this.utils.config.load( 'config/' + config, callback );
 		}
 		
 		// Save to File
@@ -124,7 +120,7 @@
 			{
 				//
 				const movementDelta = 5,
-					activeObject = context.canvas.getActiveGroup( ) || context.canvas.getActiveObject( );
+					activeObject = context.canvas.getActiveObject( );
 				
 				//
 				if( activeObject === undefined )
@@ -185,7 +181,7 @@
 				let format = format || 'png';
 								
 				// Remove the selection and update the canvas
-				this.canvas.deactivateAll( )
+				this.canvas.discardActiveObject( )
 							.renderAll( );
 				
 				// Save in SVG

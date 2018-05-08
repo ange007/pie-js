@@ -107,7 +107,7 @@
 		deactivateTab( )
 		{
 			this.tab.off( );
-			// pie.utils.panels.hide( );
+			// pie.helpers.panels.hide( );
 		}
 		
 		// Set events

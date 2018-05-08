@@ -86,7 +86,7 @@
 				return;
 			}
 			
-			this.editor.canvas.deactivateAll( );
+			this.editor.canvas.discardActiveObject( );
 			this.editor.canvas.setActiveObject( obj );
 		}
 		
@@ -113,7 +113,7 @@
 			} );
 			
 			// Deactivate All objects
-			this.editor.canvas.deactivateAll( );
+			this.editor.canvas.discardActiveObject( );
 
 			// Updated canvas
 			this.editor.canvas.renderAll( );
