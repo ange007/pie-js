@@ -37,7 +37,7 @@
 			} );
 
 			// Canvas
-			this.editor.$elements.toolbar.find( '#control-panel' ).myData( this.editor.canvas, function( type, element, propName, value ) 
+			this.editor.$elements.toolbar.find( '#control-panel' ).myData( { data: this.editor.canvas, event: this }, function( type, element, propName, value ) 
 			{
 				if( type === 'set' )
 				{
@@ -46,10 +46,22 @@
 			} );
 		}
 
+		//
+		backgroundClear( )
+		{
+			this.editor.canvas.setBackgroundColor( '' )
+								.setBackgroundImage( '' )
+								.renderAll.bind( this.editor.canvas )( );
+			/*
+			this.canvas.backgroundColor = null;
+			this.canvas.backgroundImage = null; 
+			*/
+		}
+
 		// BackgroundImage
 		backgroundImage( image )
 		{
-			this.canvas.setBackgroundImage( image, this.canvas.renderAll.bind( this.canvas ), {
+			this.editor.canvas.setBackgroundImage( image, this.editor.canvas.renderAll.bind( this.canvas ), {
 				originX: 'left',
 				originY: 'top'
 			} );

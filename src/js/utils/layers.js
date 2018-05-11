@@ -39,69 +39,72 @@
 				let object = objects[ i ];
 					object.set( 'id', i );
 				
-				this.list.push( { id: this.list.length, name: ( i + 1 ) + ': ' + objects[ i ].get( 'type' ), type: objects[ i ].get( 'type' ), object: objects[ i ] } );
+				this.list.push( { id: this.list.length, 
+									name: ( i + 1 ) + ': ' + object.get( 'type' ), 
+									hide: object.get( 'opacity' ) === 0,
+									lock: !object.hasControls,
+									type: object.get( 'type' ), 
+									object: object } );
 			}
 
 			// Template render
 			let template = this.editor.utils.template.render( 'layers.tpl', { 'layers': this.list } );
 			
 			// Apply template
-			return this.editor.$elements.layers.off( )
-												.html( template )
-												.on( 'click', '.layer, button', function( event ) { context._onLayerClick( this, event ); event.stopPropagation( ); } );
+			this.editor.$elements.layers.html( template )
+										.myData( { data: this, event: this, exlusive: true } )
+										.find( '.nav' ).sortable( { } );
+
+			return this;
 		}
 		
 		// Click handler
-		_onLayerClick( target, event )
+		action( target, id, action, event )
 		{
 			const $element = $( target );
+			const obj = this.editor.canvas.item( id );
 			
-			// Click on the button
-			if( $element.is( 'button' ) )
-			{
-				const id = $element.closest( '[data-layer-id]' ).data( 'layer-id' );
-				let obj = this.editor.canvas.item( id );
+			//
+			if( action[0] === 'remove' ) { this.remove( $element, obj ); }
+			else if( action[0] === 'visible' ) { this.hide( $element, obj ); }
+			else if( action[0] === 'lock' ) { this.lock( $element, obj ); }
+			else if( action[0] === 'select' ) { this.select( $element, obj ); }
 
-				if( $element.is( '[data-action="remove"]' ) ) { this.remove( $element, obj ); }
-				else if( $element.is( '[data-action="visible"]' ) ) { this.hide( $element, obj ); }
-				else if( $element.is( '[data-action="lock"]' ) ) { this.lock( $element, obj ); }
-			}
-			else
-			{
-				const id = $element.data( 'layer-id' );
-				let obj = this.editor.canvas.item( id );
-
-				this.select( $element, obj );
-			}
+			return false;
 		}
 		
 		// Object selection
-		select( target, obj )
+		select( $element, obj )
 		{
 			let lock = !obj.hasControls,
 				show = obj.get( 'opacity' );
 			
 			if( lock || !show )
 			{
-				return;
+				return this;
 			}
 			
-			this.editor.canvas.discardActiveObject( );
-			this.editor.canvas.setActiveObject( obj );
+			this.editor.canvas.discardActiveObject( )
+								.setActiveObject( obj )
+								.renderAll( );
+
+			return this;
 		}
 		
 		// Remove object
-		remove( target, obj )
+		remove( $button, obj )
 		{
 			// Delete the object
 			this.editor.canvas.remove( obj );
 			
 			// Update Layer List
 			this.load( ); 
+
+			return this;
 		}
 		
 		// Hide/show object
-		hide( target, obj )
+		hide( $button, obj )
 		{
 			// Check visibility
 			let show = obj.get( 'opacity' );
@@ -113,19 +116,19 @@
 			} );
 			
 			// Deactivate All objects
-			this.editor.canvas.discardActiveObject( );
-
-			// Updated canvas
-			this.editor.canvas.renderAll( );
+			this.editor.canvas.discardActiveObject( )
+								.renderAll( );
 			
 			// Update icon
-			target.toggleClass( 'btn-primary', show )
+			$button.toggleClass( 'btn-primary', show )
 					.find( '.glyphicon' ).removeClass( 'glyphicon-eye-open glyphicon-eye-close' )
 										.addClass( ( show === 1 ? 'glyphicon-eye-close' : 'glyphicon-eye-open' ) );
+
+			return this;
 		}
 		
 		// Lock/unlock layer
-		lock( target, obj )
+		lock( $button, obj )
 		{
 			// Checking the lock
 			let lock = !obj.hasControls;
@@ -142,9 +145,11 @@
 			this.editor.canvas.renderAll( );
 			
 			// Update icon
-			target.toggleClass( 'btn-primary', !lock )
+			$button.toggleClass( 'btn-primary', !lock )
 					.find( '.glyphicon' ).removeClass( 'glyphicon-lock glyphicon-lock' )
 										.addClass( ( lock ? 'glyphicon-lock' : 'glyphicon-lock' ) );
+
+			return this;
 		}
 	};
 	

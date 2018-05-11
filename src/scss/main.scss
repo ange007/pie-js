@@ -30,9 +30,10 @@ html, body {
 #editor {
     height: 100%;
 	background-image: url(./images/grid.png);
-	
-	
+
 	#toolbar {
+		max-height: 100px;
+
 		.row {
 			padding-bottom: 0px !important;
 			margin-bottom: 0px !important;
@@ -40,7 +41,7 @@ html, body {
 	}
 	
 	#wrapper {
-		height: 100%;
+		height: calc(100vh - 70px);
 	
 		#topbar {
 			height: 10px;
@@ -54,28 +55,44 @@ html, body {
 			height: 10p
 		}
 
-		#sidebar {
-			height: 100%;
-			width: 130px !important;
-			overflow: visible;
-			transition: left .2s ease-in-out;
-
-			.side-menu {
-				/*background-color: #263238;*/
-				// padding-right: 0px;
-				// border-right: 1px solid #e7e7e7;
-
-				.navbar-header {
-				 // border-bottom: 1px solid #e7e7e7;
+		.sidebar {
+			position: fixed;
+			top: 51px;
+			bottom: 0;
+			left: 0;
+			z-index: 1000;
+			padding: 20px;
+			overflow-x: hidden;
+			overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+			border-right: 1px solid #eee;
+		}
+		
+		#sidebar {			
+			#side-menu {
+				height: 100%;
+				min-width: 130px;
+				max-width: 130px;
+				overflow: visible;
+				transition: left .2s ease-in-out;
+				padding-left: 0;
+				padding-right: 0;
+				
+				.nav {
+					margin-bottom: 20px;
 				}
-				.navbar-nav .active a {
-				 // background-color: transparent;
-				 // border-right: 5px solid #e7e7e7;
+				
+				.nav-item {
+					width: 100%;
 				}
-				.navbar-nav li {
-				  //border-bottom: 1px solid #e7e7e7;
+				
+				.nav-item + .nav-item {
+					margin-left: 0;
 				}
-			 }
+				
+				.nav-link {
+					border-radius: 0;
+			 	}
+			}
 
 			#navigation {
 				height: 100%;
@@ -94,8 +111,9 @@ html, body {
 
 		#tab {
 			height: 100%;
+			padding-left: 0px;
 
-			.panel {
+			.card {
 				height: 100%;
 			}
 		}
@@ -109,8 +127,18 @@ html, body {
 
 				.canvas-container {
 					margin: 80px auto 5px;
-					background-color: white;
 					box-shadow: 0 2px 4px -1px rgba(0,0,0,.14), 0 4px 5px 0 rgba(0,0,0,.098), 0 1px 10px 0 rgba(0,0,0,.084);
+
+					&::before {
+						content: '';
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						top: 0;
+						background-color: white;
+						filter: opacity(70%);
+					}
 				}
 			}
 		}
