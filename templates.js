@@ -20,11 +20,11 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\r\n\t\t\t<li><a href=\"#\" class=\"layer\" data-layer-id=\"";
+output += "\r\n\t\t\t<li data-on=\"click:action( 'select' )\" data-on-value=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
-output += "\">\r\n\t\t\t\t";
+output += "\">\r\n\t\t\t\t<a href=\"#\" class=\"layer\">\r\n\t\t\t\t\t";
 if(runtime.memberLookup((t_4),"type") == "image") {
-output += "\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t\t";
 var t_5;
 t_5 = "picture";
 frame.set("icon", t_5, true);
@@ -34,12 +34,12 @@ context.setVariable("icon", t_5);
 if(frame.topLevel) {
 context.addExport("icon", t_5);
 }
-output += "\r\n\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 ;
 }
 else {
 if(runtime.memberLookup((t_4),"type") == "text" || runtime.memberLookup((t_4),"type") == "textbox") {
-output += "\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t\t";
 var t_6;
 t_6 = "font";
 frame.set("icon", t_6, true);
@@ -49,11 +49,11 @@ context.setVariable("icon", t_6);
 if(frame.topLevel) {
 context.addExport("icon", t_6);
 }
-output += "\r\n\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 ;
 }
 else {
-output += "\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t\t";
 var t_7;
 t_7 = "certificate";
 frame.set("icon", t_7, true);
@@ -63,16 +63,28 @@ context.setVariable("icon", t_7);
 if(frame.topLevel) {
 context.addExport("icon", t_7);
 }
-output += "\r\n\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 ;
 }
 ;
 }
-output += "\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"type-icon glyphicon glyphicon-";
+output += "\r\n\t\t\t\t\t\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<span class=\"type-icon glyphicon glyphicon-";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "icon"), env.opts.autoescape);
-output += "\" aria-hidden=\"true\"></span>\r\n\t\t\t\t&nbsp;&nbsp;\r\n\t\t\t\t<div class=\"btn-group\" role=\"group\">\r\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-default\" data-action=\"visible\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-default\" data-action=\"lock\"><span class=\"glyphicon glyphicon-lock\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-default\" data-action=\"remove\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t</div>\r\n\t\t\t\t&nbsp;&nbsp;\r\n\t\t\t\t<span>";
+output += "\" aria-hidden=\"true\"></span>\r\n\t\t\t\t\t\t&nbsp;&nbsp;\r\n\t\t\t\t\t\t";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
-output += "</span>\r\n\t\t\t</a></li>\r\n\t\t";
+output += "\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"text-right\">\r\n\t\t\t\t\t\t<div class=\"btn-group\" role=\"group\">\r\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default";
+output += runtime.suppressValue((runtime.memberLookup((t_4),"hide")?" btn-primary":""), env.opts.autoescape);
+output += "\" data-on=\"click:action( 'visible' )\" data-on-value=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
+output += "\"><span class=\"glyphicon ";
+output += runtime.suppressValue((runtime.memberLookup((t_4),"hide")?"glyphicon-eye-close":"glyphicon-eye-open"), env.opts.autoescape);
+output += "\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default";
+output += runtime.suppressValue((runtime.memberLookup((t_4),"lock")?" btn-primary":""), env.opts.autoescape);
+output += "\" data-on=\"click:action( 'lock' )\" data-on-value=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
+output += "\"><span class=\"glyphicon glyphicon-lock\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default\" data-on=\"click:action( 'remove' )\" data-on-value=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
+output += "\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</a>\r\n\t\t\t</li>\r\n\t\t";
 ;
 }
 }
@@ -102,7 +114,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\" class=\"col-md-12 row\">\r\n\r\n\t</div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"col-md-12 row\">\r\n\t\t<div id=\"sidebar\" class=\"col-md-1 row\">\r\n\r\n\t\t</div>\r\n\r\n\t\t<div id=\"tab\" class=\"col-md-2 row\">\r\n\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md-7\">\t\t\r\n\t\t\t<div id=\"top-panel\"></div>\t\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\"></div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-md-2 row\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<div id=\"splash\" aria-hidden=\"false\">\r\n\t<div id=\"splash-spinner\"></div>\r\n</div>\t";
+output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\"></div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row\">\r\n\t\t<div id=\"sidebar\">\r\n\r\n\t\t</div>\r\n\r\n\t\t<div id=\"tab\" class=\"col-sm\">\r\n\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\"></div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\"></div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<div id=\"splash\" aria-hidden=\"false\">\r\n\t<div id=\"splash-spinner\"></div>\r\n</div>\t";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -127,7 +139,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"side-menu navbar navbar-inverse col-md-3\" role=\"navigation\">\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t<ul id=\"navigation\" class=\"nav navbar-nav side-menu-container\">\t\t\r\n\t\t";
+output += "<nav id=\"side-menu\" class=\"bg-light\">\r\n\t<!--\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t-->\r\n\t<ul id=\"navigation\" class=\"nav nav-pills flex-column\">\r\n\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "tabs");
 if(t_3) {t_3 = runtime.fromIterator(t_3);
@@ -146,7 +158,7 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\r\n\t\t\t<li class=\"text-center\"><a href=\"#\" pie-target-tab=\"";
+output += "\r\n\t\t\t<li class=\"nav-item text-center\"><a href=\"#\" class=\"nav-link\" pie-target-tab=\"";
 output += runtime.suppressValue(t_4, env.opts.autoescape);
 output += "\">\r\n\t\t\t\t";
 if(env.getFilter("length").call(context, runtime.memberLookup((t_5),"icon")) > 0) {
@@ -173,7 +185,7 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\r\n\t\t\t<li class=\"text-center\"><a href=\"#\" pie-target-tab=\"";
+output += "\r\n\t\t\t<li class=\"nav-item text-center\"><a href=\"#\" class=\"nav-link\" pie-target-tab=\"";
 output += runtime.suppressValue(t_6, env.opts.autoescape);
 output += "\">\r\n\t\t\t\t";
 if(env.getFilter("length").call(context, runtime.memberLookup((t_7),"icon")) > 0) {
@@ -188,7 +200,7 @@ output += "</div>\r\n\t\t\t</a></li>\r\n\t\t";
 }
 }
 frame = frame.pop();
-output += "\r\n\t</ul>\r\n</div>";
+output += "\r\n\t</ul>\r\n</nav>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -213,11 +225,11 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"navbar navbar-inverse nopadding-top-bottom\">\r\n\t<div class=\"container-fluid\">\r\n\r\n\t\t<ul id=\"menu\" class=\"nav navbar-nav\">\r\n\t\t\t<li class=\"active\"><a href=\"#\" data-on=\"click:importFromJSON\">";
+output += "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<div class=\"collapse navbar-collapse\">\r\n\t\t<ul id=\"menu\" class=\"nav navbar-nav mr-auto\">\r\n\t\t\t<li class=\"nav-item active\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">";
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.load"), env.opts.autoescape);
-output += "<span class=\"sr-only\">(current)</span></a></li>\r\n\t\t\t<li><a href=\"#\" data-on=\"click:save\">";
+output += "<span class=\"sr-only\">(current)</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:save\">";
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.save"), env.opts.autoescape);
-output += "</a></li>\r\n\t\t\t<li class=\"dropdown\">\r\n\t\t\t\t<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\">\r\n\t\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"navbar-form navbar-right\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t\t</div> \r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div><!-- /.row -->\r\n\r\n\r\n\r\n";
+output += "</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline  my-2 my-lg-0\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"glyphicon glyphicon-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</DIV>\r\n</nav>\r\n\r\n\r\n\r\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -633,18 +645,18 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div id=\"tabs\" class=\"panel panel-default scrollable-panel\">\r\n\t<div class=\"panel-body\">\r\n\t\t<div pie-tab=\"";
+output += "<div class=\"card scrollable-panel bg-dark\">\r\n\t<div class=\"card-body\" pie-tab=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
-output += "\">\r\n\t\t\t";
+output += "\">\r\n\t\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "title")) > 0) {
-output += "\t\r\n\t\t\t\t<legend class=\"tab-title\">";
+output += "\t\r\n\t\t\t<h5 class=\"card-title\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
-output += "</legend>\r\n\t\t\t";
+output += "</h5>\r\n\t\t";
 ;
 }
-output += "\r\n\r\n\t\t\t";
+output += "\r\n\r\n\t\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "items")) > 0) {
-output += "\r\n\t\t\t\t<ul class=\"nav nav-pills nav-stacked\">\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t<ul class=\"card-text nav nav-pills nav-stacked\">\r\n\t\t\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "items");
 if(t_3) {t_3 = runtime.fromIterator(t_3);
@@ -659,7 +671,7 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\r\n\t\t\t\t\t\t<li>\r\n\t\t\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t";
 var tasks = [];
 tasks.push(
 function(callback) {
@@ -679,23 +691,23 @@ output += result;
 callback(null);
 });
 env.waterfall(tasks, function(){
-output += "\r\n\t\t\t\t\t\t</li>\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t</li>\r\n\t\t\t\t";
 });
 }
 }
 frame = frame.pop();
-output += "\r\n\t\t\t\t<ul>\r\n\t\t\t";
+output += "\r\n\t\t\t<ul>\r\n\t\t";
 ;
 }
 else {
-output += "\r\n\t\t\t\t";
+output += "\r\n\t\t\t";
 (parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_10,t_9) {
 if(t_10) { cb(t_10); return; }
 output += t_9;
-output += "\r\n\t\t\t";
+output += "\r\n\t\t";
 });
 }
-output += "\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+output += "\r\n\t</div>\r\n</div>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

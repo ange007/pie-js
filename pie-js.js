@@ -625,11 +625,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				});
 
 				// Canvas
-				this.editor.$elements.toolbar.find('#control-panel').myData(this.editor.canvas, function (type, element, propName, value) {
+				this.editor.$elements.toolbar.find('#control-panel').myData({ data: this.editor.canvas, event: this }, function (type, element, propName, value) {
 					if (type === 'set') {
 						context.editor.canvas.renderAll.bind(context.editor.canvas)();
 					}
 				});
+			}
+
+			//
+
+		}, {
+			key: 'backgroundClear',
+			value: function backgroundClear() {
+				this.editor.canvas.setBackgroundColor('').setBackgroundImage('').renderAll.bind(this.editor.canvas)();
+				/*
+    this.canvas.backgroundColor = null;
+    this.canvas.backgroundImage = null; 
+    */
 			}
 
 			// BackgroundImage
@@ -637,7 +649,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'backgroundImage',
 			value: function backgroundImage(image) {
-				this.canvas.setBackgroundImage(image, this.canvas.renderAll.bind(this.canvas), {
+				this.editor.canvas.setBackgroundImage(image, this.editor.canvas.renderAll.bind(this.canvas), {
 					originX: 'left',
 					originY: 'top'
 				});
@@ -903,78 +915,81 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					var object = objects[i];
 					object.set('id', i);
 
-					this.list.push({ id: this.list.length, name: i + 1 + ': ' + objects[i].get('type'), type: objects[i].get('type'), object: objects[i] });
+					this.list.push({ id: this.list.length,
+						name: i + 1 + ': ' + object.get('type'),
+						hide: object.get('opacity') === 0,
+						lock: !object.hasControls,
+						type: object.get('type'),
+						object: object });
 				}
 
 				// Template render
 				var template = this.editor.utils.template.render('layers.tpl', { 'layers': this.list });
 
 				// Apply template
-				return this.editor.$elements.layers.off().html(template).on('click', '.layer, button', function (event) {
-					context._onLayerClick(this, event);event.stopPropagation();
-				});
+				this.editor.$elements.layers.html(template).myData({ data: this, event: this, exlusive: true }).find('.nav').sortable({});
+
+				return this;
 			}
 
 			// Click handler
 
 		}, {
-			key: '_onLayerClick',
-			value: function _onLayerClick(target, event) {
+			key: 'action',
+			value: function action(target, id, _action, event) {
 				var $element = $(target);
+				var obj = this.editor.canvas.item(id);
 
-				// Click on the button
-				if ($element.is('button')) {
-					var id = $element.closest('[data-layer-id]').data('layer-id');
-					var obj = this.editor.canvas.item(id);
-
-					if ($element.is('[data-action="remove"]')) {
-						this.remove($element, obj);
-					} else if ($element.is('[data-action="visible"]')) {
-						this.hide($element, obj);
-					} else if ($element.is('[data-action="lock"]')) {
-						this.lock($element, obj);
-					}
-				} else {
-					var _id = $element.data('layer-id');
-					var _obj = this.editor.canvas.item(_id);
-
-					this.select($element, _obj);
+				//
+				if (_action[0] === 'remove') {
+					this.remove($element, obj);
+				} else if (_action[0] === 'visible') {
+					this.hide($element, obj);
+				} else if (_action[0] === 'lock') {
+					this.lock($element, obj);
+				} else if (_action[0] === 'select') {
+					this.select($element, obj);
 				}
+
+				return false;
 			}
 
 			// Object selection
 
 		}, {
 			key: 'select',
-			value: function select(target, obj) {
+			value: function select($element, obj) {
 				var lock = !obj.hasControls,
 				    show = obj.get('opacity');
 
 				if (lock || !show) {
-					return;
+					return this;
 				}
 
-				this.editor.canvas.discardActiveObject();
-				this.editor.canvas.setActiveObject(obj);
+				this.editor.canvas.discardActiveObject().setActiveObject(obj).renderAll();
+
+				return this;
 			}
 
 			// Remove object
 
 		}, {
 			key: 'remove',
-			value: function remove(target, obj) {
+			value: function remove($button, obj) {
 				// Delete the object
 				this.editor.canvas.remove(obj);
 
 				// Update Layer List
 				this.load();
+
+				return this;
 			}
 
 			// Hide/show object
 
 		}, {
 			key: 'hide',
-			value: function hide(target, obj) {
+			value: function hide($button, obj) {
 				// Check visibility
 				var show = obj.get('opacity');
 
@@ -985,20 +1000,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				});
 
 				// Deactivate All objects
-				this.editor.canvas.discardActiveObject();
-
-				// Updated canvas
-				this.editor.canvas.renderAll();
+				this.editor.canvas.discardActiveObject().renderAll();
 
 				// Update icon
-				target.toggleClass('btn-primary', show).find('.glyphicon').removeClass('glyphicon-eye-open glyphicon-eye-close').addClass(show === 1 ? 'glyphicon-eye-close' : 'glyphicon-eye-open');
+				$button.toggleClass('btn-primary', show).find('.glyphicon').removeClass('glyphicon-eye-open glyphicon-eye-close').addClass(show === 1 ? 'glyphicon-eye-close' : 'glyphicon-eye-open');
+
+				return this;
 			}
 
 			// Lock/unlock layer
 
 		}, {
 			key: 'lock',
-			value: function lock(target, obj) {
+			value: function lock($button, obj) {
 				// Checking the lock
 				var lock = !obj.hasControls;
 
@@ -1014,7 +1028,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				this.editor.canvas.renderAll();
 
 				// Update icon
-				target.toggleClass('btn-primary', !lock).find('.glyphicon').removeClass('glyphicon-lock glyphicon-lock').addClass(lock ? 'glyphicon-lock' : 'glyphicon-lock');
+				$button.toggleClass('btn-primary', !lock).find('.glyphicon').removeClass('glyphicon-lock glyphicon-lock').addClass(lock ? 'glyphicon-lock' : 'glyphicon-lock');
+
+				return this;
 			}
 		}]);
 
