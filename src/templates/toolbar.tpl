@@ -17,10 +17,10 @@
 			</li>
 		</ul>
 
-		<div id="control-panel" class="form-inline  my-2 my-lg-0">
+		<div id="control-panel" class="form-inline my-2 my-lg-0">
 			<div class="form-group">
 				<label for="clear-bg" class="navbar-text nopadding-top-bottom">Clear BG:</label>
-				<button data-on="click:backgroundClear"><i class="glyphicon glyphicon-trash"></i></button>
+				<button data-on="click:backgroundClear"><i class="fa fa-trash"></i></button>
 			</div> 
 
 			<div class="form-group">

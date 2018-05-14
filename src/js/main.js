@@ -13,7 +13,7 @@
 
 		// If no container is specified - used selectors (needed from customizing).
 		selectors: {
-			sidebar: '#sidebar',
+			actions: '#actions',
 			layers: '#layers',
 			panel: '#panel',
 			canvas: 'canvas'
@@ -27,7 +27,7 @@
 			onClose: function( ) { }
 		},
 
-		blocks: [ 'layers', 'sidebar' ],
+		blocks: [ 'layers', 'actions' ],
 		tabs: [ ],
 		lang: 'ru'
 	};

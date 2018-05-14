@@ -16,11 +16,9 @@
 		</div>
 	</div>
 	<div>
-		<ul id="fonts" class="nav nav-pills nav-stacked">
+		<ul id="fonts" class="list-group list-group-flush">
 			{% for item in fonts %}
-				<li>
-					{% include 'tabs/text-item.tpl' %}
-				</li>
+				{% include 'tabs/text-item.tpl' %}
 			{% endfor %}
 		</ul>
 	</div>

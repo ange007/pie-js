@@ -37,9 +37,6 @@
 			{
 				I18n.translations[ lang ] = this.editor.utils.config.load( 'locales/' + lang );
 			}
-
-			//
-			// I18n.currentLocale( );
 		}
 
 		// Reload Templatess

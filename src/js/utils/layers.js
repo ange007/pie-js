@@ -53,7 +53,7 @@
 			// Apply template
 			this.editor.$elements.layers.html( template )
 										.myData( { data: this, event: this, exlusive: true } )
-										.find( '.nav' ).sortable( { } );
+										.find( '.list-group' ).sortable( { } );
 
 			return this;
 		}

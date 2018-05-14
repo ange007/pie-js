@@ -41,20 +41,16 @@
 				}
 
 				// Template render
-				const sidebarTemplate = context.editor.utils.template.render( 'sidebar.tpl', { 'tabs': data } );
+				const actionsTemplate = context.editor.utils.template.render( 'actions.tpl', { 'tabs': data } );
 
 				//
-				const $sidebar = context.editor.$elements.sidebar;
+				const $actions = context.editor.$elements.actions;
 
 				// Display the template data
-				$sidebar.html( sidebarTemplate )
-						.on( 'click', '#navigation a[pie-target-tab]', function( event ) 
-				{
-					var targetTab = $( this ).attr( 'pie-target-tab' );
-					
-					// Tab activation
-					context._callFunction( targetTab, 'activateTab', [ ] );
-				} );
+				$actions.html( actionsTemplate )
+						.myData( { }, function( type, element, propName, data ) {
+							if( type === 'on' ) { context._callFunction( data[ 'value' ], data[ 'name' ], [ ] ); }
+						 } );
 			} );
 		}
 
@@ -74,7 +70,7 @@
 	{
 		constructor( editor )
 		{
-			this.className = this.constructor.name.charAt(0).toLowerCase( ) + this.constructor.name.slice( 1 );
+			this.className = this.constructor.name.charAt( 0 ).toLowerCase( ) + this.constructor.name.slice( 1 );
 			this.editor = editor;
 			this.canvas = editor.canvas;
 			this.tab = editor.$elements.tab;
@@ -95,7 +91,7 @@
 		{
 			// Template render
 			let templateHTML = this.editor.utils.template.render( 'tabs/' + this.className + '.tpl', this.data );
-
+			
 			// Apply template
 			this.tab.html( templateHTML );
 			

@@ -92,19 +92,14 @@
 											action: 'addImage',
 											arguments: './packs/stickers/' + i + '/' + item.file } );
 					}
-					
-					// stickerList = stickerList.concat( items );
 				}
 
 				// Template render
-				let stickersHTML = context.editor.utils.template.render( 'tabs/stickers.tpl', { 
+				context.editor.render( context.tab, 'tabs/stickers.tpl', $.extend( { }, context.data, { 
 					'active_category': category || 'all', 
 					'categories': context.categories, 
 					'stickers': stickerList 
-				} );
-
-				// Apply template
-				context.tab.html( stickersHTML );
+				} ) );
 			} );
 
 			return this;

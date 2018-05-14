@@ -59,7 +59,7 @@
 			
 			//
 			this.$elements = {
-				sidebar: $container.find( this.options.container !== undefined ? '#sidebar' : selectors.sidebar ),
+				actions: $container.find( this.options.container !== undefined ? '#actions' : selectors.actions ),
 				toolbar: $container.find( this.options.container !== undefined ? '#toolbar' : selectors.toolbar ),
 				layers: $container.find( this.options.container !== undefined ? '#layers' : selectors.layers ),
 				panel: $container.find( this.options.container !== undefined ? '#panel' : selectors.panel ),
@@ -229,6 +229,14 @@
 				context.canvas.calcOffset( );
 				context.canvas.renderAll( );
 			} ); 
+		}
+
+		// Render template
+		render( $element, template, data )
+		{
+			let renderTPL = this.utils.template.render( template, data );
+
+			return $element.html( renderTPL );
 		}
 		
 		// Get selected object

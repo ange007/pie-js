@@ -82,10 +82,10 @@
 				}
 
 				// Template render
-				let fontsHTML = context.editor.utils.template.render( 'tabs/text.tpl', { 'categories': fontCategories, 'fonts': fontList } );
-
-				// Apply template
-				context.tab.html( fontsHTML );
+				context.editor.render( context.tab, 'tabs/text.tpl', $.extend( { }, context.data, { 
+					'categories': fontCategories, 
+					'fonts': fontList
+				} ) );
 			} );
 		}
 
