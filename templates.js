@@ -1,3 +1,89 @@
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["actions.tpl"] = (function() {
+function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var parentTemplate = null;
+output += "<nav id=\"actions-menu\">\r\n\t<!--\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t-->\r\n\t<ul id=\"navigation\" class=\"nav nav-pills\">\r\n\t\t";
+frame = frame.push();
+var t_3 = runtime.contextOrFrameLookup(context, frame, "tabs");
+if(t_3) {t_3 = runtime.fromIterator(t_3);
+var t_1;
+if(runtime.isArray(t_3)) {
+var t_2 = t_3.length;
+for(t_1=0; t_1 < t_3.length; t_1++) {
+var t_4 = t_3[t_1][0];
+frame.set("[object Object]", t_3[t_1][0]);
+var t_5 = t_3[t_1][1];
+frame.set("[object Object]", t_3[t_1][1]);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\r\n\t\t\t<li class=\"nav-item text-center\">\r\n\t\t\t\t<a href=\"#\" class=\"nav-link\" data-on=\"activateTab\" data-on-value=\"";
+output += runtime.suppressValue(t_4, env.opts.autoescape);
+output += "\">\r\n\t\t\t\t\t";
+if(env.getFilter("length").call(context, runtime.memberLookup((t_5),"icon")) > 0) {
+output += runtime.suppressValue(env.getFilter("safe").call(context, runtime.memberLookup((t_5),"icon")), env.opts.autoescape);
+;
+}
+output += "\r\n\t\t\t\t\t<div>";
+output += runtime.suppressValue(runtime.memberLookup((t_5),"caption"), env.opts.autoescape);
+output += "</div>\r\n\t\t\t\t</a>\r\n\t\t\t</li>\r\n\t\t";
+;
+}
+} else {
+t_1 = -1;
+var t_2 = runtime.keys(t_3).length;
+for(var t_6 in t_3) {
+t_1++;
+var t_7 = t_3[t_6];
+frame.set("tabID", t_6);
+frame.set("tab", t_7);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\r\n\t\t\t<li class=\"nav-item text-center\">\r\n\t\t\t\t<a href=\"#\" class=\"nav-link\" data-on=\"activateTab\" data-on-value=\"";
+output += runtime.suppressValue(t_6, env.opts.autoescape);
+output += "\">\r\n\t\t\t\t\t";
+if(env.getFilter("length").call(context, runtime.memberLookup((t_7),"icon")) > 0) {
+output += runtime.suppressValue(env.getFilter("safe").call(context, runtime.memberLookup((t_7),"icon")), env.opts.autoescape);
+;
+}
+output += "\r\n\t\t\t\t\t<div>";
+output += runtime.suppressValue(runtime.memberLookup((t_7),"caption"), env.opts.autoescape);
+output += "</div>\r\n\t\t\t\t</a>\r\n\t\t\t</li>\r\n\t\t";
+;
+}
+}
+}
+frame = frame.pop();
+output += "\r\n\t</ul>\r\n</nav>";
+if(parentTemplate) {
+parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+} else {
+cb(null, output);
+}
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+
+})();
+})();
+
 (function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["layers.tpl"] = (function() {
 function root(env, context, frame, runtime, cb) {
 var lineno = null;
@@ -5,7 +91,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"panel panel-default\">\r\n\t<div class=\"panel-heading\">\r\n\t\t<h3 class=\"panel-title\">Layers</h3>\r\n\t</div>\r\n\t<div class=\"panel-body\">\r\n\t\t<ul class=\"nav nav-pills nav-stacked\">\r\n\t\t";
+output += "<div class=\"card bg-light\">\r\n\t<div class=\"card-header\">\r\n\t\tLayers\r\n\t</div>\r\n\t<div class=\"card-body\">\r\n\t\t<ul class=\"list-group\">\r\n\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "layers");
 if(t_3) {t_3 = runtime.fromIterator(t_3);
@@ -20,11 +106,11 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\r\n\t\t\t<li data-on=\"click:action( 'select' )\" data-on-value=\"";
+output += "\r\n\t\t\t<li class=\"list-group-item list-group-item-action layer\" data-on=\"click:action( 'select' )\" data-on-value=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
-output += "\">\r\n\t\t\t\t<a href=\"#\" class=\"layer\">\r\n\t\t\t\t\t";
+output += "\">\r\n\t\t\t\t";
 if(runtime.memberLookup((t_4),"type") == "image") {
-output += "\r\n\t\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 var t_5;
 t_5 = "picture";
 frame.set("icon", t_5, true);
@@ -34,12 +120,12 @@ context.setVariable("icon", t_5);
 if(frame.topLevel) {
 context.addExport("icon", t_5);
 }
-output += "\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t";
 ;
 }
 else {
 if(runtime.memberLookup((t_4),"type") == "text" || runtime.memberLookup((t_4),"type") == "textbox") {
-output += "\r\n\t\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 var t_6;
 t_6 = "font";
 frame.set("icon", t_6, true);
@@ -49,11 +135,11 @@ context.setVariable("icon", t_6);
 if(frame.topLevel) {
 context.addExport("icon", t_6);
 }
-output += "\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t";
 ;
 }
 else {
-output += "\r\n\t\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 var t_7;
 t_7 = "certificate";
 frame.set("icon", t_7, true);
@@ -63,28 +149,28 @@ context.setVariable("icon", t_7);
 if(frame.topLevel) {
 context.addExport("icon", t_7);
 }
-output += "\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t";
 ;
 }
 ;
 }
-output += "\r\n\t\t\t\t\t\r\n\t\t\t\t\t<div>\r\n\t\t\t\t\t\t<span class=\"type-icon glyphicon glyphicon-";
+output += "\r\n\t\t\t\t\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<span class=\"type-icon fa fa-";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "icon"), env.opts.autoescape);
-output += "\" aria-hidden=\"true\"></span>\r\n\t\t\t\t\t\t&nbsp;&nbsp;\r\n\t\t\t\t\t\t";
+output += "\" aria-hidden=\"true\"></span>\r\n\t\t\t\t\t&nbsp;&nbsp;\r\n\t\t\t\t\t";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
-output += "\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"text-right\">\r\n\t\t\t\t\t\t<div class=\"btn-group\" role=\"group\">\r\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default";
+output += "\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"text-right\">\r\n\t\t\t\t\t<div class=\"btn-group\" role=\"group\">\r\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default";
 output += runtime.suppressValue((runtime.memberLookup((t_4),"hide")?" btn-primary":""), env.opts.autoescape);
 output += "\" data-on=\"click:action( 'visible' )\" data-on-value=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
-output += "\"><span class=\"glyphicon ";
-output += runtime.suppressValue((runtime.memberLookup((t_4),"hide")?"glyphicon-eye-close":"glyphicon-eye-open"), env.opts.autoescape);
-output += "\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default";
+output += "\"><span class=\"fa ";
+output += runtime.suppressValue((runtime.memberLookup((t_4),"hide")?"fa-eye-slash":"fa-eye"), env.opts.autoescape);
+output += "\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default";
 output += runtime.suppressValue((runtime.memberLookup((t_4),"lock")?" btn-primary":""), env.opts.autoescape);
 output += "\" data-on=\"click:action( 'lock' )\" data-on-value=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
-output += "\"><span class=\"glyphicon glyphicon-lock\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default\" data-on=\"click:action( 'remove' )\" data-on-value=\"";
+output += "\"><span class=\"fa fa-lock\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-xs btn-default\" data-on=\"click:action( 'remove' )\" data-on-value=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"id"), env.opts.autoescape);
-output += "\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</a>\r\n\t\t\t</li>\r\n\t\t";
+output += "\"><span class=\"fa fa-trash\" aria-hidden=\"true\"></span></button>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</li>\r\n\t\t";
 ;
 }
 }
@@ -114,93 +200,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\"></div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row\">\r\n\t\t<div id=\"sidebar\">\r\n\r\n\t\t</div>\r\n\r\n\t\t<div id=\"tab\" class=\"col-sm\">\r\n\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\"></div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\"></div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<div id=\"splash\" aria-hidden=\"false\">\r\n\t<div id=\"splash-spinner\"></div>\r\n</div>\t";
-if(parentTemplate) {
-parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-} else {
-cb(null, output);
-}
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-root: root
-};
-
-})();
-})();
-
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["sidebar.tpl"] = (function() {
-function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var parentTemplate = null;
-output += "<nav id=\"side-menu\" class=\"bg-light\">\r\n\t<!--\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t-->\r\n\t<ul id=\"navigation\" class=\"nav nav-pills flex-column\">\r\n\t\t";
-frame = frame.push();
-var t_3 = runtime.contextOrFrameLookup(context, frame, "tabs");
-if(t_3) {t_3 = runtime.fromIterator(t_3);
-var t_1;
-if(runtime.isArray(t_3)) {
-var t_2 = t_3.length;
-for(t_1=0; t_1 < t_3.length; t_1++) {
-var t_4 = t_3[t_1][0];
-frame.set("[object Object]", t_3[t_1][0]);
-var t_5 = t_3[t_1][1];
-frame.set("[object Object]", t_3[t_1][1]);
-frame.set("loop.index", t_1 + 1);
-frame.set("loop.index0", t_1);
-frame.set("loop.revindex", t_2 - t_1);
-frame.set("loop.revindex0", t_2 - t_1 - 1);
-frame.set("loop.first", t_1 === 0);
-frame.set("loop.last", t_1 === t_2 - 1);
-frame.set("loop.length", t_2);
-output += "\r\n\t\t\t<li class=\"nav-item text-center\"><a href=\"#\" class=\"nav-link\" pie-target-tab=\"";
-output += runtime.suppressValue(t_4, env.opts.autoescape);
-output += "\">\r\n\t\t\t\t";
-if(env.getFilter("length").call(context, runtime.memberLookup((t_5),"icon")) > 0) {
-output += runtime.suppressValue(env.getFilter("safe").call(context, runtime.memberLookup((t_5),"icon")), env.opts.autoescape);
-;
-}
-output += "\r\n\t\t\t\t<div>";
-output += runtime.suppressValue(runtime.memberLookup((t_5),"caption"), env.opts.autoescape);
-output += "</div>\r\n\t\t\t</a></li>\r\n\t\t";
-;
-}
-} else {
-t_1 = -1;
-var t_2 = runtime.keys(t_3).length;
-for(var t_6 in t_3) {
-t_1++;
-var t_7 = t_3[t_6];
-frame.set("tabID", t_6);
-frame.set("tab", t_7);
-frame.set("loop.index", t_1 + 1);
-frame.set("loop.index0", t_1);
-frame.set("loop.revindex", t_2 - t_1);
-frame.set("loop.revindex0", t_2 - t_1 - 1);
-frame.set("loop.first", t_1 === 0);
-frame.set("loop.last", t_1 === t_2 - 1);
-frame.set("loop.length", t_2);
-output += "\r\n\t\t\t<li class=\"nav-item text-center\"><a href=\"#\" class=\"nav-link\" pie-target-tab=\"";
-output += runtime.suppressValue(t_6, env.opts.autoescape);
-output += "\">\r\n\t\t\t\t";
-if(env.getFilter("length").call(context, runtime.memberLookup((t_7),"icon")) > 0) {
-output += runtime.suppressValue(env.getFilter("safe").call(context, runtime.memberLookup((t_7),"icon")), env.opts.autoescape);
-;
-}
-output += "\r\n\t\t\t\t<div>";
-output += runtime.suppressValue(runtime.memberLookup((t_7),"caption"), env.opts.autoescape);
-output += "</div>\r\n\t\t\t</a></li>\r\n\t\t";
-;
-}
-}
-}
-frame = frame.pop();
-output += "\r\n\t</ul>\r\n</nav>";
+output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\"></div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row ml-0 mr-0 pl-0 pr-0\">\r\n\t\t<div id=\"actions\" class=\"vertical left bg-light\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\r\n\t\t<div id=\"tab\" class=\"col-sm-2\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm-2 mr-0 pr-0\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div id=\"splash\" aria-hidden=\"false\">\r\n\t\t<div id=\"splash-spinner\"></div>\r\n\t</div>\t\r\n</div>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -229,7 +229,7 @@ output += "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<d
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.load"), env.opts.autoescape);
 output += "<span class=\"sr-only\">(current)</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:save\">";
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.save"), env.opts.autoescape);
-output += "</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline  my-2 my-lg-0\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"glyphicon glyphicon-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</DIV>\r\n</nav>\r\n\r\n\r\n\r\n";
+output += "</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline my-2 my-lg-0\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"fa fa-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</DIV>\r\n</nav>\r\n\r\n\r\n\r\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -489,7 +489,11 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<a href=\"#\" \r\n\t";
+output += "<a href=\"#\" \r\n\tclass=\"";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("class"))(env, context, frame, runtime, function(t_2,t_1) {
+if(t_2) { cb(t_2); return; }
+output += t_1;
+output += "\"\r\n\t";
 if(env.getFilter("length").call(context, runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"action")) > 0) {
 output += " pie-action=\"";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"action"), env.opts.autoescape);
@@ -503,17 +507,45 @@ output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLook
 output += "\"";
 ;
 }
-output += "\r\n>\r\n\r\n\t";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_2,t_1) {
-if(t_2) { cb(t_2); return; }
-output += t_1;
+output += "\r\n\t";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("custom"))(env, context, frame, runtime, function(t_4,t_3) {
+if(t_4) { cb(t_4); return; }
+output += t_3;
+output += "\r\n>\r\n\t";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_6,t_5) {
+if(t_6) { cb(t_6); return; }
+output += t_5;
 output += "\r\n</a>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
 cb(null, output);
 }
-});
+})})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_class(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_custom(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+cb(null, output);
+;
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
@@ -531,6 +563,8 @@ cb(null, output);
 }
 }
 return {
+b_class: b_class,
+b_custom: b_custom,
 b_content: b_content,
 root: root
 };
@@ -645,16 +679,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"card scrollable-panel bg-dark\">\r\n\t<div class=\"card-body\" pie-tab=\"";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
-output += "\">\r\n\t\t";
+output += "<div class=\"card scrollable-panel bg-dark\">\r\n\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "title")) > 0) {
-output += "\t\r\n\t\t\t<h5 class=\"card-title\">";
+output += "\r\n\t\t<h5 class=\"card-header\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
-output += "</h5>\r\n\t\t";
+output += "</h5>\r\n\t";
 ;
 }
-output += "\r\n\r\n\t\t";
+output += "\r\n\t<div class=\"card-body\" pie-tab=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
+output += "\">\r\n\t\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "items")) > 0) {
 output += "\r\n\t\t\t<ul class=\"card-text nav nav-pills nav-stacked\">\r\n\t\t\t\t";
 frame = frame.push();
@@ -955,7 +989,7 @@ frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
 output += "\r\n\t";
 if(env.getFilter("length").call(context, runtime.memberLookup((t_4),"name")) > 0) {
-output += "\r\n\t<li><a href=\"#\" style=\"font-family: ";
+output += "\r\n\t\t<li>\r\n\t\t\t<a href=\"#\" style=\"font-family: ";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
 output += ";\" onclick=\"pie.getEditor( '";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
@@ -963,9 +997,9 @@ output += "' ).";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "tabID"), env.opts.autoescape);
 output += ".addText( '";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
-output += "' );\">\r\n\t\t";
+output += "' );\">\r\n\t\t\t\t";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
-output += "\r\n\t</a></li>\r\n\t";
+output += "\r\n\t\t\t</a>\r\n\t\t</li>\r\n\t";
 ;
 }
 output += "\r\n";
@@ -1004,15 +1038,51 @@ for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("class"))(env, context, frame, runtime, function(t_5,t_4) {
 if(t_5) { cb(t_5); return; }
 output += t_4;
+output += "\r\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("custom"))(env, context, frame, runtime, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += t_6;
+output += "\r\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_9,t_8) {
+if(t_9) { cb(t_9); return; }
+output += t_8;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
 cb(null, output);
 }
-})});
+})})})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_class(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "list-group-item list-group-item-action";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_custom(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "style=\"font-family: ";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"caption"), env.opts.autoescape);
+output += ";\"";
+cb(null, output);
+;
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
@@ -1023,11 +1093,7 @@ var colno = null;
 var output = "";
 try {
 var frame = frame.push(true);
-output += "\r\n\t<span href=\"#\" style=\"font-family: ";
 output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"caption"), env.opts.autoescape);
-output += ";\">\r\n\t\t";
-output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "item")),"caption"), env.opts.autoescape);
-output += "\r\n\t</span>\r\n";
 cb(null, output);
 ;
 } catch (e) {
@@ -1035,6 +1101,8 @@ cb(null, output);
 }
 }
 return {
+b_class: b_class,
+b_custom: b_custom,
 b_content: b_content,
 root: root
 };
@@ -1122,7 +1190,7 @@ output += "</option>\r\n\t\t\t\t";
 }
 }
 frame = frame.pop();
-output += "\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"f-search\">Search</label>\r\n\t\t\t<input type=\"text\" id=\"f-search\" class=\"form-control\" />\r\n\t\t</div>\r\n\t</div>\r\n\t<div>\r\n\t\t<ul id=\"fonts\" class=\"nav nav-pills nav-stacked\">\r\n\t\t\t";
+output += "\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"f-search\">Search</label>\r\n\t\t\t<input type=\"text\" id=\"f-search\" class=\"form-control\" />\r\n\t\t</div>\r\n\t</div>\r\n\t<div>\r\n\t\t<ul id=\"fonts\" class=\"list-group list-group-flush\">\r\n\t\t\t";
 frame = frame.push();
 var t_15 = runtime.contextOrFrameLookup(context, frame, "fonts");
 if(t_15) {t_15 = runtime.fromIterator(t_15);
@@ -1137,7 +1205,7 @@ frame.set("loop.revindex0", t_14 - t_13 - 1);
 frame.set("loop.first", t_13 === 0);
 frame.set("loop.last", t_13 === t_14 - 1);
 frame.set("loop.length", t_14);
-output += "\r\n\t\t\t\t<li>\r\n\t\t\t\t\t";
+output += "\r\n\t\t\t\t";
 var tasks = [];
 tasks.push(
 function(callback) {
@@ -1157,7 +1225,7 @@ output += result;
 callback(null);
 });
 env.waterfall(tasks, function(){
-output += "\r\n\t\t\t\t</li>\r\n\t\t\t";
+output += "\r\n\t\t\t";
 });
 }
 }

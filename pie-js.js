@@ -35,7 +35,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 		// If no container is specified - used selectors (needed from customizing).
 		selectors: {
-			sidebar: '#sidebar',
+			actions: '#actions',
 			layers: '#layers',
 			panel: '#panel',
 			canvas: 'canvas'
@@ -49,7 +49,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			onClose: function onClose() {}
 		},
 
-		blocks: ['layers', 'sidebar'],
+		blocks: ['layers', 'actions'],
 		tabs: [],
 		lang: 'ru'
 	};
@@ -135,7 +135,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 				//
 				this.$elements = {
-					sidebar: $container.find(this.options.container !== undefined ? '#sidebar' : selectors.sidebar),
+					actions: $container.find(this.options.container !== undefined ? '#actions' : selectors.actions),
 					toolbar: $container.find(this.options.container !== undefined ? '#toolbar' : selectors.toolbar),
 					layers: $container.find(this.options.container !== undefined ? '#layers' : selectors.layers),
 					panel: $container.find(this.options.container !== undefined ? '#panel' : selectors.panel),
@@ -309,6 +309,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					context.canvas.calcOffset();
 					context.canvas.renderAll();
 				});
+			}
+
+			// Render template
+
+		}, {
+			key: 'render',
+			value: function render($element, template, data) {
+				var renderTPL = this.utils.template.render(template, data);
+
+				return $element.html(renderTPL);
 			}
 
 			// Get selected object
@@ -543,9 +553,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				if (lang !== 'en') {
 					I18n.translations[lang] = this.editor.utils.config.load('locales/' + lang);
 				}
-
-				//
-				// I18n.currentLocale( );
 			}
 
 			// Reload Templatess
@@ -753,17 +760,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					}
 
 					// Template render
-					var sidebarTemplate = context.editor.utils.template.render('sidebar.tpl', { 'tabs': data });
+					var actionsTemplate = context.editor.utils.template.render('actions.tpl', { 'tabs': data });
 
 					//
-					var $sidebar = context.editor.$elements.sidebar;
+					var $actions = context.editor.$elements.actions;
 
 					// Display the template data
-					$sidebar.html(sidebarTemplate).on('click', '#navigation a[pie-target-tab]', function (event) {
-						var targetTab = $(this).attr('pie-target-tab');
-
-						// Tab activation
-						context._callFunction(targetTab, 'activateTab', []);
+					$actions.html(actionsTemplate).myData({}, function (type, element, propName, data) {
+						if (type === 'on') {
+							context._callFunction(data['value'], data['name'], []);
+						}
 					});
 				});
 			}
@@ -927,7 +933,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				var template = this.editor.utils.template.render('layers.tpl', { 'layers': this.list });
 
 				// Apply template
-				this.editor.$elements.layers.html(template).myData({ data: this, event: this, exlusive: true }).find('.nav').sortable({});
+				this.editor.$elements.layers.html(template).myData({ data: this, event: this, exlusive: true }).find('.list-group').sortable({});
 
 				return this;
 			}
@@ -1127,10 +1133,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					}
 
 					// Template render
-					var fontsHTML = context.editor.utils.template.render('tabs/text.tpl', { 'categories': fontCategories, 'fonts': fontList });
-
-					// Apply template
-					context.tab.html(fontsHTML);
+					context.editor.render(context.tab, 'tabs/text.tpl', $.extend({}, context.data, {
+						'categories': fontCategories,
+						'fonts': fontList
+					}));
 				});
 			}
 
@@ -1283,19 +1289,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 								action: 'addImage',
 								arguments: './packs/stickers/' + i + '/' + item.file });
 						}
-
-						// stickerList = stickerList.concat( items );
 					}
 
 					// Template render
-					var stickersHTML = context.editor.utils.template.render('tabs/stickers.tpl', {
+					context.editor.render(context.tab, 'tabs/stickers.tpl', $.extend({}, context.data, {
 						'active_category': category || 'all',
 						'categories': context.categories,
 						'stickers': stickerList
-					});
-
-					// Apply template
-					context.tab.html(stickersHTML);
+					}));
 				});
 
 				return this;

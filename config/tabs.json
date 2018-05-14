@@ -1,12 +1,17 @@
 {
+	"basics": {
+		"caption": "Basics", 
+		"title": "Basics",
+		"icon": "<span class='fa fa-font' aria-hidden='true'></span>"
+	},
 	"text": {
 		"caption": "Text", 
 		"title": "Text",
-		"icon": "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"
+		"icon": "<span class='fa fa-font' aria-hidden='true'></span>"
 	},
 	"stickers": {
 		"caption": "Stickers",
 		"title": "Stickers",
-		"icon": "<span class='glyphicon glyphicon-picture' aria-hidden='true'></span>"
+		"icon": "<span class='fa fa-image' aria-hidden='true'></span>"
 	}
 }
