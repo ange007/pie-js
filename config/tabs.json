@@ -2,7 +2,17 @@
 	"basics": {
 		"caption": "Basics", 
 		"title": "Basics",
-		"icon": "<span class='fa fa-font' aria-hidden='true'></span>"
+		"icon": "<span class='fa fa-font' aria-hidden='true'></span>",
+		"items": [ 
+			{
+				"caption": "Resize",
+				"action": "showResize"
+			},
+			{
+				"caption": "Background color",
+				"action": "showBackgroundColor"
+			}
+		]
 	},
 	"text": {
 		"caption": "Text", 

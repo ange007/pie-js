@@ -5,7 +5,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<nav id=\"actions-menu\">\r\n\t<!--\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t-->\r\n\t<ul id=\"navigation\" class=\"nav nav-pills\">\r\n\t\t";
+output += "<nav>\r\n\t<!--\r\n\t<div class=\"navbar-header\">\r\n\t\t<div class=\"brand-wrapper\">\r\n\t\t\t<button type=\"button\" class=\"navbar-toggle\">\r\n\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t\t<span class=\"icon-bar\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t</div>\r\n\t-->\r\n\t<ul id=\"navigation\" class=\"nav nav-pills\">\r\n\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "tabs");
 if(t_3) {t_3 = runtime.fromIterator(t_3);
@@ -200,7 +200,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\"></div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row ml-0 mr-0 pl-0 pr-0\">\r\n\t\t<div id=\"actions\" class=\"vertical left bg-light\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\r\n\t\t<div id=\"tab\" class=\"col-sm-2\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm-2 mr-0 pr-0\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div id=\"splash\" aria-hidden=\"false\">\r\n\t\t<div id=\"splash-spinner\"></div>\r\n\t</div>\t\r\n</div>";
+output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\">\r\n\t\t<!-- -->\r\n\t</div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row ml-0 mr-0 pl-0 pr-0\">\r\n\t\t<div id=\"actions\" class=\"vertical left bg-light row col-md-auto ml-0 mr-0 pl-1 pr-1\">\r\n\t\t\t<div id=\"actions-menu\"class=\"col-md\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"tab\" class=\"col-md ml-0 mr-0 pl-0 pr-0\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"panel\" class=\"col-md ml-0 mr-0 pl-0 pr-0\" style=\"display: none;\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm-2 mr-0 pr-0\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div id=\"splash\" aria-hidden=\"false\">\r\n\t\t<div id=\"splash-spinner\"></div>\r\n\t</div>\t\r\n</div>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -229,7 +229,12 @@ output += "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<d
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.load"), env.opts.autoescape);
 output += "<span class=\"sr-only\">(current)</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:save\">";
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.save"), env.opts.autoescape);
-output += "</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline my-2 my-lg-0\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"fa fa-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</DIV>\r\n</nav>\r\n\r\n\r\n\r\n";
+output += "</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t";
+if(runtime.contextOrFrameLookup(context, frame, "demo")) {
+output += "\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Actions Panel Position<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('left')\">Left</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('right')\">Right</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('top')\">Top</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('bottom')\">Bottom</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Toolbar Position<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:toolbarPosition('top')\">Top</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:toolbarPosition('bottom')\">Bottom</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t";
+;
+}
+output += "\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline my-2 my-lg-0\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"fa fa-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</DIV>\r\n</nav>\r\n\r\n\r\n\r\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -362,21 +367,26 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"panel panel-default\">\n\t<div class=\"panel-heading\">\n\t\t";
+output += "<div class=\"card bg-dark\">\n\t";
+if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "title")) > 0) {
+output += "\n\t\t<h5 class=\"card-header\">";
 (parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_2,t_1) {
 if(t_2) { cb(t_2); return; }
 output += t_1;
-output += "\n\t\t<button type=\"button\" class=\"close\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n\t</div>\n\t<div class=\"panel-body\">\n\t\t";
+output += "</h5>\n\t";
+});
+}
+output += "\n\t<div class=\"card-body\">\n\t\t";
 (parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
 if(t_4) { cb(t_4); return; }
 output += t_3;
-output += "\n\t</div>\n</div>\n";
+output += "\n\t</div>\n</div>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
 cb(null, output);
 }
-})});
+});
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
@@ -489,7 +499,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<a href=\"#\" \r\n\tclass=\"";
+output += "\r\n<a href=\"#\" \r\n\tclass=\"";
 (parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("class"))(env, context, frame, runtime, function(t_2,t_1) {
 if(t_2) { cb(t_2); return; }
 output += t_1;
@@ -586,15 +596,32 @@ for(var t_1 in parentTemplate.blocks) {
 context.addBlock(t_1, parentTemplate.blocks[t_1]);
 }
 output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_5,t_4) {
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("class"))(env, context, frame, runtime, function(t_5,t_4) {
 if(t_5) { cb(t_5); return; }
 output += t_4;
+output += "\r\n\r\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += t_6;
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
 cb(null, output);
 }
-})});
+})})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_class(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "list-group-item list-group-item-action";
+cb(null, output);
+;
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
@@ -622,6 +649,7 @@ cb(null, output);
 }
 }
 return {
+b_class: b_class,
 b_content: b_content,
 root: root
 };
@@ -690,7 +718,7 @@ output += "\r\n\t<div class=\"card-body\" pie-tab=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
 output += "\">\r\n\t\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "items")) > 0) {
-output += "\r\n\t\t\t<ul class=\"card-text nav nav-pills nav-stacked\">\r\n\t\t\t\t";
+output += "\r\n\t\t\t<ul id=\"navigation\" class=\"list-group\">\r\n\t\t\t\t";
 frame = frame.push();
 var t_3 = runtime.contextOrFrameLookup(context, frame, "items");
 if(t_3) {t_3 = runtime.fromIterator(t_3);
@@ -705,7 +733,7 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "\r\n\t\t\t\t\t<li>\r\n\t\t\t\t\t\t";
+output += "\r\n\t\t\t\t\t";
 var tasks = [];
 tasks.push(
 function(callback) {
@@ -725,12 +753,12 @@ output += result;
 callback(null);
 });
 env.waterfall(tasks, function(){
-output += "\r\n\t\t\t\t\t</li>\r\n\t\t\t\t";
+output += "\r\n\t\t\t\t";
 });
 }
 }
 frame = frame.pop();
-output += "\r\n\t\t\t<ul>\r\n\t\t";
+output += "\r\n\t\t\t</ul>\r\n\t\t";
 ;
 }
 else {
@@ -1190,7 +1218,7 @@ output += "</option>\r\n\t\t\t\t";
 }
 }
 frame = frame.pop();
-output += "\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"f-search\">Search</label>\r\n\t\t\t<input type=\"text\" id=\"f-search\" class=\"form-control\" />\r\n\t\t</div>\r\n\t</div>\r\n\t<div>\r\n\t\t<ul id=\"fonts\" class=\"list-group list-group-flush\">\r\n\t\t\t";
+output += "\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"f-search\">Search</label>\r\n\t\t\t<input type=\"text\" id=\"f-search\" class=\"form-control\" />\r\n\t\t</div>\r\n\t</div>\r\n\t<div>\r\n\t\t<ul id=\"fonts\" class=\"list-group\">\r\n\t\t\t";
 frame = frame.push();
 var t_15 = runtime.contextOrFrameLookup(context, frame, "fonts");
 if(t_15) {t_15 = runtime.fromIterator(t_15);

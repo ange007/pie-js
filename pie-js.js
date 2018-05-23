@@ -33,11 +33,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	pie.defaultOptions = {
 		container: undefined, // The main container in which the editor will be located
 
-		// If no container is specified - used selectors (needed from customizing).
+		// If no container is specified - used selectors 
+		// (needed from customizing)
 		selectors: {
-			actions: '#actions',
-			layers: '#layers',
+			toolbar: '#toolbar',
+			actions: '#actions-menu',
 			panel: '#panel',
+			tab: '#tab',
+			layers: '#layers',
 			canvas: 'canvas'
 		},
 
@@ -51,7 +54,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 		blocks: ['layers', 'actions'],
 		tabs: [],
-		lang: 'ru'
+		lang: 'ru',
+		demo: false
 	};
 
 	// Editor list
@@ -100,7 +104,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 			// Initializing additional libraries
 			this.utils = {
-				config: new pie.utils.Config(this),
 				tabs: new pie.utils.Tabs(this),
 				template: new pie.utils.Template(this),
 				layers: new pie.utils.Layers(this),
@@ -134,14 +137,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				}
 
 				//
-				this.$elements = {
-					actions: $container.find(this.options.container !== undefined ? '#actions' : selectors.actions),
-					toolbar: $container.find(this.options.container !== undefined ? '#toolbar' : selectors.toolbar),
-					layers: $container.find(this.options.container !== undefined ? '#layers' : selectors.layers),
-					panel: $container.find(this.options.container !== undefined ? '#panel' : selectors.panel),
-					tab: $container.find(this.options.container !== undefined ? '#tab' : selectors.tab),
-					canvas: $container.find(this.options.container !== undefined ? 'canvas' : selectors.canvas)
-				};
+				for (var element in this.options.selectors) {
+					this.$elements[element] = $container.find(this.options.selectors[element]);
+				}
 
 				// Create fabricJS
 				this.canvas = new fabric.Canvas(this.$elements.canvas[0]);
@@ -164,7 +162,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: '_getConfig',
 			value: function _getConfig(config, callback) {
-				this.utils.config.load('config/' + config, callback);
+				pie.helpers.config.load('config/' + config, callback);
 			}
 
 			// Save to File
@@ -401,6 +399,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 	var pie = global.pie = global.pie || {};
 
+	// BaseClass
+	pie.BaseClass = function BaseClass(editor) {
+		_classCallCheck(this, BaseClass);
+
+		this.editor = editor;
+		this.className = this.constructor.name.charAt(0).toLowerCase() + this.constructor.name.slice(1);
+		this.canvas = editor.canvas;
+	};
+})(window);
+
+(function (global) {
+	'use strict';
+
+	var pie = global.pie = global.pie || {};
+
 	// Init scope
 	if (!pie.helpers) {
 		pie.helpers = {};
@@ -426,7 +439,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 			// Render template
 			var context = this,
-			    template = editor.helpers.template.render('panels/' + tpl + '.tpl', data);
+			    template = editor.utils.template.render('panels/' + tpl + '.tpl', data);
 
 			//
 			this.element = $(this.selector);
@@ -460,53 +473,41 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	var pie = global.pie = global.pie || {};
 
 	// Init scope
-	if (!pie.utils) {
+	if (!pie.helpers) {
 		pie.utils = {};
 	}
-	if (pie.utils.Config) {
-		console.warn('pie.utils.Config is already defined.');return;
+	if (pie.helpers.config) {
+		console.warn('pie.helpers.config is already defined.');return;
 	}
 
 	// Config
-	pie.utils.Config = function () {
-		function Config(editor) {
-			_classCallCheck(this, Config);
-
-			this.editor = editor;
-		}
-
+	pie.helpers.config = {
 		//
+		load: function load(file, callback) {
+			var data = {
+				url: './' + file + '.json',
+				dataType: 'json'
+			};
 
+			//
+			if (typeof callback === 'function') {
+				$.ajax($.extend({}, data, {
+					success: function success(response) {
+						var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
 
-		_createClass(Config, [{
-			key: 'load',
-			value: function load(file, callback) {
-				var data = {
-					url: './' + file + '.json',
-					dataType: 'json'
-				};
+						callback(object);
+					}
+				}));
+			} else {
+				var response = $.ajax($.extend({}, data, { async: false })).responseText;
+				var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
 
-				//
-				if (typeof callback === 'function') {
-					$.ajax($.extend({}, data, {
-						success: function success(response) {
-							var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
-
-							callback(object);
-						}
-					}));
-				} else {
-					var response = $.ajax($.extend({}, data, { async: false })).responseText;
-					var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
-
-					return object;
-				}
+				return object;
 			}
-		}]);
-
-		return Config;
-	}();
+		}
+	};
 })(window);
+
 (function (global) {
 	'use strict';
 
@@ -521,18 +522,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	}
 
 	// Template
-	pie.utils.Template = function () {
+	pie.utils.Template = function (_pie$BaseClass) {
+		_inherits(Template, _pie$BaseClass);
+
 		function Template(editor) {
 			_classCallCheck(this, Template);
 
-			this.editor = editor;
-			this.language = '';
+			//
+			var _this = _possibleConstructorReturn(this, (Template.__proto__ || Object.getPrototypeOf(Template)).call(this, editor));
+
+			_this.language = '';
 
 			//
 			var customEnv = nunjucks.configure();
 			customEnv.addFilter('i18n', function (str, data) {
 				return I18n.t(str, data);
 			});
+			return _this;
 		}
 
 		// Change Language
@@ -547,11 +553,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				I18n.fallbacks = true;
 				I18n.defaultLocale = 'en';
 				I18n.locale = lang;
-				I18n.translations['en'] = this.editor.utils.config.load('locales/en');
+				I18n.translations['en'] = pie.helpers.config.load('locales/en');
 
 				// Load other language
 				if (lang !== 'en') {
-					I18n.translations[lang] = this.editor.utils.config.load('locales/' + lang);
+					I18n.translations[lang] = pie.helpers.config.load('locales/' + lang);
 				}
 			}
 
@@ -587,7 +593,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}]);
 
 		return Template;
-	}();
+	}(pie.BaseClass);
 })(window);
 (function (global) {
 	'use strict';
@@ -603,23 +609,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	}
 
 	// Toolbar
-	pie.utils.Toolbar = function () {
-		//
-		function Toolbar(editor) {
+	pie.utils.Toolbar = function (_pie$BaseClass2) {
+		_inherits(Toolbar, _pie$BaseClass2);
+
+		function Toolbar() {
 			_classCallCheck(this, Toolbar);
 
-			this.editor = editor;
+			return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));
 		}
-
-		// Load Toolbar
-
 
 		_createClass(Toolbar, [{
 			key: 'load',
+
+			// Load Toolbar
 			value: function load() {
 				// Template render
 				var context = this,
-				    template = this.editor.utils.template.render('toolbar.tpl', {});
+				    template = this.editor.utils.template.render('toolbar.tpl', { demo: this.editor.options.demo });
 
 				// Set template and two-way communication
 				this.editor.$elements.toolbar.html(template);
@@ -662,12 +668,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				});
 			}
 
-			// Round
-
-		}, {
-			key: 'rounded',
-			value: function rounded() {}
-
 			// Add image
 
 		}, {
@@ -693,7 +693,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'exportToJSON',
 			value: function exportToJSON() {
-				alert('export');
 				this.editor.exportToJSON();
 			}
 
@@ -708,7 +707,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}]);
 
 		return Toolbar;
-	}();
+	}(pie.BaseClass);
 })(window);
 (function (global) {
 	'use strict';
@@ -724,19 +723,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	}
 
 	// Tabs
-	pie.utils.Tabs = function () {
-		//
-		function Tabs(editor) {
+	pie.utils.Tabs = function (_pie$BaseClass3) {
+		_inherits(Tabs, _pie$BaseClass3);
+
+		function Tabs() {
 			_classCallCheck(this, Tabs);
 
-			this.editor = editor;
+			return _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).apply(this, arguments));
 		}
-
-		// Loading the contents of tabs
-
 
 		_createClass(Tabs, [{
 			key: 'load',
+
+			// Loading the contents of tabs
 			value: function load() {
 				var context = this;
 
@@ -745,8 +744,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					// Calling the load event of the tab in the required module
 					// @todo: Here we need to filter tabs depending on the settings of the editor
 					var data = {};
+
 					for (var tabID in config) {
 						var tabName = tabID.charAt(0).toUpperCase() + tabID.slice(1);
+
+						console.log(tabName);
 
 						//
 						if (pie.tabs.hasOwnProperty(tabID)) {
@@ -786,18 +788,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}]);
 
 		return Tabs;
-	}();
+	}(pie.BaseClass);
 
 	// Base class of the tab
-	pie.utils.BasicTab = function () {
+	pie.utils.BasicTab = function (_pie$BaseClass4) {
+		_inherits(BasicTab, _pie$BaseClass4);
+
 		function BasicTab(editor) {
 			_classCallCheck(this, BasicTab);
 
-			this.className = this.constructor.name.charAt(0).toLowerCase() + this.constructor.name.slice(1);
-			this.editor = editor;
-			this.canvas = editor.canvas;
-			this.tab = editor.$elements.tab;
-			this.data = {};
+			//
+			var _this4 = _possibleConstructorReturn(this, (BasicTab.__proto__ || Object.getPrototypeOf(BasicTab)).call(this, editor));
+
+			_this4.tab = editor.$elements.tab;
+			_this4.data = {};
+			return _this4;
 		}
 
 		// Tab loading
@@ -821,7 +826,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				var templateHTML = this.editor.utils.template.render('tabs/' + this.className + '.tpl', this.data);
 
 				// Apply template
-				this.tab.html(templateHTML);
+				this.tab.addClass('active').html(templateHTML);
 
 				// Set events
 				this.setEvents();
@@ -832,7 +837,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}, {
 			key: 'deactivateTab',
 			value: function deactivateTab() {
-				this.tab.off();
+				//
+				this.tab.removeClass('active').off();
+
 				// pie.helpers.panels.hide( );
 			}
 
@@ -873,7 +880,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}]);
 
 		return BasicTab;
-	}();
+	}(pie.BaseClass);
 })(window);
 (function (global) {
 	'use strict';
@@ -889,15 +896,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	}
 
 	// Layers
-	pie.utils.Layers = function () {
+	pie.utils.Layers = function (_pie$BaseClass5) {
+		_inherits(Layers, _pie$BaseClass5);
+
 		function Layers(editor) {
 			_classCallCheck(this, Layers);
 
-			//
-			this.editor = editor;
-
 			// List of layers
-			this.list = [];
+			var _this5 = _possibleConstructorReturn(this, (Layers.__proto__ || Object.getPrototypeOf(Layers)).call(this, editor));
+			//
+
+
+			_this5.list = [];
+			return _this5;
 		}
 
 		// List of objects on the canvas
@@ -1041,8 +1052,127 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}]);
 
 		return Layers;
-	}();
+	}(pie.BaseClass);
 })(window);
+
+(function (global) {
+	'use strict';
+
+	var pie = global.pie = global.pie || {};
+
+	// Init scope
+	if (!pie.tabs) {
+		pie.tabs = {};
+	}
+	if (pie.tabs.Basics) {
+		console.warn('pie.tabs.basics is already defined.');return;
+	}
+
+	//
+	pie.tabs.Basics = function (_pie$utils$BasicTab) {
+		_inherits(Basics, _pie$utils$BasicTab);
+
+		function Basics() {
+			_classCallCheck(this, Basics);
+
+			return _possibleConstructorReturn(this, (Basics.__proto__ || Object.getPrototypeOf(Basics)).apply(this, arguments));
+		}
+
+		_createClass(Basics, [{
+			key: 'activateTab',
+
+			// Activating the tab
+			value: function activateTab($tab, data) {
+				// Parent call
+				_get(Basics.prototype.__proto__ || Object.getPrototypeOf(Basics.prototype), 'activateTab', this).call(this, $tab, data);
+
+				// Template render
+				this.editor.render(this.tab, 'tabs/basics.tpl', $.extend({}, this.data, {}));
+
+				//
+				return data;
+			}
+
+			// Background color selection Window
+
+		}, {
+			key: 'showBackgroundColor',
+			value: function showBackgroundColor() {
+				var context = this,
+				    panel = pie.helpers.panels.show(this.editor, 'basics', { title: 'Выбор цвета', type: 'color' });
+
+				// Establish two-way communication
+				$(panel).myData(this.canvas, function (type, element, propName, value) {
+					if (type === 'set') {
+						context.canvas.renderAll.bind(context.canvas)();
+					}
+				});
+			}
+
+			// Background image selection window
+
+		}, {
+			key: 'showBackgroundImage',
+			value: function showBackgroundImage() {}
+
+			// Image on background
+
+		}, {
+			key: 'backgroundImage',
+			value: function backgroundImage(image) {
+				this.canvas.setBackgroundImage(image, this.canvas.renderAll.bind(this.canvas), {
+					originX: 'left',
+					originY: 'top'
+				});
+			}
+
+			// Canvas resize
+
+		}, {
+			key: 'showResize',
+			value: function showResize() {
+				var context = this,
+				    panel = pie.helpers.panels.show(this.editor, 'basics', { title: 'Resize', type: 'resize', width: this.canvas.getWidth(), height: this.canvas.getHeight() });
+
+				// Establish two-way communication
+				$(panel).myData(this.canvas, function (type, element, propName, value) {});
+			}
+
+			// 
+
+		}, {
+			key: 'showRound',
+			value: function showRound() {}
+
+			// Rounded the corners of the canvas
+
+		}, {
+			key: 'rounded',
+			value: function rounded() {}
+
+			// Image selection window
+
+		}, {
+			key: 'showAddImage',
+			value: function showAddImage() {}
+
+			// Add image
+
+		}, {
+			key: 'addImage',
+			value: function addImage(image) {
+				var context = this;
+
+				fabric.Image.fromURL(image, function (oImg) {
+					context.canvas.add(oImg);
+				});
+			}
+		}]);
+
+		return Basics;
+	}(pie.utils.BasicTab);
+})(window);
+
 (function (global) {
 	'use strict';
 
@@ -1057,8 +1187,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	}
 
 	// Text
-	pie.tabs.Text = function (_pie$utils$BasicTab) {
-		_inherits(Text, _pie$utils$BasicTab);
+	pie.tabs.Text = function (_pie$utils$BasicTab2) {
+		_inherits(Text, _pie$utils$BasicTab2);
 
 		function Text() {
 			_classCallCheck(this, Text);
@@ -1199,8 +1329,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	}
 
 	// Stickers
-	pie.tabs.Stickers = function (_pie$utils$BasicTab2) {
-		_inherits(Stickers, _pie$utils$BasicTab2);
+	pie.tabs.Stickers = function (_pie$utils$BasicTab3) {
+		_inherits(Stickers, _pie$utils$BasicTab3);
 
 		function Stickers() {
 			_classCallCheck(this, Stickers);

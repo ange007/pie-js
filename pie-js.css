@@ -54,35 +54,46 @@ html, body {
       -webkit-transition: left .2s ease-in-out;
       transition: left .2s ease-in-out;
       /*padding-left: 0;
-			padding-right: 0;*/ }
+			padding-right: 0;*/
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease; }
       #editor #wrapper #actions.vertical {
-        height: 100%;
-        min-width: 130px;
-        max-width: 130px;
-        -webkit-box-orient: vertical !important;
-        -webkit-box-direction: normal !important;
-            -ms-flex-direction: column !important;
-                flex-direction: column !important; }
-        #editor #wrapper #actions.vertical #actions-menu .nav {
-          margin-bottom: 20px; }
-        #editor #wrapper #actions.vertical #actions-menu .nav-item {
-          width: 100%; }
-        #editor #wrapper #actions.vertical #actions-menu .nav-item + .nav-item {
-          margin-left: 0; }
-        #editor #wrapper #actions.vertical #actions-menu .nav-link {
-          border-radius: 0; }
+        /*height: 100%;
+				flex-direction: column !important;*/ }
+        #editor #wrapper #actions.vertical #actions-menu {
+          min-width: 130px;
+          max-width: 130px; }
+          #editor #wrapper #actions.vertical #actions-menu .nav {
+            margin-bottom: 20px; }
+          #editor #wrapper #actions.vertical #actions-menu .nav-item {
+            width: 100%; }
+          #editor #wrapper #actions.vertical #actions-menu .nav-item + .nav-item {
+            margin-left: 0; }
+          #editor #wrapper #actions.vertical #actions-menu .nav-link {
+            border-radius: 0; }
+        #editor #wrapper #actions.vertical #tab {
+          height: 100%;
+          width: 0px; }
+          #editor #wrapper #actions.vertical #tab.active {
+            width: 300px; }
       #editor #wrapper #actions.horizontal {
         width: 100%;
         min-height: 80px;
-        max-height: 80px; }
-        #editor #wrapper #actions.horizontal #actions-menu .nav {
-          margin-bottom: 20px; }
-        #editor #wrapper #actions.horizontal #actions-menu .nav-item {
-          height: 100%; }
-        #editor #wrapper #actions.horizontal #actions-menu .nav-item + .nav-item {
-          margin-left: 0; }
-        #editor #wrapper #actions.horizontal #actions-menu .nav-link {
-          border-radius: 0; }
+        max-height: 160px; }
+        #editor #wrapper #actions.horizontal #actions-menu {
+          min-height: 80px;
+          max-height: 80px; }
+          #editor #wrapper #actions.horizontal #actions-menu .nav {
+            margin-bottom: 20px; }
+          #editor #wrapper #actions.horizontal #actions-menu .nav-item {
+            height: 100%; }
+          #editor #wrapper #actions.horizontal #actions-menu .nav-item + .nav-item {
+            margin-left: 0; }
+          #editor #wrapper #actions.horizontal #actions-menu .nav-link {
+            border-radius: 0; }
+        #editor #wrapper #actions.horizontal #tab.active {
+          min-height: 100px;
+          height: 100px; }
       #editor #wrapper #actions #navigation {
         height: 100%;
         padding-right: 0px;
@@ -92,11 +103,12 @@ html, body {
            -moz-user-select: none;
             -ms-user-select: none;
                 user-select: none; }
-    #editor #wrapper #tab {
-      height: 100%;
-      padding-left: 0px; }
-      #editor #wrapper #tab .card {
-        height: 100%; }
+      #editor #wrapper #actions #tab {
+        padding-left: 0px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease; }
+        #editor #wrapper #actions #tab .card {
+          height: 100%; }
     #editor #wrapper #canvas-wrapper {
       height: 100%; }
       #editor #wrapper #canvas-wrapper #viewport {
