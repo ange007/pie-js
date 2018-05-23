@@ -4,18 +4,12 @@
 	let pie = global.pie = global.pie || { };
 
 	// Init scope
-	if( !pie.utils ) { pie.utils = { }; }
-	if( pie.utils.Config ) { console.warn( 'pie.utils.Config is already defined.' ); return; }
+	if( !pie.helpers ) { pie.utils = { }; }
+	if( pie.helpers.config ) { console.warn( 'pie.helpers.config is already defined.' ); return; }
 
 	// Config
-	pie.utils.Config = 
-	class Config 
+	pie.helpers.config =
 	{
-		constructor( editor )
-		{
-			this.editor = editor;
-		}
-
 		//
 		load( file, callback )
 		{

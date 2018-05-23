@@ -72,12 +72,11 @@ html, body {
 			transition: left .2s ease-in-out;
 			/*padding-left: 0;
 			padding-right: 0;*/
+			transition: all 0.5s ease;
 
 			&.vertical {
-				height: 100%;
-				min-width: 130px;
-				max-width: 130px;
-				flex-direction: column !important;
+				/*height: 100%;
+				flex-direction: column !important;*/
 				
 				&.left {
 
@@ -88,7 +87,9 @@ html, body {
 				}
 
 				#actions-menu {
-
+					min-width: 130px;
+					max-width: 130px;
+					
 					.nav {
 						margin-bottom: 20px;
 					}
@@ -105,12 +106,22 @@ html, body {
 						border-radius: 0;
 					 }
 				}
+
+				#tab {
+					height: 100%;
+					width: 0px;
+
+					&.active {
+						//min-width: 430px;
+						width: 300px;
+					}
+				}
 			}
 
 			&.horizontal {
 				width: 100%;
 				min-height: 80px;
-				max-height: 80px;
+				max-height: 160px;
 
 				&.top {
 
@@ -121,6 +132,8 @@ html, body {
 				}
 
 				#actions-menu {
+					min-height: 80px;
+					max-height: 80px;
 				
 					.nav {
 						margin-bottom: 20px;
@@ -138,6 +151,13 @@ html, body {
 						border-radius: 0;
 					 }
 				}
+
+				#tab {
+					&.active {
+						min-height: 100px;
+						height: 100px;
+					}
+				}
 			}
 
 			#navigation {
@@ -147,14 +167,18 @@ html, body {
 				z-index: 10;
 				user-select: none;
 			}
-		}
 
-		#tab {
-			height: 100%;
-			padding-left: 0px;
+			#tab {
+				padding-left: 0px;
+				transition: all 0.3s ease;
 
-			.card {
-				height: 100%;
+				&.active {
+					
+				}
+
+				.card {
+					height: 100%;
+				}
 			}
 		}
 

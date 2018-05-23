@@ -29,7 +29,7 @@
 				
 			// Render template
 			let context = this,
-				template = editor.helpers.template.render( 'panels/' + tpl + '.tpl', data );
+				template = editor.utils.template.render( 'panels/' + tpl + '.tpl', data );
 			
 			//
 			this.element = $( this.selector );

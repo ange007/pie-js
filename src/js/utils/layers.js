@@ -9,12 +9,12 @@
 
 	// Layers
 	pie.utils.Layers = 
-	class Layers 
+	class Layers extends pie.BaseClass 
 	{
 		constructor( editor )
 		{
 			//
-			this.editor = editor;
+			super( editor );
 			
 			// List of layers
 			this.list = [ ];

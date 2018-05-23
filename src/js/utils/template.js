@@ -9,11 +9,13 @@
 
 	// Template
 	pie.utils.Template = 
-	class Template
+	class Template extends pie.BaseClass 
 	{
 		constructor( editor )
 		{
-			this.editor = editor;
+			super( editor );
+
+			//
 			this.language = '';
 
 			//
@@ -30,12 +32,12 @@
 			I18n.fallbacks = true;
 			I18n.defaultLocale = 'en';
 			I18n.locale = lang;
-			I18n.translations[ 'en' ] = this.editor.utils.config.load( 'locales/en' );
+			I18n.translations[ 'en' ] = pie.helpers.config.load( 'locales/en' );
 
 			// Load other language
 			if( lang !== 'en' ) 
 			{
-				I18n.translations[ lang ] = this.editor.utils.config.load( 'locales/' + lang );
+				I18n.translations[ lang ] = pie.helpers.config.load( 'locales/' + lang );
 			}
 		}
 
@@ -66,5 +68,4 @@
 			I18n.t( str, data );
 		}
 	};
-
 } )( window );

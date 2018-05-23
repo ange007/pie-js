@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div>
-		<ul id="fonts" class="list-group list-group-flush">
+		<ul id="fonts" class="list-group">
 			{% for item in fonts %}
 				{% include 'tabs/text-item.tpl' %}
 			{% endfor %}

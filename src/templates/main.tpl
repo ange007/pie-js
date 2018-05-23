@@ -1,13 +1,21 @@
 <div id="editor">	
-	<div id="toolbar"></div>
+	<div id="toolbar">
+		<!-- -->
+	</div>
 	
 	<div id="wrapper" class="container-fluid row ml-0 mr-0 pl-0 pr-0">
-		<div id="actions" class="vertical left bg-light">
-			<!-- -->
-		</div>
+		<div id="actions" class="vertical left bg-light row col-md-auto ml-0 mr-0 pl-1 pr-1">
+			<div id="actions-menu"class="col-md">
+				<!-- -->
+			</div>
 
-		<div id="tab" class="col-sm-2">
-			<!-- -->
+			<div id="tab" class="col-md ml-0 mr-0 pl-0 pr-0">
+				<!-- -->
+			</div>
+
+			<div id="panel" class="col-md ml-0 mr-0 pl-0 pr-0" style="display: none;">
+				<!-- -->
+			</div>
 		</div>
 
 		<div id="canvas-wrapper" class="col-md">

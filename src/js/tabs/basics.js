@@ -11,6 +11,19 @@
 	pie.tabs.Basics =
 	class Basics extends pie.utils.BasicTab
 	{
+		// Activating the tab
+		activateTab( $tab, data )
+		{
+			// Parent call
+			super.activateTab( $tab, data );
+
+			// Template render
+			this.editor.render( this.tab, 'tabs/basics.tpl', $.extend( { }, this.data, { } ) );
+
+			//
+			return data;
+		}
+
 		// Background color selection Window
 		showBackgroundColor( )
 		{
@@ -82,24 +95,6 @@
 			{
 				context.canvas.add( oImg );
 			} );	
-		}
-		
-		// Save
-		save( format )
-		{
-			this.editor.save( format );
-		}
-
-		// Export to JSON
-		exportToJSON( )
-		{
-			this.editor.exportToJSON( );
-		}
-		
-		// Import from JSON
-		importFromJSON( json )
-		{
-			this.editor.importFromJSON( json );
 		}
 	};
 } )( window );

@@ -8,13 +8,31 @@
 				<a class="nav-link" href="#" data-on="click:save">{{ 'toolbar.save'|i18n }}</a>
 			</li>
 			<li class="nav-item dropdown">
-				<a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Other<span class="caret"></span></a>
+				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Other<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a class="nav-link" href="#" data-on="click:importFromJSON">Import from JSON</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a class="nav-link" href="#" data-on="click:exportToJSON">Export to JSON</a></li>
 				</ul>
 			</li>
+			{% if demo %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions Panel Position<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a class="nav-link" href="#" data-on="click:actionsPanelPosition('left')">Left</a></li>
+					<li><a class="nav-link" href="#" data-on="click:actionsPanelPosition('right')">Right</a></li>
+					<li><a class="nav-link" href="#" data-on="click:actionsPanelPosition('top')">Top</a></li>
+					<li><a class="nav-link" href="#" data-on="click:actionsPanelPosition('bottom')">Bottom</a></li>
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Toolbar Position<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a class="nav-link" href="#" data-on="click:toolbarPosition('top')">Top</a></li>
+					<li><a class="nav-link" href="#" data-on="click:toolbarPosition('bottom')">Bottom</a></li>
+				</ul>
+			</li>
+			{% endif %}
 		</ul>
 
 		<div id="control-panel" class="form-inline my-2 my-lg-0">

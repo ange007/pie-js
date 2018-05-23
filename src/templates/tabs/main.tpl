@@ -4,13 +4,11 @@
 	{% endif %}
 	<div class="card-body" pie-tab="{{ id }}">
 		{% if items|length > 0 %}
-			<ul class="card-text nav nav-pills nav-stacked">
+			<ul id="navigation" class="list-group">
 				{% for item in items %}
-					<li>
-						{% include 'tabs/' + id + '-item.tpl' %}
-					</li>
+					{% include 'tabs/' + id + '-item.tpl' %}
 				{% endfor %}
-			<ul>
+			</ul>
 		{% else %}
 			{% block content %} {% endblock %}
 		{% endif %}

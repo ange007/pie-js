@@ -1,9 +1,8 @@
-<div class="panel panel-default">
-	<div class="panel-heading">
-		{% block title %}{% endblock %}
-		<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	</div>
-	<div class="panel-body">
+<div class="card bg-dark">
+	{% if title|length > 0 %}
+		<h5 class="card-header">{% block title %}{% endblock %}</h5>
+	{% endif %}
+	<div class="card-body">
 		{% block content %}{% endblock %}
 	</div>
 </div>

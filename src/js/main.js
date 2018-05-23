@@ -11,11 +11,14 @@
 	pie.defaultOptions = { 
 		container: undefined, // The main container in which the editor will be located
 
-		// If no container is specified - used selectors (needed from customizing).
+		// If no container is specified - used selectors 
+		// (needed from customizing)
 		selectors: {
-			actions: '#actions',
-			layers: '#layers',
+			toolbar:  '#toolbar',
+			actions: '#actions-menu',
 			panel: '#panel',
+			tab: '#tab',
+			layers: '#layers',
 			canvas: 'canvas'
 		},
 
@@ -29,7 +32,8 @@
 
 		blocks: [ 'layers', 'actions' ],
 		tabs: [ ],
-		lang: 'ru'
+		lang: 'ru',
+		demo: false
 	};
 	
 	// Editor list
@@ -55,11 +59,18 @@
 } )( window );
 
 //= editor.js
+//= baseClass.js
+
 //= helpers/panels.js
-//= utils/config.js
+//= helpers/config.js
+
 //= utils/template.js
 //= utils/toolbar.js
 //= utils/tabs.js
 //= utils/layers.js
+
+//= tabs/basics.js
+//= tabs/filters.js
+//= tabs/shapes.js
 //= tabs/text.js
 //= tabs/stickers.js

@@ -5,24 +5,18 @@
 
 	// Init scope
 	if( !pie.utils ) { pie.utils = { }; }
-	if( pie.utils.Toolbar ) { console.warn( 'pie.utils.Toolbar is already defined.' );	return; }
+	if( pie.utils.Toolbar ) { console.warn( 'pie.utils.Toolbar is already defined.' ); return; }
 
 	// Toolbar
 	pie.utils.Toolbar = 
-	class Toolbar
+	class Toolbar extends pie.BaseClass 
 	{
-		//
-		constructor( editor )
-		{
-			this.editor = editor;
-		}
-		
 		// Load Toolbar
 		load( )
 		{
 			// Template render
 			let context = this,
-				template = this.editor.utils.template.render( 'toolbar.tpl', { } );
+				template = this.editor.utils.template.render( 'toolbar.tpl', { demo: this.editor.options.demo } );
 
 			// Set template and two-way communication
 			this.editor.$elements.toolbar.html( template );
@@ -67,16 +61,10 @@
 			} );
 		}
 
-		// Round
-		rounded( )
-		{
-
-		}
-
 		// Add image
 		addImage( image )
 		{
-			var context = this;
+			let context = this;
 
 			fabric.Image.fromURL( image, function( oImg ) 
 			{
@@ -93,7 +81,6 @@
 		//
 		exportToJSON( )
 		{
-			alert( 'export' );
 			this.editor.exportToJSON( );
 		}
 		

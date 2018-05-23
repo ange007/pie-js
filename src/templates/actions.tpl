@@ -1,4 +1,4 @@
-<nav id="actions-menu">
+<nav>
 	<!--
 	<div class="navbar-header">
 		<div class="brand-wrapper">

@@ -9,14 +9,8 @@
 
 	// Tabs
 	pie.utils.Tabs =
-	class Tabs 
+	class Tabs extends pie.BaseClass 
 	{
-		//
-		constructor( editor ) 
-		{
-			this.editor = editor;
-		}
-		
 		// Loading the contents of tabs
 		load( )
 		{
@@ -28,9 +22,12 @@
 				// Calling the load event of the tab in the required module
 				// @todo: Here we need to filter tabs depending on the settings of the editor
 				let data = { };
+				
 				for( let tabID in config ) 
 				{
 					let tabName = tabID.charAt( 0 ).toUpperCase( ) + tabID.slice( 1 );
+
+					console.log( tabName );
 
 					//
 					if( pie.tabs.hasOwnProperty( tabID ) ) { context.editor.tabs[ tabID ] = new pie.tabs[ tabID ]( context.editor ); }
@@ -66,13 +63,13 @@
 
 	// Base class of the tab
 	pie.utils.BasicTab =
-	class BasicTab
+	class BasicTab extends pie.BaseClass 
 	{
 		constructor( editor )
 		{
-			this.className = this.constructor.name.charAt( 0 ).toLowerCase( ) + this.constructor.name.slice( 1 );
-			this.editor = editor;
-			this.canvas = editor.canvas;
+			super( editor );
+
+			//
 			this.tab = editor.$elements.tab;
 			this.data = { };
 		}
@@ -93,7 +90,8 @@
 			let templateHTML = this.editor.utils.template.render( 'tabs/' + this.className + '.tpl', this.data );
 			
 			// Apply template
-			this.tab.html( templateHTML );
+			this.tab.addClass( 'active' )
+					.html( templateHTML );
 			
 			// Set events
 			this.setEvents( );
@@ -101,8 +99,11 @@
 
 		// Tab deactivating
 		deactivateTab( )
-		{
-			this.tab.off( );
+		{			
+			//
+			this.tab.removeClass( 'active' )
+					.off( );
+
 			// pie.helpers.panels.hide( );
 		}
 		

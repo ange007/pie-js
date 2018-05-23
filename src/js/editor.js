@@ -26,7 +26,6 @@
 
 			// Initializing additional libraries
 			this.utils = {
-				config: 	new pie.utils.Config( this ),
 				tabs:		new pie.utils.Tabs( this ),
 				template:	new pie.utils.Template( this ),
 				layers:		new pie.utils.Layers( this ),
@@ -56,16 +55,12 @@
 				// Display the template data
 				$container = $( template ).appendTo( this.options.container );
 			}
-			
+
 			//
-			this.$elements = {
-				actions: $container.find( this.options.container !== undefined ? '#actions' : selectors.actions ),
-				toolbar: $container.find( this.options.container !== undefined ? '#toolbar' : selectors.toolbar ),
-				layers: $container.find( this.options.container !== undefined ? '#layers' : selectors.layers ),
-				panel: $container.find( this.options.container !== undefined ? '#panel' : selectors.panel ),
-				tab: $container.find( this.options.container !== undefined ? '#tab' : selectors.tab ),
-				canvas: $container.find( this.options.container !== undefined ? 'canvas' : selectors.canvas )
-			};
+			for( let element in this.options.selectors  )
+			{
+				this.$elements[ element ] = $container.find( this.options.selectors[ element ] );
+			}
 			
 			// Create fabricJS
 			this.canvas = new fabric.Canvas( this.$elements.canvas[ 0 ] );
@@ -86,7 +81,7 @@
 		// Getting Settings
 		_getConfig( config, callback )
 		{
-			this.utils.config.load( 'config/' + config, callback );
+			pie.helpers.config.load( 'config/' + config, callback );
 		}
 		
 		// Save to File
