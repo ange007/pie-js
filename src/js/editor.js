@@ -63,7 +63,7 @@
 			}
 			
 			// Create fabricJS
-			this.canvas = new fabric.Canvas( this.$elements.canvas[ 0 ] );
+			this.canvas = new fabric.Canvas( this.$elements[ 'canvas' ][ 0 ] );
 			
 			// Loading the tabs content
 			this.utils.tabs.load( );
@@ -188,7 +188,7 @@
 				}
 				else
 				{
-					let imageString = canvas.toDataURL( { format: format, quality: 0.8 } );
+					let imageString = this.canvas.toDataURL( { format: format, quality: 0.8 } );
 					
 					this._saveToFile( this.id + '.' + format, imageString );
 				}
@@ -233,6 +233,18 @@
 
 			return $element.html( renderTPL );
 		}
+
+		//
+		zoom( down )
+		{
+			let factor = down ? 0.9 : 1.1;
+
+			this.canvas.setZoom( this.canvas.getZoom( ) * factor );
+			this.canvas.setWidth( this.canvas.width * factor );
+			this.canvas.setHeight( this.canvas.height * factor );
+
+			return Math.round( this.canvas.getZoom( ) * factor * 100 );
+		}
 		
 		// Get selected object
 		getSelected( ) 
@@ -255,7 +267,7 @@
 		setActiveStyle( styleName, value, object )
 		{
 			object = object || this.activeObject;
-			if( !object ) return;
+			if( !object ) { return; }
 
 			if( object.setSelectionStyles && object.isEditing ) 
 			{

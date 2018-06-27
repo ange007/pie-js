@@ -14,12 +14,13 @@
 		// If no container is specified - used selectors 
 		// (needed from customizing)
 		selectors: {
-			toolbar:  '#toolbar',
-			actions: '#actions-menu',
-			panel: '#panel',
-			tab: '#tab',
-			layers: '#layers',
-			canvas: 'canvas'
+			'toolbar': '#toolbar',
+			'actions': '#actions',
+			'actions-menu': '#actions-menu',
+			'panel': '#panel',
+			'tab': '#tab',
+			'layers': '#layers',
+			'canvas': 'canvas'
 		},
 
 		//

@@ -131,6 +131,28 @@ html, body {
 
 				}
 
+				.list-group {
+					display: flex;
+					flex-direction: row;
+				}
+				
+				.list-group-item {
+					margin-bottom: 0;
+					margin-right: 0;
+					 border-right-width: 0;
+				}
+
+				.list-group-item:first-child {
+					border-top-right-radius: 0;
+					border-bottom-left-radius: 4px;
+				}
+
+				.list-group-item:last-child {
+					border-top-right-radius: 4px;
+					border-bottom-left-radius: 0;
+					border-right-width: 1px;
+				}
+
 				#actions-menu {
 					min-height: 80px;
 					max-height: 80px;

@@ -51,9 +51,9 @@
 			let template = this.editor.utils.template.render( 'layers.tpl', { 'layers': this.list } );
 			
 			// Apply template
-			this.editor.$elements.layers.html( template )
-										.myData( { data: this, event: this, exlusive: true } )
-										.find( '.list-group' ).sortable( { } );
+			this.editor.$elements[ 'layers' ].html( template )
+											.myData( { data: this, event: this, exlusive: true } )
+											.find( '.list-group' ).sortable( { } );
 
 			return this;
 		}
@@ -65,10 +65,10 @@
 			const obj = this.editor.canvas.item( id );
 			
 			//
-			if( action[0] === 'remove' ) { this.remove( $element, obj ); }
-			else if( action[0] === 'visible' ) { this.hide( $element, obj ); }
-			else if( action[0] === 'lock' ) { this.lock( $element, obj ); }
-			else if( action[0] === 'select' ) { this.select( $element, obj ); }
+			if( action[ 0 ] === 'remove' ) { this.remove( $element, obj ); }
+			else if( action[ 0 ] === 'visible' ) { this.hide( $element, obj ); }
+			else if( action[ 0 ] === 'lock' ) { this.lock( $element, obj ); }
+			else if( action[ 0 ] === 'select' ) { this.select( $element, obj ); }
 
 			return false;
 		}

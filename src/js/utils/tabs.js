@@ -41,7 +41,7 @@
 				const actionsTemplate = context.editor.utils.template.render( 'actions.tpl', { 'tabs': data } );
 
 				//
-				const $actions = context.editor.$elements.actions;
+				const $actions = context.editor.$elements[ 'actions-menu' ];
 
 				// Display the template data
 				$actions.html( actionsTemplate )
@@ -70,7 +70,7 @@
 			super( editor );
 
 			//
-			this.tab = editor.$elements.tab;
+			this.tab = editor.$elements[ 'tab' ];
 			this.data = { };
 		}
 		

@@ -19,10 +19,10 @@
 				template = this.editor.utils.template.render( 'toolbar.tpl', { demo: this.editor.options.demo } );
 
 			// Set template and two-way communication
-			this.editor.$elements.toolbar.html( template );
+			this.editor.$elements[ 'toolbar' ].html( template );
 
 			// Menu
-			this.editor.$elements.toolbar.find( '#menu' ).myData( this, function( type, element, propName, value ) 
+			this.editor.$elements[ 'toolbar' ].find( '#menu' ).myData( this, function( type, element, propName, value ) 
 			{
 				if( type === 'set' )
 				{
@@ -31,7 +31,7 @@
 			} );
 
 			// Canvas
-			this.editor.$elements.toolbar.find( '#control-panel' ).myData( { data: this.editor.canvas, event: this }, function( type, element, propName, value ) 
+			this.editor.$elements[ 'toolbar' ].find( '#control-panel' ).myData( { data: this.editor.canvas, event: this }, function( type, element, propName, value ) 
 			{
 				if( type === 'set' )
 				{
@@ -89,6 +89,41 @@
 		{
 			alert( 'import' );
 			this.editor.importFromJSON( json );
+		}
+
+		//
+		actionsPanelPosition( target, id, args )
+		{
+			let $element = this.editor.$elements[ 'actions' ];
+			let position = args[ 0 ];
+
+			$( $element ).removeClass( 'top bottom left right vertical horizontal' )
+						.addClass( ( position === 'left' || position === 'right' ) ? 'vertical' : 'horizontal' )
+						.addClass( position );
+		}
+
+		//
+		toolbarPosition( target, id, args )
+		{
+			let $element = this.editor.$elements[ 'toolbar' ];
+			let position = args[ 0 ];
+
+			$( $element ).removeClass( 'top bottom' )
+						.addClass( position );
+
+			if( position === 'bottom' )
+			{
+
+			}
+		}
+
+		//
+		zoom( target, id, args )
+		{
+			let state = ( args[ 0 ] === 'true' );
+			let percentage = this.editor.zoom( state );
+
+			$( '#zoom-value' ).html( 'Zoom ' + percentage + '%' );
 		}
 	};
 } )( window );
