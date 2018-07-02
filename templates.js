@@ -200,7 +200,7 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\">\r\n\t\t<!-- -->\r\n\t</div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row ml-0 mr-0 pl-0 pr-0\">\r\n\t\t<div id=\"actions\" class=\"vertical left bg-light row col-md-auto ml-0 mr-0 pl-1 pr-1\">\r\n\t\t\t<div id=\"actions-menu\"class=\"col-md\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"tab\" class=\"col-md ml-0 mr-0 pl-0 pr-0\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"panel\" class=\"col-md ml-0 mr-0 pl-0 pr-0\" style=\"display: none;\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm-2 mr-0 pr-0\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div id=\"splash\" aria-hidden=\"false\">\r\n\t\t<div id=\"splash-spinner\"></div>\r\n\t</div>\t\r\n</div>";
+output += "<div id=\"editor\">\t\r\n\t<div id=\"toolbar\">\r\n\t\t<!-- -->\r\n\t</div>\r\n\t\r\n\t<div id=\"wrapper\" class=\"container-fluid row ml-0 mr-0 pl-0 pr-0\">\r\n\t\t<div id=\"actions\" class=\"vertical left bg-light row col-md-auto ml-0 mr-0 pl-1 pr-1\">\r\n\t\t\t<div id=\"actions-menu\"class=\"col-md-12\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"tab\" class=\"col-md ml-0 mr-0 pl-0 pr-0\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"panel\" class=\"col-md ml-0 mr-0 pl-0 pr-0\" style=\"display: none;\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n\t\t<div id=\"canvas-wrapper\" class=\"col-md\">\r\n\t\t\t<div id=\"top-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"viewport\">\r\n\t\t\t\t<canvas id=\"canvas\" width=\"500\" height=\"300\"></canvas>\r\n\r\n\t\t\t\t<div id=\"ruler\"></div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div id=\"bottom-panel\">\r\n\t\t\t\t<!-- -->\r\n\t\t\t</div>\t\r\n\t\t</div>\r\n\r\n\t\t<div id=\"layers\" class=\"col-sm-2 mr-0 pr-0\">\r\n\t\t\t<!-- -->\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div id=\"splash\" aria-hidden=\"false\">\r\n\t\t<div id=\"splash-spinner\"></div>\r\n\t</div>\t\r\n</div>";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -225,16 +225,16 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<div class=\"collapse navbar-collapse\">\r\n\t\t<ul id=\"menu\" class=\"nav navbar-nav mr-auto\">\r\n\t\t\t<li class=\"nav-item active\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">";
+output += "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n\t<div class=\"collapse navbar-collapse\">\r\n\t\t<ul id=\"menu\" class=\"nav navbar-nav mr-auto\">\r\n\t\t\t<li class=\"nav-item active\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">\r\n\t\t\t\t\t<i class=\"fas fa-upload\"></i>&nbsp;";
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.load"), env.opts.autoescape);
-output += "<span class=\"sr-only\">(current)</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:save\">";
+output += "<span class=\"sr-only\">(current)</span>\r\n\t\t\t\t</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\">\r\n\t\t\t\t<a class=\"nav-link\" href=\"#\" data-on=\"click:save\">\r\n\t\t\t\t\t<i class=\"fas fa-save\"></i>&nbsp;";
 output += runtime.suppressValue(env.getFilter("i18n").call(context, "toolbar.save"), env.opts.autoescape);
-output += "</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t";
+output += "\r\n\t\t\t\t</a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Other<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:importFromJSON\">Import from JSON</a></li>\r\n\t\t\t\t\t<li role=\"separator\" class=\"divider\"></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:exportToJSON\">Export to JSON</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t";
 if(runtime.contextOrFrameLookup(context, frame, "demo")) {
 output += "\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Actions Panel Position<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('left')\">Left</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('right')\">Right</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('top')\">Top</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:actionsPanelPosition('bottom')\">Bottom</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Toolbar Position<span class=\"caret\"></span></a>\r\n\t\t\t\t<ul class=\"dropdown-menu\">\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:toolbarPosition('top')\">Top</a></li>\r\n\t\t\t\t\t<li><a class=\"nav-link\" href=\"#\" data-on=\"click:toolbarPosition('bottom')\">Bottom</a></li>\r\n\t\t\t\t</ul>\r\n\t\t\t</li>\r\n\t\t\t";
 ;
 }
-output += "\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline my-2 my-lg-0\">\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"fa fa-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</DIV>\r\n</nav>\r\n\r\n\r\n\r\n";
+output += "\r\n\t\t</ul>\r\n\r\n\t\t<div id=\"control-panel\" class=\"form-inline my-2 my-lg-0 btn-toolbar\" role=\"toolbar\">\r\n\t\t\t<div class=\"input-group\">\r\n\t\t\t\t<div class=\"btn-toolbar mx-auto pr-3\" role=\"toolbar\">\r\n\t\t\t\t\t<div class=\"input-group-prepend\">\r\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-light\" title=\"Zoom UP\" data-on=\"zoom(false)\"><i class=\"fas fa-plus-circle\"></i></button>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div id=\"zoom-value\" class=\"input-group-text\">\r\n\t\t\t\t\t\tZoom 100%\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"input-group-append\">\r\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-light\" title=\"Zoom DOWN\" data-on=\"zoom(true)\"><i class=\"fas fa-minus-circle\"></i></button>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\r\n\t\t\t\t<button type=\"button\" class=\"btn btn-light\" title=\"History\"><i class=\"fas fa-history\"></i></button>\r\n\t\t\t\t<button type=\"button\" class=\"btn btn-light\" title=\"Layers\"><i class=\"fas fa-clone\"></i></button>\r\n\t\t\t</div>\r\n\r\n\t\t\t<!--\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"clear-bg\" class=\"navbar-text nopadding-top-bottom\">Clear BG:</label>\r\n\t\t\t\t<button data-on=\"click:backgroundClear\"><i class=\"fa fa-trash\"></i></button>\r\n\t\t\t</div> \r\n\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"bg\" class=\"navbar-text nopadding-top-bottom\">BG:</label>\r\n\t\t\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t\t\t</div> \r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"height\" class=\"navbar-text nopadding-top-bottom\">H:</label>\r\n\t\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\"/>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"form-group\">\r\n\t\t\t\t<label for=\"width\" class=\"navbar-text nopadding-top-bottom\">W:</label>\r\n\t\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t\t</div>\r\n\t\t\t-->\r\n\t\t</div>\r\n\t</div>\r\n</nav>\r\n\r\n\r\n\r\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
@@ -246,246 +246,6 @@ cb(null, output);
 }
 }
 return {
-root: root
-};
-
-})();
-})();
-
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["panels/basics.tpl"] = (function() {
-function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var parentTemplate = null;
-env.getTemplate("panels/main.tpl", true, "panels/basics.tpl", false, function(t_3,t_2) {
-if(t_3) { cb(t_3); return; }
-parentTemplate = t_2
-for(var t_1 in parentTemplate.blocks) {
-context.addBlock(t_1, parentTemplate.blocks[t_1]);
-}
-output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_5,t_4) {
-if(t_5) { cb(t_5); return; }
-output += t_4;
-output += "\r\n\r\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
-if(t_7) { cb(t_7); return; }
-output += t_6;
-if(parentTemplate) {
-parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-} else {
-cb(null, output);
-}
-})})});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_title(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var frame = frame.push(true);
-output += "\r\n\t";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
-output += "\r\n";
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_content(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var frame = frame.push(true);
-output += "\r\n\t";
-if(runtime.contextOrFrameLookup(context, frame, "type") === "crop") {
-output += "\r\n\r\n\t";
-;
-}
-else {
-if(runtime.contextOrFrameLookup(context, frame, "type") === "rotate") {
-output += "\r\n\r\n\t";
-;
-}
-else {
-if(runtime.contextOrFrameLookup(context, frame, "type") === "resize") {
-output += "\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"width\">Width</label>\r\n\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t</div>\r\n\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"height\">Height</label>\r\n\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\" />\r\n\t\t</div>\r\n\t";
-;
-}
-else {
-if(runtime.contextOrFrameLookup(context, frame, "type") === "round") {
-output += "\r\n\r\n\t";
-;
-}
-else {
-if(runtime.contextOrFrameLookup(context, frame, "type") === "color") {
-output += "\r\n\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t";
-;
-}
-else {
-if(runtime.contextOrFrameLookup(context, frame, "type") === "image") {
-output += "\r\n\r\n\t";
-;
-}
-;
-}
-;
-}
-;
-}
-;
-}
-;
-}
-output += "\r\n";
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-b_title: b_title,
-b_content: b_content,
-root: root
-};
-
-})();
-})();
-
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["panels/main.tpl"] = (function() {
-function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var parentTemplate = null;
-output += "<div class=\"card bg-dark\">\n\t";
-if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "title")) > 0) {
-output += "\n\t\t<h5 class=\"card-header\">";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_2,t_1) {
-if(t_2) { cb(t_2); return; }
-output += t_1;
-output += "</h5>\n\t";
-});
-}
-output += "\n\t<div class=\"card-body\">\n\t\t";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-output += t_3;
-output += "\n\t</div>\n</div>";
-if(parentTemplate) {
-parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-} else {
-cb(null, output);
-}
-});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_title(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var frame = frame.push(true);
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_content(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var frame = frame.push(true);
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-b_title: b_title,
-b_content: b_content,
-root: root
-};
-
-})();
-})();
-
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["panels/text.tpl"] = (function() {
-function root(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var parentTemplate = null;
-env.getTemplate("panels/main.tpl", true, "panels/text.tpl", false, function(t_3,t_2) {
-if(t_3) { cb(t_3); return; }
-parentTemplate = t_2
-for(var t_1 in parentTemplate.blocks) {
-context.addBlock(t_1, parentTemplate.blocks[t_1]);
-}
-output += "\n\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_5,t_4) {
-if(t_5) { cb(t_5); return; }
-output += t_4;
-output += "\n\n";
-(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
-if(t_7) { cb(t_7); return; }
-output += t_6;
-if(parentTemplate) {
-parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-} else {
-cb(null, output);
-}
-})})});
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_title(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var frame = frame.push(true);
-output += "\n\t";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
-output += "\n";
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-function b_content(env, context, frame, runtime, cb) {
-var lineno = null;
-var colno = null;
-var output = "";
-try {
-var frame = frame.push(true);
-output += "\n<div class=\"btn-toolbar\" role=\"toolbar\">\n\t<div class=\"btn-group\"> \n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Left Align\">\n\t\t\t<span class=\"glyphicon glyphicon-align-left\" aria-hidden=\"true\"></span>\n\t\t</button>\n\t\t\n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Center Align\">\n\t\t\t<span class=\"glyphicon glyphicon-align-center\" aria-hidden=\"true\"></span>\n\t\t</button> \n\t\t\n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Right Align\">\n\t\t\t<span class=\"glyphicon glyphicon-align-right\" aria-hidden=\"true\"></span>\n\t\t</button>\n\t\t\n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Justify\">\n\t\t\t<span class=\"glyphicon glyphicon-align-justify\" aria-hidden=\"true\"></span>\n\t\t</button>\n\t</div> \n</div>\n";
-cb(null, output);
-;
-} catch (e) {
-  cb(runtime.handleError(e, lineno, colno));
-}
-}
-return {
-b_title: b_title,
-b_content: b_content,
 root: root
 };
 
@@ -707,14 +467,14 @@ var colno = null;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"card scrollable-panel bg-dark\">\r\n\t";
+output += "<div class=\"card scrollable-panel bg-dark\">\r\n\t<!--\r\n\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "title")) > 0) {
 output += "\r\n\t\t<h5 class=\"card-header\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
 output += "</h5>\r\n\t";
 ;
 }
-output += "\r\n\t<div class=\"card-body\" pie-tab=\"";
+output += "\r\n\t-->\r\n\t<div class=\"card-body\" pie-tab=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
 output += "\">\r\n\t\t";
 if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "items")) > 0) {
@@ -1266,6 +1026,246 @@ cb(null, output);
 }
 }
 return {
+b_content: b_content,
+root: root
+};
+
+})();
+})();
+
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["panels/basics.tpl"] = (function() {
+function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var parentTemplate = null;
+env.getTemplate("panels/main.tpl", true, "panels/basics.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
+for(var t_1 in parentTemplate.blocks) {
+context.addBlock(t_1, parentTemplate.blocks[t_1]);
+}
+output += "\r\n\r\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
+output += "\r\n\r\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += t_6;
+if(parentTemplate) {
+parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+} else {
+cb(null, output);
+}
+})})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_title(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "\r\n\t";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
+output += "\r\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_content(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "\r\n\t";
+if(runtime.contextOrFrameLookup(context, frame, "type") === "crop") {
+output += "\r\n\r\n\t";
+;
+}
+else {
+if(runtime.contextOrFrameLookup(context, frame, "type") === "rotate") {
+output += "\r\n\r\n\t";
+;
+}
+else {
+if(runtime.contextOrFrameLookup(context, frame, "type") === "resize") {
+output += "\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"width\">Width</label>\r\n\t\t\t<input type=\"number\" name=\"width\" class=\"form-control\" data-bind=\"width\"/>\r\n\t\t</div>\r\n\r\n\t\t<div class=\"form-group\">\r\n\t\t\t<label for=\"height\">Height</label>\r\n\t\t\t<input type=\"number\" name=\"height\" class=\"form-control\" data-bind=\"height\" />\r\n\t\t</div>\r\n\t";
+;
+}
+else {
+if(runtime.contextOrFrameLookup(context, frame, "type") === "round") {
+output += "\r\n\r\n\t";
+;
+}
+else {
+if(runtime.contextOrFrameLookup(context, frame, "type") === "color") {
+output += "\r\n\t\t<input type=\"color\" data-bind=\"backgroundColor\">\r\n\t";
+;
+}
+else {
+if(runtime.contextOrFrameLookup(context, frame, "type") === "image") {
+output += "\r\n\r\n\t";
+;
+}
+;
+}
+;
+}
+;
+}
+;
+}
+;
+}
+output += "\r\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+b_title: b_title,
+b_content: b_content,
+root: root
+};
+
+})();
+})();
+
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["panels/main.tpl"] = (function() {
+function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var parentTemplate = null;
+output += "<div class=\"card bg-dark\">\n\t";
+if(env.getFilter("length").call(context, runtime.contextOrFrameLookup(context, frame, "title")) > 0) {
+output += "\n\t\t<h5 class=\"card-header\">";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_2,t_1) {
+if(t_2) { cb(t_2); return; }
+output += t_1;
+output += "</h5>\n\t";
+});
+}
+output += "\n\t<div class=\"card-body\">\n\t\t";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_4,t_3) {
+if(t_4) { cb(t_4); return; }
+output += t_3;
+output += "\n\t</div>\n</div>";
+if(parentTemplate) {
+parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+} else {
+cb(null, output);
+}
+});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_title(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_content(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+b_title: b_title,
+b_content: b_content,
+root: root
+};
+
+})();
+})();
+
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["panels/text.tpl"] = (function() {
+function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var parentTemplate = null;
+env.getTemplate("panels/main.tpl", true, "panels/text.tpl", false, function(t_3,t_2) {
+if(t_3) { cb(t_3); return; }
+parentTemplate = t_2
+for(var t_1 in parentTemplate.blocks) {
+context.addBlock(t_1, parentTemplate.blocks[t_1]);
+}
+output += "\n\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("title"))(env, context, frame, runtime, function(t_5,t_4) {
+if(t_5) { cb(t_5); return; }
+output += t_4;
+output += "\n\n";
+(parentTemplate ? function(e, c, f, r, cb) { cb(""); } : context.getBlock("content"))(env, context, frame, runtime, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += t_6;
+if(parentTemplate) {
+parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+} else {
+cb(null, output);
+}
+})})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_title(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "\n\t";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "title"), env.opts.autoescape);
+output += "\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+function b_content(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+var frame = frame.push(true);
+output += "\n<div class=\"btn-toolbar\" role=\"toolbar\">\n\t<div class=\"btn-group\"> \n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Left Align\">\n\t\t\t<span class=\"glyphicon glyphicon-align-left\" aria-hidden=\"true\"></span>\n\t\t</button>\n\t\t\n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Center Align\">\n\t\t\t<span class=\"glyphicon glyphicon-align-center\" aria-hidden=\"true\"></span>\n\t\t</button> \n\t\t\n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Right Align\">\n\t\t\t<span class=\"glyphicon glyphicon-align-right\" aria-hidden=\"true\"></span>\n\t\t</button>\n\t\t\n\t\t<button type=\"button\" class=\"btn btn-default\" aria-label=\"Justify\">\n\t\t\t<span class=\"glyphicon glyphicon-align-justify\" aria-hidden=\"true\"></span>\n\t\t</button>\n\t</div> \n</div>\n";
+cb(null, output);
+;
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+b_title: b_title,
 b_content: b_content,
 root: root
 };

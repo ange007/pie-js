@@ -36,12 +36,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		// If no container is specified - used selectors 
 		// (needed from customizing)
 		selectors: {
-			toolbar: '#toolbar',
-			actions: '#actions-menu',
-			panel: '#panel',
-			tab: '#tab',
-			layers: '#layers',
-			canvas: 'canvas'
+			'toolbar': '#toolbar',
+			'actions': '#actions',
+			'actions-menu': '#actions-menu',
+			'panel': '#panel',
+			'tab': '#tab',
+			'layers': '#layers',
+			'canvas': 'canvas'
 		},
 
 		//
@@ -142,7 +143,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				}
 
 				// Create fabricJS
-				this.canvas = new fabric.Canvas(this.$elements.canvas[0]);
+				this.canvas = new fabric.Canvas(this.$elements['canvas'][0]);
 
 				// Loading the tabs content
 				this.utils.tabs.load();
@@ -269,7 +270,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 						this._saveToFile(this.id + '.' + _format, 'data:text/plain;charset=utf-8;base64,' + btoa(unescape(encodeURIComponent(SVGString))));
 					} else {
-						var imageString = canvas.toDataURL({ format: _format, quality: 0.8 });
+						var imageString = this.canvas.toDataURL({ format: _format, quality: 0.8 });
 
 						this._saveToFile(this.id + '.' + _format, imageString);
 					}
@@ -319,6 +320,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				return $element.html(renderTPL);
 			}
 
+			//
+
+		}, {
+			key: 'zoom',
+			value: function zoom(down) {
+				var factor = down ? 0.9 : 1.1;
+
+				this.canvas.setZoom(this.canvas.getZoom() * factor);
+				this.canvas.setWidth(this.canvas.width * factor);
+				this.canvas.setHeight(this.canvas.height * factor);
+
+				return Math.round(this.canvas.getZoom() * factor * 100);
+			}
+
 			// Get selected object
 
 		}, {
@@ -346,7 +361,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			key: 'setActiveStyle',
 			value: function setActiveStyle(styleName, value, object) {
 				object = object || this.activeObject;
-				if (!object) return;
+				if (!object) {
+					return;
+				}
 
 				if (object.setSelectionStyles && object.isEditing) {
 					var style = {};
@@ -628,17 +645,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				    template = this.editor.utils.template.render('toolbar.tpl', { demo: this.editor.options.demo });
 
 				// Set template and two-way communication
-				this.editor.$elements.toolbar.html(template);
+				this.editor.$elements['toolbar'].html(template);
 
 				// Menu
-				this.editor.$elements.toolbar.find('#menu').myData(this, function (type, element, propName, value) {
+				this.editor.$elements['toolbar'].find('#menu').myData(this, function (type, element, propName, value) {
 					if (type === 'set') {
 						context.editor.canvas.renderAll.bind(context.editor.canvas)();
 					}
 				});
 
 				// Canvas
-				this.editor.$elements.toolbar.find('#control-panel').myData({ data: this.editor.canvas, event: this }, function (type, element, propName, value) {
+				this.editor.$elements['toolbar'].find('#control-panel').myData({ data: this.editor.canvas, event: this }, function (type, element, propName, value) {
 					if (type === 'set') {
 						context.editor.canvas.renderAll.bind(context.editor.canvas)();
 					}
@@ -704,6 +721,41 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				alert('import');
 				this.editor.importFromJSON(json);
 			}
+
+			//
+
+		}, {
+			key: 'actionsPanelPosition',
+			value: function actionsPanelPosition(target, id, args) {
+				var $element = this.editor.$elements['actions'];
+				var position = args[0];
+
+				$($element).removeClass('top bottom left right vertical horizontal').addClass(position === 'left' || position === 'right' ? 'vertical' : 'horizontal').addClass(position);
+			}
+
+			//
+
+		}, {
+			key: 'toolbarPosition',
+			value: function toolbarPosition(target, id, args) {
+				var $element = this.editor.$elements['toolbar'];
+				var position = args[0];
+
+				$($element).removeClass('top bottom').addClass(position);
+
+				if (position === 'bottom') {}
+			}
+
+			//
+
+		}, {
+			key: 'zoom',
+			value: function zoom(target, id, args) {
+				var state = args[0] === 'true';
+				var percentage = this.editor.zoom(state);
+
+				$('#zoom-value').html('Zoom ' + percentage + '%');
+			}
 		}]);
 
 		return Toolbar;
@@ -765,7 +817,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					var actionsTemplate = context.editor.utils.template.render('actions.tpl', { 'tabs': data });
 
 					//
-					var $actions = context.editor.$elements.actions;
+					var $actions = context.editor.$elements['actions-menu'];
 
 					// Display the template data
 					$actions.html(actionsTemplate).myData({}, function (type, element, propName, data) {
@@ -800,7 +852,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			//
 			var _this4 = _possibleConstructorReturn(this, (BasicTab.__proto__ || Object.getPrototypeOf(BasicTab)).call(this, editor));
 
-			_this4.tab = editor.$elements.tab;
+			_this4.tab = editor.$elements['tab'];
 			_this4.data = {};
 			return _this4;
 		}
@@ -944,7 +996,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				var template = this.editor.utils.template.render('layers.tpl', { 'layers': this.list });
 
 				// Apply template
-				this.editor.$elements.layers.html(template).myData({ data: this, event: this, exlusive: true }).find('.list-group').sortable({});
+				this.editor.$elements['layers'].html(template).myData({ data: this, event: this, exlusive: true }).find('.list-group').sortable({});
 
 				return this;
 			}

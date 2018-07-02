@@ -80,6 +80,25 @@ html, body {
         width: 100%;
         min-height: 80px;
         max-height: 160px; }
+        #editor #wrapper #actions.horizontal .list-group {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: row;
+                  flex-direction: row; }
+        #editor #wrapper #actions.horizontal .list-group-item {
+          margin-bottom: 0;
+          margin-right: 0;
+          border-right-width: 0; }
+        #editor #wrapper #actions.horizontal .list-group-item:first-child {
+          border-top-right-radius: 0;
+          border-bottom-left-radius: 4px; }
+        #editor #wrapper #actions.horizontal .list-group-item:last-child {
+          border-top-right-radius: 4px;
+          border-bottom-left-radius: 0;
+          border-right-width: 1px; }
         #editor #wrapper #actions.horizontal #actions-menu {
           min-height: 80px;
           max-height: 80px; }
