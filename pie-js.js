@@ -99,7 +99,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this.options = $.extend(true, pie.defaultOptions, options);
 
 			// Additional variables
-			this.$elements = {};
+			this.$elements = {}; // See main.js - "selectors"
 			this.layers = [];
 			this.tabs = {};
 
@@ -137,7 +137,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					$container = $(template).appendTo(this.options.container);
 				}
 
-				//
+				// Set main container
+				this.$elements['container'] = $container;
+
+				// Get elements
 				for (var element in this.options.selectors) {
 					this.$elements[element] = $container.find(this.options.selectors[element]);
 				}
@@ -510,14 +513,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			if (typeof callback === 'function') {
 				$.ajax($.extend({}, data, {
 					success: function success(response) {
-						var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
+						var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response || '{}');
 
 						callback(object);
 					}
 				}));
 			} else {
 				var response = $.ajax($.extend({}, data, { async: false })).responseText;
-				var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response);
+				var object = (typeof response === 'undefined' ? 'undefined' : _typeof(response)) === 'object' ? response : JSON.parse(response || '{}');
 
 				return object;
 			}
@@ -726,32 +729,38 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 		}, {
 			key: 'actionsPanelPosition',
-			value: function actionsPanelPosition(target, id, args) {
-				var $element = this.editor.$elements['actions'];
-				var position = args[0];
+			value: function actionsPanelPosition(position) {
+				var $container = $(this.editor.$elements['container']);
+				var $element = $(this.editor.$elements['actions']);
+				var positionClass = '';
 
-				$($element).removeClass('top bottom left right vertical horizontal').addClass(position === 'left' || position === 'right' ? 'vertical' : 'horizontal').addClass(position);
+				if (position === 'left') {
+					positionClass = 'order-first';
+				} else if (position === 'right') {
+					positionClass = 'order-last';
+				}
+				// else if( position === 'bottom' ) { positionClass = 'd-flex'; }
+
+				$element.removeClass('top bottom left right vertical horizontal order-first order-last').addClass(position === 'left' || position === 'right' ? 'vertical' : 'horizontal').addClass(position).addClass(positionClass);
 			}
 
 			//
 
 		}, {
 			key: 'toolbarPosition',
-			value: function toolbarPosition(target, id, args) {
-				var $element = this.editor.$elements['toolbar'];
-				var position = args[0];
+			value: function toolbarPosition(position) {
+				var $container = $(this.editor.$elements['container']);
+				var $element = $(this.editor.$elements['toolbar']);
 
-				$($element).removeClass('top bottom').addClass(position);
-
-				if (position === 'bottom') {}
+				$element.removeClass('top bottom').addClass(position);
 			}
 
 			//
 
 		}, {
 			key: 'zoom',
-			value: function zoom(target, id, args) {
-				var state = args[0] === 'true';
+			value: function zoom(value) {
+				var state = value === 'true';
 				var percentage = this.editor.zoom(state);
 
 				$('#zoom-value').html('Zoom ' + percentage + '%');
@@ -820,9 +829,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					var $actions = context.editor.$elements['actions-menu'];
 
 					// Display the template data
-					$actions.html(actionsTemplate).myData({}, function (type, element, propName, data) {
+					$actions.html(actionsTemplate).myData({}, function (type, element, propName, value, data) {
 						if (type === 'on') {
-							context._callFunction(data['value'], data['name'], []);
+							context._callFunction(value, propName, []);
 						}
 					});
 				});
