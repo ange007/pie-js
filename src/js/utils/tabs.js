@@ -45,9 +45,10 @@
 
 				// Display the template data
 				$actions.html( actionsTemplate )
-						.myData( { }, function( type, element, propName, data ) {
-							if( type === 'on' ) { context._callFunction( data[ 'value' ], data[ 'name' ], [ ] ); }
-						 } );
+						.myData( { }, function( type, element, propName, value, data ) 
+						{
+							if( type === 'on' ) { context._callFunction( value, propName, [ ] ); }
+						} );
 			} );
 		}
 

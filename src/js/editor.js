@@ -20,7 +20,7 @@
 			this.options = $.extend( true, pie.defaultOptions, options );
 
 			// Additional variables
-			this.$elements = { };
+			this.$elements = { }; // See main.js - "selectors"
 			this.layers = [ ];
 			this.tabs = { };
 
@@ -56,7 +56,10 @@
 				$container = $( template ).appendTo( this.options.container );
 			}
 
-			//
+			// Set main container
+			this.$elements[ 'container' ] = $container;
+
+			// Get elements
 			for( let element in this.options.selectors  )
 			{
 				this.$elements[ element ] = $container.find( this.options.selectors[ element ] );

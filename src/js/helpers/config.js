@@ -25,7 +25,7 @@
 				{
 					success: function( response )
 					{ 
-						let object = ( typeof response === 'object' ? response : JSON.parse( response ) );
+						let object = ( typeof response === 'object' ? response : JSON.parse( response || '{}' ) );
 						
 						callback( object ); 
 					} 
@@ -34,7 +34,7 @@
 			else
 			{
 				let response = $.ajax( $.extend( { }, data, { async: false } ) ).responseText;
-				let	object = ( typeof response === 'object' ? response : JSON.parse( response ) );
+				let	object = ( typeof response === 'object' ? response : JSON.parse( response || '{}' ) );
 
 				return object;
 			}

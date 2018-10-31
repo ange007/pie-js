@@ -92,35 +92,36 @@
 		}
 
 		//
-		actionsPanelPosition( target, id, args )
+		actionsPanelPosition( position )
 		{
-			let $element = this.editor.$elements[ 'actions' ];
-			let position = args[ 0 ];
+			let $container = $( this.editor.$elements[ 'container' ] );
+			let $element = $( this.editor.$elements[ 'actions' ] );
+			let positionClass = '';
 
-			$( $element ).removeClass( 'top bottom left right vertical horizontal' )
-						.addClass( ( position === 'left' || position === 'right' ) ? 'vertical' : 'horizontal' )
-						.addClass( position );
+			if( position === 'left' ) { positionClass = 'order-first'; }
+			else if( position === 'right' ) { positionClass = 'order-last'; }
+			// else if( position === 'bottom' ) { positionClass = 'd-flex'; }
+
+			$element.removeClass( 'top bottom left right vertical horizontal order-first order-last' )
+					.addClass( ( position === 'left' || position === 'right' ) ? 'vertical' : 'horizontal' )
+					.addClass( position )
+					.addClass( positionClass );
 		}
 
 		//
-		toolbarPosition( target, id, args )
+		toolbarPosition( position )
 		{
-			let $element = this.editor.$elements[ 'toolbar' ];
-			let position = args[ 0 ];
+			let $container = $( this.editor.$elements[ 'container' ] );
+			let $element = $( this.editor.$elements[ 'toolbar' ] );
 
-			$( $element ).removeClass( 'top bottom' )
-						.addClass( position );
-
-			if( position === 'bottom' )
-			{
-
-			}
+			$element.removeClass( 'top bottom' )
+					.addClass( position );
 		}
 
 		//
-		zoom( target, id, args )
+		zoom( value )
 		{
-			let state = ( args[ 0 ] === 'true' );
+			let state = ( value === 'true' );
 			let percentage = this.editor.zoom( state );
 
 			$( '#zoom-value' ).html( 'Zoom ' + percentage + '%' );
